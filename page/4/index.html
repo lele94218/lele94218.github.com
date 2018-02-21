@@ -80,9 +80,65 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
-    <article id="post-2016-01-21-32---bean-scopes" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-2016-02-16-java-web-summary-1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/09/28/2016-01-21-32---bean-scopes/" class="article-date">
+    <a href="/2016/09/28/2016-02-16-java-web-summary-1/" class="article-date">
+  <time datetime="2016-09-28T15:50:16.000Z" itemprop="datePublished">2016-09-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java-Web/">Java Web</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/28/2016-02-16-java-web-summary-1/">Java Web 系统总结 (一)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一-JSP-总结"><a href="#一-JSP-总结" class="headerlink" title="一. JSP 总结"></a>一. <em>JSP</em> 总结</h3><h4 id="9个隐含对象及其常用方法-虽然为-Java-代码-但是使用-EL-表达式完全可以进行调用相关-get-方法"><a href="#9个隐含对象及其常用方法-虽然为-Java-代码-但是使用-EL-表达式完全可以进行调用相关-get-方法" class="headerlink" title="9个隐含对象及其常用方法 (虽然为 Java 代码, 但是使用 _EL_ 表达式完全可以进行调用相关 get 方法):"></a>9个隐含对象及其常用方法 (虽然为 <em>Java</em> 代码, 但是使用 _EL_ 表达式完全可以进行调用相关 <em>get</em> 方法):</h4><p><strong>1. <em>Request (HttpServletRequest)</em></strong></p>
+<ul>
+<li><p><strong>Attribute</strong> 相关:</p>
+<p>可以理解在 <code>request</code> 作用域范围内的一个存储空间, 实现方法是将键值对放入一个 <code>HashMap</code>.</p>
+</li>
+</ul>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">getAttribute</span><span class="params">(String name)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setAttribute</span><span class="params">(String name, Object o)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">removeAttribute</span><span class="params">(String name)</span></span>;</span><br></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2016/09/28/2016-02-16-java-web-summary-1/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.terryx.com/2016/09/28/2016-02-16-java-web-summary-1/" data-id="cjdwtu4pe000bjj3sps7f8dqu" class="article-share-link">Share</a>
+      
+        <a href="http://www.terryx.com/2016/09/28/2016-02-16-java-web-summary-1/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-Web/">Java Web</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-2016-01-22-43--access-resource" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/28/2016-01-22-43--access-resource/" class="article-date">
   <time datetime="2016-09-28T15:50:16.000Z" itemprop="datePublished">2016-09-28</time>
 </a>
     
@@ -98,7 +154,7 @@ ga('send', 'pageview');
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/28/2016-01-21-32---bean-scopes/">3.2 Bean Scopes</a>
+      <a class="article-title" href="/2016/09/28/2016-01-22-43--access-resource/">4.3  Access Resource</a>
     </h1>
   
 
@@ -106,26 +162,19 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Bean-scopes-singleton-and-prototype"><a href="#Bean-scopes-singleton-and-prototype" class="headerlink" title="Bean scopes: singleton and prototype"></a>Bean scopes: <em>singleton</em> and <em>prototype</em></h3><h4 id="1-singleton"><a href="#1-singleton" class="headerlink" title="1. singleton"></a>1. <em>singleton</em></h4><p>Only one instance in Spring IoC container. Only return the same Bean.</p>
-<blockquote>
-<p>One instance of the bean is created for the entire application.</p>
-</blockquote>
-<p>Two ways to implement, we could learn how Spring work through the code bellow:</p>
-<ul>
-<li><strong>Define static attribute to hold the instance:</strong></li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.javass.spring.chapter3.bean;  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;  </span><br><span class="line">    <span class="comment">//1. Private constructor  </span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InstanceHolder</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="comment">//3.Global accession  </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> InstanceHolder.INSTANCE;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="Access-Resource"><a href="#Access-Resource" class="headerlink" title="Access Resource"></a>Access Resource</h3><h4 id="1-ResourceLoader"><a href="#1-ResourceLoader" class="headerlink" title="1. ResourceLoader"></a>1. <em>ResourceLoader</em></h4><p>Spring has a <strong><em>DefaultResourceLoader</em></strong> which can return <strong><em>ClassPathResource</em></strong>, <strong><em>UrlResource</em></strong>, and <strong><em>ServletContextResourceLoader</em></strong> which extends all functions of <strong><em>DefaultResourceLoader</em></strong>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testResourceLoad</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">	ResourceLoader loader = <span class="keyword">new</span> DefaultResourceLoader();</span><br><span class="line">	Resource resource = loader.getResource(<span class="string">"classpath:cn/javass/spring/chapter4/test.txt"</span>);</span><br><span class="line">	Assert.assertEquals(ClassPathResource.class, resource.getClass());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         
           <p class="article-more-link">
-            <a href="/2016/09/28/2016-01-21-32---bean-scopes/#more">Read More</a>
+            <a href="/2016/09/28/2016-01-22-43--access-resource/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/" data-id="cjdws0f1a00064l3s8mejded5" class="article-share-link">Share</a>
+      <a data-url="http://www.terryx.com/2016/09/28/2016-01-22-43--access-resource/" data-id="cjdwtu4p10006jj3sg3f1rf1e" class="article-share-link">Share</a>
       
-        <a href="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://www.terryx.com/2016/09/28/2016-01-22-43--access-resource/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-3/">Spring 3</a></li></ul>
@@ -138,9 +187,9 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-2016-01-22-42--using-resource" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-2016-01-21-41-resource" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/09/28/2016-01-22-42--using-resource/" class="article-date">
+    <a href="/2016/09/28/2016-01-21-41-resource/" class="article-date">
   <time datetime="2016-09-28T15:50:16.000Z" itemprop="datePublished">2016-09-28</time>
 </a>
     
@@ -156,7 +205,7 @@ ga('send', 'pageview');
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/28/2016-01-22-42--using-resource/">4.2  Using Resource</a>
+      <a class="article-title" href="/2016/09/28/2016-01-21-41-resource/">4.1 Resource</a>
     </h1>
   
 
@@ -164,19 +213,19 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Using-Resource"><a href="#Using-Resource" class="headerlink" title="Using Resource"></a>Using Resource</h3><h4 id="1-ByteArrayResource"><a href="#1-ByteArrayResource" class="headerlink" title="1. ByteArrayResource"></a>1. <em>ByteArrayResource</em></h4><p>Junit test:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.ByteArrayResource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResourceTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testByteArraryResorce</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Resource resource = <span class="keyword">new</span> ByteArrayResource(<span class="string">"Hello World!"</span>.getBytes());</span><br><span class="line">		<span class="keyword">if</span> (resource.exists()) &#123;</span><br><span class="line">			dumpStream(resource);</span><br><span class="line">		&#125;</span><br><span class="line">		Assert.assertEquals(<span class="keyword">false</span>, resource.isOpen());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dumpStream</span><span class="params">(Resource resource)</span> </span>&#123;</span><br><span class="line">		InputStream inputStream = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			inputStream = resource.getInputStream();</span><br><span class="line">			<span class="keyword">byte</span> [] descByte = <span class="keyword">new</span> <span class="keyword">byte</span> [inputStream.available()];</span><br><span class="line">			inputStream.read(descByte);</span><br><span class="line">			System.out.println(<span class="keyword">new</span> String(descByte));</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				inputStream.close();</span><br><span class="line">			&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h3><h4 id="1-Resource-API"><a href="#1-Resource-API" class="headerlink" title="1. Resource API"></a>1. Resource API</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">InputStreamSource</span> </span>&#123;  </span><br><span class="line">    <span class="function">InputStream <span class="title">getInputStream</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Resource</span> <span class="keyword">extends</span> <span class="title">InputStreamSource</span> </span>&#123;  </span><br><span class="line">       <span class="function"><span class="keyword">boolean</span> <span class="title">exists</span><span class="params">()</span></span>;  </span><br><span class="line">       <span class="function"><span class="keyword">boolean</span> <span class="title">isReadable</span><span class="params">()</span></span>;  </span><br><span class="line">       <span class="function"><span class="keyword">boolean</span> <span class="title">isOpen</span><span class="params">()</span></span>;  </span><br><span class="line">       <span class="function">URL <span class="title">getURL</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">       <span class="function">URI <span class="title">getURI</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">       <span class="function">File <span class="title">getFile</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">       <span class="function"><span class="keyword">long</span> <span class="title">contentLength</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">       <span class="function"><span class="keyword">long</span> <span class="title">lastModified</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">       <span class="function">Resource <span class="title">createRelative</span><span class="params">(String relativePath)</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">       <span class="function">String <span class="title">getFilename</span><span class="params">()</span></span>;  </span><br><span class="line">       <span class="function">String <span class="title">getDescription</span><span class="params">()</span></span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         
           <p class="article-more-link">
-            <a href="/2016/09/28/2016-01-22-42--using-resource/#more">Read More</a>
+            <a href="/2016/09/28/2016-01-21-41-resource/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.terryx.com/2016/09/28/2016-01-22-42--using-resource/" data-id="cjdws0f0l00004l3sz359zdnb" class="article-share-link">Share</a>
+      <a data-url="http://www.terryx.com/2016/09/28/2016-01-21-41-resource/" data-id="cjdwtu4oc0000jj3s2k5eu612" class="article-share-link">Share</a>
       
-        <a href="http://www.terryx.com/2016/09/28/2016-01-22-42--using-resource/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://www.terryx.com/2016/09/28/2016-01-21-41-resource/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-3/">Spring 3</a></li></ul>
@@ -214,7 +263,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-Web/">Java Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Management/">Memory Management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCIP/">SCIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SICP/">SICP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-3/">Spring 3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-4/">Spring 4</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-Web/">Java Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Management/">Memory Management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCIP/">SCIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SICP/">SICP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Soul/">Soul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-3/">Spring 3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-4/">Spring 4</a></li></ul>
     </div>
   </div>
 
@@ -224,7 +273,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 12.5px;">Java Web</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Memory-Management/" style="font-size: 10px;">Memory Management</a> <a href="/tags/SCIP/" style="font-size: 10px;">SCIP</a> <a href="/tags/SICP/" style="font-size: 17.5px;">SICP</a> <a href="/tags/Spring-3/" style="font-size: 15px;">Spring 3</a> <a href="/tags/Spring-4/" style="font-size: 12.5px;">Spring 4</a>
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 12.5px;">Java Web</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Memory-Management/" style="font-size: 10px;">Memory Management</a> <a href="/tags/SCIP/" style="font-size: 10px;">SCIP</a> <a href="/tags/SICP/" style="font-size: 17.5px;">SICP</a> <a href="/tags/Soul/" style="font-size: 10px;">Soul</a> <a href="/tags/Spring-3/" style="font-size: 15px;">Spring 3</a> <a href="/tags/Spring-4/" style="font-size: 12.5px;">Spring 4</a>
     </div>
   </div>
 
@@ -233,7 +282,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
     </div>
   </div>
 
@@ -244,6 +293,10 @@ ga('send', 'pageview');
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/02/21/new-year/">新年</a>
+          </li>
         
           <li>
             <a href="/2017/01/02/sicp-2-2/">Hierarchical Data and the Closure Property</a>
@@ -259,10 +312,6 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2016/12/20/sicp-1-2-2/">Building Abstractions with Procedures Section 2 - Part 2</a>
-          </li>
-        
-          <li>
-            <a href="/2016/12/15/scip-1-2/">Building Abstractions with Procedures Section 2 - Part 1</a>
           </li>
         
       </ul>
