@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-65933410-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Introduction to Data Abstraction | 欲說還休</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Section 2.1  Introduction to Data AbstractionExercises in this section of SCIP.">
+<meta name="keywords" content="SICP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction to Data Abstraction">
+<meta property="og:url" content="http://www.terryx.com/2016/12/31/sicp-2-1/index.html">
+<meta property="og:site_name" content="欲說還休">
+<meta property="og:description" content="Section 2.1  Introduction to Data AbstractionExercises in this section of SCIP.">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-01-02T07:01:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Introduction to Data Abstraction">
+<meta name="twitter:description" content="Section 2.1  Introduction to Data AbstractionExercises in this section of SCIP.">
+<meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
+  
+    <link rel="alternate" href="/atom.xml" title="欲說還休" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">欲說還休</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/lele94218">Github</a>
+        
+          <a class="main-nav-link" href="/about">About Me</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.terryx.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-sicp-2-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/31/sicp-2-1/" class="article-date">
+  <time datetime="2016-12-31T06:05:14.000Z" itemprop="datePublished">2016-12-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Introduction to Data Abstraction
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Section-2-1-Introduction-to-Data-Abstraction"><a href="#Section-2-1-Introduction-to-Data-Abstraction" class="headerlink" title="Section 2.1  Introduction to Data Abstraction"></a>Section 2.1  Introduction to Data Abstraction</h2><p>Exercises in this section of <a href="https://mitpress.mit.edu/books/structure-and-interpretation-computer-programs" target="_blank" rel="noopener">SCIP</a>.</p>
+<a id="more"></a>
+<p><strong>Exercise 2.1.</strong>  Define a better version of <code>make-rat</code> that handles both positive and negative arguments. <code>Make-rat</code> should normalize the sign so that if the rational number is positive, both the numerator and denominator are positive, and if the rational number is negative, only the numerator is negative.</p>
+<p><strong>Answer 2.1.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(define (numer x) (car x))</span><br><span class="line"></span><br><span class="line">(define (denom x) (cdr x))</span><br><span class="line"></span><br><span class="line">(define (print-rat x)</span><br><span class="line">    (newline)</span><br><span class="line">    (display (numer x))</span><br><span class="line">    (display &quot;/&quot;)</span><br><span class="line">    (display (denom x))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (make-rat n d)</span><br><span class="line">    (let ((g ((if (&lt; d 0) - +) (abs (gcd n d)))))</span><br><span class="line">        (cons (/ n g) (/ d g))</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 2.2.</strong>  Consider the problem of representing line segments in a plane. Each segment is represented as a pair of points: a starting point and an ending point. Define a constructor <code>make-segment</code> and selectors <code>start-segment</code> and <code>end-segment</code> that define the representation of segments in terms of points. Furthermore, a point can be represented as a pair of numbers: the $x$ coordinate and the $y$ coordinate. Accordingly, specify a constructor <code>make-point</code> and selectors <code>x-point</code> and <code>y-point</code> that define this representation. Finally, using your selectors and constructors, define a procedure <code>midpoint-segment</code> that takes a line segment as argument and returns its midpoint (the point whose coordinates are the average of the coordinates of the endpoints). To try your procedures, you’ll need a way to print points:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(define (print-point p)</span><br><span class="line">  (newline)</span><br><span class="line">  (display &quot;(&quot;)</span><br><span class="line">  (display (x-point p))</span><br><span class="line">  (display &quot;,&quot;)</span><br><span class="line">  (display (y-point p))</span><br><span class="line">  (display &quot;)&quot;))</span><br></pre></td></tr></table></figure>
+<p><strong>Answer 2.2.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">(define (x-point x) (car x))</span><br><span class="line"></span><br><span class="line">(define (y-point x) (cdr x))</span><br><span class="line"></span><br><span class="line">(define (print-point p)</span><br><span class="line">    (newline)</span><br><span class="line">    (display &quot;(&quot;)</span><br><span class="line">    (display (x-point p))</span><br><span class="line">    (display &quot;,&quot;)</span><br><span class="line">    (display (y-point p))</span><br><span class="line">    (display &quot;)&quot;)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (make-point x y)</span><br><span class="line">    (cons x y)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (start-segment x) (car x))</span><br><span class="line"></span><br><span class="line">(define (end-segment x) (cdr x))</span><br><span class="line"></span><br><span class="line">(define (make-segment x y)</span><br><span class="line">    (cons x y)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (midpoint-segment s)</span><br><span class="line">    (define (average a b) (/ (+ a b) 2.0))</span><br><span class="line">    (let (</span><br><span class="line">            (a (start-segment s))</span><br><span class="line">            (b (end-segment s))</span><br><span class="line">         )</span><br><span class="line">         (make-point (average (x-point a) (x-point b)) (average (y-point a) (y-point b)))</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 2.3.</strong>  Implement a representation for rectangles in a plane. (Hint: You may want to make use of exercise 2.2.) In terms of your constructors and selectors, create procedures that compute the perimeter and the area of a given rectangle. Now implement a different representation for rectangles. Can you design your system with suitable abstraction barriers, so that the same perimeter and area procedures will work using either representation?</p>
+<p><strong>Answer 2.3.</strong> Here, it talks about axis-aligned rectangles.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">(define (x-point x) (car x))</span><br><span class="line"></span><br><span class="line">(define (y-point x) (cdr x))</span><br><span class="line"></span><br><span class="line">(define (print-point p)</span><br><span class="line">    (newline)</span><br><span class="line">    (display &quot;(&quot;)</span><br><span class="line">    (display (x-point p))</span><br><span class="line">    (display &quot;,&quot;)</span><br><span class="line">    (display (y-point p))</span><br><span class="line">    (display &quot;)&quot;)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (make-point x y)</span><br><span class="line">    (cons x y)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (make-rect p1 p2)</span><br><span class="line">    (let (</span><br><span class="line">            (x1 (x-point p1))</span><br><span class="line">            (x2 (x-point p2))</span><br><span class="line">            (y1 (y-point p1))</span><br><span class="line">            (y2 (y-point p2))</span><br><span class="line">         )</span><br><span class="line">         (cond </span><br><span class="line">            ((and (&lt; x1 x2) (&lt; y1 y2)) (cons p1 p2))</span><br><span class="line">            ((and (&gt; x1 x2) (&gt; y1 y2)) (cons p2 p1))</span><br><span class="line">            ((and (&lt; x1 x2) (&gt; y1 y2)) (cons (make-point (x1 y2)) (make-point (x2 y1))))</span><br><span class="line">            (else (cons (make-point (x2 y1)) (make-point (x1 y2))))</span><br><span class="line">         )</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (bottom-left r) (car r))</span><br><span class="line"></span><br><span class="line">(define (top-right r) (cdr r))</span><br><span class="line"></span><br><span class="line">(define (print-rect r)</span><br><span class="line">    (print-point (bottom-left r))</span><br><span class="line">    (print-point (top-right r))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (perimeter r)</span><br><span class="line">    (let (</span><br><span class="line">            (p1 (bottom-left r))</span><br><span class="line">            (p2 (top-right r))</span><br><span class="line">         )</span><br><span class="line">         (let (</span><br><span class="line">                (x1 (x-point p1))</span><br><span class="line">                (x2 (x-point p2))</span><br><span class="line">                (y1 (y-point p1))</span><br><span class="line">                (y2 (y-point p2))</span><br><span class="line">              )</span><br><span class="line">              (* 2 (+ (- x2 x1) (- y2 y1)))</span><br><span class="line">         )</span><br><span class="line">    )    </span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (area r)</span><br><span class="line">     (let (</span><br><span class="line">            (p1 (bottom-left r))</span><br><span class="line">            (p2 (top-right r))</span><br><span class="line">         )</span><br><span class="line">         (let (</span><br><span class="line">                (x1 (x-point p1))</span><br><span class="line">                (x2 (x-point p2))</span><br><span class="line">                (y1 (y-point p1))</span><br><span class="line">                (y2 (y-point p2))</span><br><span class="line">              )</span><br><span class="line">              (* (- x2 x1) (- y2 y1))</span><br><span class="line">         )</span><br><span class="line">    )    </span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define r (make-rect (make-point 1 1)</span><br><span class="line">                     (make-point 4 5)))</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 2.4.</strong>  Here is an alternative procedural representation of pairs. For this representation, verify that <code>(car (cons x y))</code> yields $x$ for any objects $x$ and $y$.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(define (cons x y)</span><br><span class="line">  (lambda (m) (m x y)))</span><br><span class="line"></span><br><span class="line">(define (car z)</span><br><span class="line">  (z (lambda (p q) p)))</span><br></pre></td></tr></table></figure>
+<p>What is the corresponding definition of <code>cdr</code>? (Hint: To verify that this works, make use of the substitution model of section 1.1.5.)</p>
+<p><strong>Answer 2.4.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(define (cdr z)</span><br><span class="line">	(z (lambda (p q) q))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Substitution model:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">=&gt; (cdr z)</span><br><span class="line">=&gt; (z (lambda (p q) p))</span><br><span class="line">=&gt; ((lambda (m) (m x y) (lambda (p q) q)))</span><br><span class="line">=&gt; ((lambda (p q) q) x y)</span><br><span class="line">=&gt; y</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 2.5.</strong>  Show that we can represent pairs of nonnegative integers using only numbers and arithmetic operations if we represent the pair $a$ and $b$ as the integer that is the product $2^a 3^b$. Give the corresponding definitions of the procedures <code>cons</code>, <code>car</code>, and <code>cdr</code>.</p>
+<p><strong>Answer 2.5.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">(define (cons a b)</span><br><span class="line">    (* (expt 2 a) (expt 3 b))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (logb b n) (floor (/ (log n) (log b))))</span><br><span class="line"></span><br><span class="line">(define (car x)</span><br><span class="line">    (logb 2 (/ x (gcd x (expt 3 (logb 3 x)))))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (cdr x)</span><br><span class="line">    (logb 3 (/ x (gcd x (expt 2 (logb 2 x)))))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 2.6.</strong>  In case representing pairs as procedures wasn’t mind-boggling enough, consider that, in a language that can manipulate procedures, we can get by without numbers (at least insofar as nonnegative integers are concerned) by implementing $0$ and the operation of adding $1$ as</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(define zero (lambda (f) (lambda (x) x)))</span><br><span class="line"></span><br><span class="line">(define (add-1 n)</span><br><span class="line">  (lambda (f) (lambda (x) (f ((n f) x)))))</span><br></pre></td></tr></table></figure>
+<p>This representation is known as <em>Church numerals</em>, after its inventor, Alonzo Church, the logician who invented the $\lambda$ calculus.</p>
+<p>Define <code>one</code> and <code>two</code> directly (not in terms of <code>zero</code> and <code>add-1</code>). (Hint: Use substitution to evaluate (<code>add-1 zero</code>)). Give a direct definition of the addition procedure <code>+</code> (not in terms of repeated application of <code>add-1</code>).</p>
+<p><strong>Answer 2.6.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">=&gt; (one)</span><br><span class="line">=&gt; (add-1 zero)</span><br><span class="line">=&gt; (lambda (f) (lambda (x) (f ((zero f) x))))</span><br></pre></td></tr></table></figure>
+<p><code>zero</code> is a function of one argument, that returns a function of one argument that returns the argument.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">=&gt; ((zero f) x)</span><br><span class="line">=&gt; ((lambda(x) x) x)</span><br><span class="line">=&gt; x</span><br></pre></td></tr></table></figure>
+<p>So, <code>one</code> and <code>two</code> are:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">=&gt; (one)</span><br><span class="line">=&gt; (lambda (f) (lambda (x) (f x)))</span><br><span class="line"></span><br><span class="line">=&gt; (two)</span><br><span class="line">=&gt; (add-1 two)</span><br><span class="line">=&gt; (lambda (f) (lambda (x) (f (f x))))</span><br></pre></td></tr></table></figure>
+<p>Thus,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(define one (lambda (f) (lambda (x) (f x))))</span><br><span class="line"></span><br><span class="line">(define two (lambda (f) (lambda (x) (f (f x)))))</span><br></pre></td></tr></table></figure>
+<p>And <code>add</code> using the same approach in <code>add-1</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(define (add a b)</span><br><span class="line">	(lambda (f)</span><br><span class="line">		(lambda (x) (a f) ((b f) x))</span><br><span class="line">	)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 2.7.</strong>  Alyssa’s program is incomplete because she has not specified the implementation of the interval abstraction. Here is a definition of the interval constructor:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(define (make-interval a b) (cons a b))</span><br></pre></td></tr></table></figure>
+<p>Define selectors <code>upper-bound</code> and <code>lower-bound</code> to complete the implementation.</p>
+<p><strong>Answer 2.7.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(define (upper-bound interval)</span><br><span class="line">	(max (car interval) (cdr interval))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (lower-bound interval)</span><br><span class="line">	(min (car interval) (cdr interval))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 2.8.</strong>  Using reasoning analogous to Alyssa’s, describe how the difference of two intervals may be computed. Define a corresponding subtraction procedure, called <code>sub-interval</code>.</p>
+<p><strong>Answer 2.8.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(define (sub-interval x y)</span><br><span class="line">	(make-interval (- (lower-bound x) (upper-bound y))</span><br><span class="line">				   (- (upper-bound x) (lower-bound y)))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 2.9.</strong>  The <em>width</em> of an interval is half of the difference between its upper and lower bounds. The width is a measure of the uncertainty of the number specified by the interval. For some arithmetic operations the width of the result of combining two intervals is a function only of the widths of the argument intervals, whereas for others the width of the combination is not a function of the widths of the argument intervals. Show that the width of the sum (or difference) of two intervals is a function only of the widths of the intervals being added (or subtracted). Give examples to show that this is not true for multiplication or division.</p>
+<p><strong>Answer 2.9.</strong> For multiplication and division, the story is different. If the width of the result was a function of the widths of the inputs, then multiplying different intervals with the same widths should give the same answer. For example, multiplying a width 5 interval with a width 1 interval.</p>
+<p><strong>Exercise 2.10.</strong>  Ben Bitdiddle, an expert systems programmer, looks over Alyssa’s shoulder and comments that it is not clear what it means to divide by an interval that spans zero. Modify Alyssa’s code to check for this condition and to signal an error if it occurs.</p>
+<p><strong>Answer 2.10.</strong> We should guarantee:</p>
+<p>$$<br>R_p = \frac{1}{1/R_1+1/R_2} = \frac{R_1+R_2}{R_1 R_2}, \text{where } R_1 R_2 \neq 0.<br>$$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(define (div-interval x y)</span><br><span class="line">	(if (&gt;= 0 (* (lower-bound y) (upper-bound y)))</span><br><span class="line">		(error &quot;Divison 0 error&quot;)</span><br><span class="line">		(mul-interval x (make-interval (/ 1 (upper-bound y))</span><br><span class="line">							(/ 1 (lower-bound y))</span><br><span class="line">						))</span><br><span class="line">	)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 2.11.</strong>  In passing, Ben also cryptically comments: “By testing the signs of the endpoints of the intervals, it is possible to break <code>mul-interval</code> into nine cases, only one of which requires more than two multiplications.” Rewrite this procedure using Ben’s suggestion.</p>
+<p>After debugging her program, Alyssa shows it to a potential user, who complains that her program solves the wrong problem. He wants a program that can deal with numbers represented as a center value and an additive tolerance; for example, he wants to work with intervals such as $3.5 \pm 0.15$ rather than $[3.35, 3.65]$. Alyssa returns to her desk and fixes this problem by supplying an alternate constructor and alternate selectors:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(define (make-center-width c w)</span><br><span class="line">  (make-interval (- c w) (+ c w)))</span><br><span class="line">(define (center i)</span><br><span class="line">  (/ (+ (lower-bound i) (upper-bound i)) 2))</span><br><span class="line">(define (width i)</span><br><span class="line">  (/ (- (upper-bound i) (lower-bound i)) 2))</span><br></pre></td></tr></table></figure>
+<p>Unfortunately, most of Alyssa’s users are engineers. Real engineering situations usually involve measurements with only a small uncertainty, measured as the ratio of the width of the interval to the midpoint of the interval. Engineers usually specify percentage tolerances on the parameters of devices, as in the resistor specifications given earlier.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.terryx.com/2016/12/31/sicp-2-1/" data-id="cjdws0f2m00124l3svl1sobmq" class="article-share-link">Share</a>
+      
+        <a href="http://www.terryx.com/2016/12/31/sicp-2-1/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SICP/">SICP</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/01/02/sicp-2-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hierarchical Data and the Closure Property
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/24/sicp-1-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Formulating Abstractions with Higher-Order Procedures</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java-Web/">Java Web</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-3/">Spring 3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-4/">Spring 4</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-Web/">Java Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Management/">Memory Management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCIP/">SCIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SICP/">SICP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-3/">Spring 3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-4/">Spring 4</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 12.5px;">Java Web</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Memory-Management/" style="font-size: 10px;">Memory Management</a> <a href="/tags/SCIP/" style="font-size: 10px;">SCIP</a> <a href="/tags/SICP/" style="font-size: 17.5px;">SICP</a> <a href="/tags/Spring-3/" style="font-size: 15px;">Spring 3</a> <a href="/tags/Spring-4/" style="font-size: 12.5px;">Spring 4</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/02/sicp-2-2/">Hierarchical Data and the Closure Property</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/31/sicp-2-1/">Introduction to Data Abstraction</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/24/sicp-1-3/">Formulating Abstractions with Higher-Order Procedures</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/20/sicp-1-2-2/">Building Abstractions with Procedures Section 2 - Part 2</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/15/scip-1-2/">Building Abstractions with Procedures Section 2 - Part 1</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 TerryX<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/lele94218" class="mobile-nav-link">Github</a>
+  
+    <a href="/about" class="mobile-nav-link">About Me</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'lele94218';
+  
+  var disqus_url = 'http://www.terryx.com/2016/12/31/sicp-2-1/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

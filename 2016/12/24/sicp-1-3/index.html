@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-65933410-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Formulating Abstractions with Higher-Order Procedures | 欲說還休</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Section 1.3 Formulating Abstractions with Higher-Order ProceduresExercises in this section of SCIP, and Merry Xmas.">
+<meta name="keywords" content="SICP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Formulating Abstractions with Higher-Order Procedures">
+<meta property="og:url" content="http://www.terryx.com/2016/12/24/sicp-1-3/index.html">
+<meta property="og:site_name" content="欲說還休">
+<meta property="og:description" content="Section 1.3 Formulating Abstractions with Higher-Order ProceduresExercises in this section of SCIP, and Merry Xmas.">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2016-12-31T05:47:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Formulating Abstractions with Higher-Order Procedures">
+<meta name="twitter:description" content="Section 1.3 Formulating Abstractions with Higher-Order ProceduresExercises in this section of SCIP, and Merry Xmas.">
+<meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
+  
+    <link rel="alternate" href="/atom.xml" title="欲說還休" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">欲說還休</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/lele94218">Github</a>
+        
+          <a class="main-nav-link" href="/about">About Me</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.terryx.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-sicp-1-3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/24/sicp-1-3/" class="article-date">
+  <time datetime="2016-12-24T22:23:26.000Z" itemprop="datePublished">2016-12-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Formulating Abstractions with Higher-Order Procedures
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Section-1-3-Formulating-Abstractions-with-Higher-Order-Procedures"><a href="#Section-1-3-Formulating-Abstractions-with-Higher-Order-Procedures" class="headerlink" title="Section 1.3 Formulating Abstractions with Higher-Order Procedures"></a>Section 1.3 Formulating Abstractions with Higher-Order Procedures</h2><p>Exercises in this section of <a href="https://mitpress.mit.edu/books/structure-and-interpretation-computer-programs" target="_blank" rel="noopener">SCIP</a>, and Merry Xmas.</p>
+<a id="more"></a>
+<p><strong>Exercise 1.29.</strong>  Simpson’s Rule is a more accurate method of numerical integration than the method illustrated above. Using Simpson’s Rule, the integral of a function $f$ between $a$ and $b$ is approximated as</p>
+<p>$$<br>\frac{h}{3}[y_0+4y_1+2y_2+4y_3+…+2y_{n-2}+4y_{n-1}+y_n]<br>$$</p>
+<p>where $h = (b - a)/n$, for some even integer $n$, and $y_k = f(a + kh)$. (Increasing $n$ increases the accuracy of the approximation.) Define a procedure that takes as arguments $f$, $a$, $b$, and $n$ and returns the value of the integral, computed using Simpson’s Rule. Use your procedure to integrate cube between $0$ and $1$ (with $n = 100$ and $n = 1000$), and compare the results to those of the integral procedure shown above.</p>
+<p><strong>Answer 1.29.</strong> The Simpson’s Rule can also be written as follow:</p>
+<p>$$<br>\frac{h}{3}[y_0+4y_1+2y_2+4y_3+…+2y_{n-2}+4y_{n-1}+y_n] = \frac{h}{3}\sum_{j=2,4…}^{n}[y_{j-2} + 4y_{j-1} + y_{j}]<br>$$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">(define (sum term a next b)</span><br><span class="line">    (if (&gt; a b)</span><br><span class="line">        0</span><br><span class="line">        (+ (term a)</span><br><span class="line">           (sum term (next a) next b)</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (simpson-rule f a b n)</span><br><span class="line">    (define (simpson-next x)</span><br><span class="line">        (+ x 2)</span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">    (define h (/ (- b a) n))</span><br><span class="line">    </span><br><span class="line">    (define (y k)</span><br><span class="line">        (f (+ a (* k h)))</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    (define (simpson-term x)</span><br><span class="line">        (+</span><br><span class="line">            (y x)</span><br><span class="line">            (* 4 (y (+ x 1)))</span><br><span class="line">            (y (+ x 2))</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    (* (sum simpson-term 0 simpson-next n ) (/ h 3))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (cub x)</span><br><span class="line">    (* x x x)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(exact-&gt;inexact(simpson-rule cub 0 1 100))</span><br><span class="line">(exact-&gt;inexact(simpson-rule cub 0 1 1000))</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.30.</strong>  The <code>sum</code> procedure above generates a linear recursion. The procedure can be rewritten so that the sum is performed iteratively. Show how to do this by filling in the missing expressions in the following definition:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(define (sum term a next b)</span><br><span class="line">  (define (iter a result)</span><br><span class="line">      (if &lt;??&gt;</span><br><span class="line">	      &lt;??&gt;</span><br><span class="line">		  (iter &lt;??&gt; &lt;??&gt;))</span><br><span class="line">  (iter &lt;??&gt; &lt;??&gt;)</span><br></pre></td></tr></table></figure>
+<p><strong>Answer 1.30.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(define (sum term a next b)</span><br><span class="line">	(define (iter a result)</span><br><span class="line">		(if (&gt; a b)</span><br><span class="line">			result</span><br><span class="line">			(iter (next a) (+ result (term a)))</span><br><span class="line">		)</span><br><span class="line">	)</span><br><span class="line">	(iter a 0)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.31.</strong></p>
+<p>a.  The <code>sum</code> procedure is only the simplest of a vast number of similar abstractions that can be captured as higher-order procedures. Write an analogous procedure called <code>product</code> that returns the product of the values of a function at points over a given range. Show how to define <code>factorial</code> in terms of product. Also use product to compute approximations to $\pi$ using the formula</p>
+<p>$$<br>\frac{\pi}{4}=\frac{2 \cdot 4 \cdot 4 \cdot 6 \cdot 6 \cdot 8 …}{3 \cdot 3 \cdot 5 \cdot 5 \cdot 7 \cdot 7 …}<br>$$</p>
+<p>b.  If your product procedure generates a recursive process, write one that generates an iterative process. If it generates an iterative process, write one that generates a recursive process.</p>
+<p><strong>Answer 1.31.</strong></p>
+<p>$$<br>\frac{\pi}{4}=\frac{2 \cdot 4 \cdot 4 \cdot 6 \cdot 6 \cdot 8 …}{3 \cdot 3 \cdot 5 \cdot 5 \cdot 7 \cdot 7 …} =<br>\frac{1}{n+1}\prod_{i=1}^{n}[(\frac{2(i+1)}{2i})^2]<br>$$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">(define (product term a next b)</span><br><span class="line">    (if (&gt; a b)</span><br><span class="line">        1</span><br><span class="line">        (* (term a) (product term (next a) next b))</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (factorial n)</span><br><span class="line">    (define (identity x)</span><br><span class="line">        x</span><br><span class="line">    )</span><br><span class="line">    (define (next x)</span><br><span class="line">        (+ x 1)</span><br><span class="line">    )</span><br><span class="line">    (product identity 1 next n)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (product term a next b)</span><br><span class="line">    (define (iter a result)</span><br><span class="line">        (if (&gt; a b)</span><br><span class="line">            result</span><br><span class="line">            (iter (next a) (* result (term a)))</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">    (iter a 1)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (square x)</span><br><span class="line">    (* x x)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (pi-product a b)</span><br><span class="line">    (define (pi-term x)</span><br><span class="line">       (square (/ (* 2 (+ x 1)) (+ (* 2 x) 1)))</span><br><span class="line">    )</span><br><span class="line">    (define (pi-next x)</span><br><span class="line">        (+ x 1)</span><br><span class="line">    )</span><br><span class="line">    (* 4 (/ (product-iter pi-term a pi-next b) (+ b 1)))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(exact-&gt;inexact(pi-product 1 10000))</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.32.</strong> </p>
+<p>a. Show that <code>sum</code> and <code>product</code> (exercise 1.31) are both special cases of a still more general notion called <code>accumulate</code> that combines a collection of terms, using some general accumulation function:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(accumulate combiner null-value term a next b)</span><br></pre></td></tr></table></figure>
+<p><code>Accumulate</code> takes as arguments the same term and range specifications as <code>sum</code> and <code>product</code>, together with a <code>combiner</code> procedure (of two arguments) that specifies how the current term is to be combined with the accumulation of the preceding terms and a <code>null-value</code> that specifies what base value to use when the terms run out. Write <code>accumulate</code> and show how <code>sum</code> and <code>product</code> can both be defined as simple calls to <code>accumulate</code>.</p>
+<p>b. If your <code>accumulate</code> procedure generates a recursive process, write one that generates an iterative process. If it generates an iterative process, write one that generates a recursive process.</p>
+<p><strong>Answer 1.32.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">(define (accumulate combiner null-value term a next b)</span><br><span class="line">    (if (&gt; a b)</span><br><span class="line">        null-value</span><br><span class="line">        (combiner (term a) (accumulate combiner null-value term (next a) next b))</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (accumlate-iter combiner null-value term a next b)</span><br><span class="line">    (define (iter a result)</span><br><span class="line">        (if (&gt; a b) res</span><br><span class="line">            (iter (next a) (combiner res (term a)))</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">    (iter a null-value)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (sum term a next b)</span><br><span class="line">    (accumulate + 0 term a next b)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (product term a next b)</span><br><span class="line">    (accumlate * 1 term a next b)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.33.</strong>  You can obtain an even more general version of <code>accumulate</code> (exercise 1.32) by introducing the notion of a <em>filter</em> on the terms to be combined. That is, combine only those terms derived from values in the range that satisfy a specified condition. The resulting <code>filtered-accumulate</code> abstraction takes the same arguments as accumulate, together with an additional predicate of one argument that specifies the filter. Write <code>filtered-accumulate</code> as a procedure. Show how to express the following using <code>filtered-accumulate</code>:</p>
+<p>a. the sum of the squares of the prime numbers in the interval $a$ to $b$ (assuming that you have a <code>prime</code>? predicate already written)</p>
+<p>b. the product of all the positive integers less than $n$ that are relatively prime to $n$ (i.e., all positive integers $i &lt; n$ such that $GCD(i,n) = 1)$.</p>
+<p><strong>Answer 1.33.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(define (filtered-accumulate combiner null-value term a next b filter)</span><br><span class="line">    (if (&gt; a b)</span><br><span class="line">        null-value</span><br><span class="line">        (if (filter a)</span><br><span class="line">            (combiner (term a) (filtered-accumulate combiner null-value (next a) next b filter))</span><br><span class="line">            (combiner null-value (filtered-accumulate combiner null-value (next a) next b filter))</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.34.</strong>  Suppose we define the procedure</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(define (f g)</span><br><span class="line">  (g 2))</span><br></pre></td></tr></table></figure>
+<p>Then we have</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(f square)</span><br><span class="line">4</span><br><span class="line"></span><br><span class="line">(f (lambda (z) (* z (+ z 1))))</span><br><span class="line">6</span><br></pre></td></tr></table></figure>
+<p>What happens if we (perversely) ask the interpreter to evaluate the combination <code>(f f)</code>? Explain.</p>
+<p><strong>Answer 1.34.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">=&gt; (f f)</span><br><span class="line">=&gt; (f 2)</span><br><span class="line">=&gt; (2 2)</span><br></pre></td></tr></table></figure>
+<p>The third invocation will attempt to apply its argument, <code>2</code>, to <code>2</code>, resulting in error.</p>
+<p><strong>Exercise 1.35.</strong>  Show that the golden ratio $\phi$ (section 1.2.2) is a fixed point of the transformation $x \mapsto 1 + 1/x$, and use this fact to compute $\phi$ by means of the <code>fixed-point</code> procedure.</p>
+<p><strong>Answer 1.35.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">(define tolerance 0.00001)</span><br><span class="line"></span><br><span class="line">(define (fixed-point f first-guess)</span><br><span class="line">    (define (close-enough? v1 v2)</span><br><span class="line">        (&lt; (abs (- v1 v2)) tolerance)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    (define (try guess)</span><br><span class="line">        (let ((next (f guess)))</span><br><span class="line">            (if (close-enough? guess next)</span><br><span class="line">                next</span><br><span class="line">                (try next)</span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    (try first-guess)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(fixed-point (lambda (x) (+ 1 (/ 1 x))) 1.0)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.36.</strong>  Modify <code>fixed-point</code> so that it prints the sequence of approximations it generates, using the <code>newline</code> and <code>display</code> primitives shown in exercise 1.22. Then find a solution to $x^x = 1000$ by finding a fixed point of $x \mapsto \log(1000)/\log(x)$. (Use Scheme’s primitive <code>log</code> procedure, which computes natural logarithms.) Compare the number of steps this takes with and without average damping. (Note that you cannot start fixed-point with a guess of $1$, as this would cause division by $\log(1) = 0$.)</p>
+<p><strong>Answer 1.36.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(define tolerance 0.00001)</span><br><span class="line"></span><br><span class="line">(define (fixed-point f first-guess)</span><br><span class="line">    (define (close-enough? v1 v2)</span><br><span class="line">        (&lt; (abs (- v1 v2)) tolerance)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    (define (try guess)</span><br><span class="line">        (display guess)</span><br><span class="line">        (newline)</span><br><span class="line">        (let ((next (f guess)))</span><br><span class="line">            (if (close-enough? guess next)</span><br><span class="line">                next</span><br><span class="line">                (try next)</span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    (try first-guess)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(fixed-point (lambda(x) (/ (log 1000.0) (log x))) 2.0)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.37.</strong></p>
+<p>a. An infinite continued fraction is an expression of the form</p>
+<p>$$<br>f=\frac{N_1}{D_1+\frac{N_2}{D_2+\frac{N_3}{D_3+…}}}<br>$$</p>
+<p>As an example, one can show that the infinite continued fraction expansion with the $N_i$ and the $D_i$ all equal to $1$ produces $1/\phi$, where $\phi$ is the golden ratio (described in section 1.2.2). One way to approximate an infinite continued fraction is to truncate the expansion after a given number of terms. Such a truncation – a so-called <em>$k$-term finite continued fraction</em> – has the form</p>
+<p>$$<br>\frac{N_1}{D_1+\frac{N_2}{…+\frac{N_k}{D_k}}}<br>$$</p>
+<p>Suppose that <code>n</code> and <code>d</code> are procedures of one argument (the term index $i$) that return the $N_i$ and $D_i$ of the terms of the continued fraction. Define a procedure <code>cont-frac</code> such that evaluating <code>(cont-frac n d k)</code> computes the value of the $k$-term finite continued fraction. Check your procedure by approximating $1/\phi$ using</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(cont-frac (lambda (i) 1.0)</span><br><span class="line">           (lambda (i) 1.0)</span><br><span class="line">           k)</span><br></pre></td></tr></table></figure>
+<p>for successive values of <code>k</code>. How large must you make <code>k</code> in order to get an approximation that is accurate to $4$ decimal places?</p>
+<p>b. If your <code>cont-frac</code> procedure generates a recursive process, write one that generates an iterative process. If it generates an iterative process, write one that generates a recursive process.</p>
+<p><strong>Answer 1.37.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">(define (con-frac n d k)</span><br><span class="line">    (define (frac i)</span><br><span class="line">        (if (&lt; i k)</span><br><span class="line">            (/ (n i) (+ (d i) (frac (+ i 1))))</span><br><span class="line">            (/ (n i) (d i))</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">    (frac 1)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (con-frac-iter n d k)</span><br><span class="line">    (define (frac-iter i result)</span><br><span class="line">        (if (= i 0)</span><br><span class="line">            result</span><br><span class="line">            (frac-iter (- i 1) (/ (n i) (+ (d i) result)))</span><br><span class="line">        )</span><br><span class="line">        (frac-iter (- k 1) (/ (n k) (d k)))</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(con-frac (lambda(i) 1.0) (lambda(i) 1.0) 10)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.38.</strong>  In 1737, the Swiss mathematician Leonhard Euler published a memoir <em>De Fractionibus Continuis</em>, which included a continued fraction expansion for $e - 2$, where $e$ is the base of the natural logarithms. In this fraction, the $E_i$ are all $1$, and the $D_i$ are successively $1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8, …$. Write a program that uses your <code>cont-frac</code> procedure from exercise 1.37 to approximate $e$, based on Euler’s expansion.</p>
+<p><strong>Answer 1.38.</strong></p>
+<p>$$<br>D_i=<br>\begin{cases}<br> 2(i+1)/3,  &amp; \text{if } i\bmod 3 = 2;\<br> 1, &amp; \text{if } i\bmod 3 \neq  2.<br>\end{cases}<br>$$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">(define (con-frac n d k)</span><br><span class="line">    (define (frac i)</span><br><span class="line">        (if (&lt; i k)</span><br><span class="line">            (/ (n i) (+ (d i) (frac (+ i 1))))</span><br><span class="line">            (/ (n i) (d i))</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">    (frac 1)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (eular k)</span><br><span class="line">    (+ 2.0 (con-frac </span><br><span class="line">        (lambda(i) 1)</span><br><span class="line">        (lambda(i)</span><br><span class="line">            (if (= (remainder i 3) 2)</span><br><span class="line">                (/ (+ i 1) 1.5)</span><br><span class="line">                1</span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">        k</span><br><span class="line">    ))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(eular 100)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.39.</strong>  A continued fraction representation of the tangent function was published in 1770 by the German mathematician J.H. Lambert:</p>
+<p>$$<br>\tan x  = \frac{x}{1-\frac{x^2}{3-\frac{x^2}{5-…}}}<br>$$</p>
+<p>where $x$ is in radians. Define a procedure <code>(tan-cf x k)</code> that computes an approximation to the tangent function based on Lambert’s formula. <code>K</code> specifies the number of terms to compute, as in exercise 1.37.</p>
+<p><strong>Answer 1.39.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">(define (con-frac n d k)</span><br><span class="line">    (define (frac i)</span><br><span class="line">        (if (&lt; i k)</span><br><span class="line">            (/ (n i) (- (d i) (frac (+ i 1))))</span><br><span class="line">            (/ (n i) (d i))</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">    (frac 1)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (tan-cf x k)</span><br><span class="line">    (con-frac </span><br><span class="line">        (lambda (i) (</span><br><span class="line">            if (= i 1)</span><br><span class="line">                x</span><br><span class="line">                (* x x)</span><br><span class="line">        ))</span><br><span class="line">        (lambda (i) (</span><br><span class="line">            - (* 2 i) 1</span><br><span class="line">        ))</span><br><span class="line">        k</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.40.</strong>  Define a procedure <code>cubic</code> that can be used together with the <code>newtons-method</code> procedure in expressions of the form</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(newtons-method (cubic a b c) 1)</span><br></pre></td></tr></table></figure>
+<p>to approximate zeros of the cubic $x^3 + ax^2 + bx + c$.</p>
+<p><strong>Answer 1.40.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">(define (cubic a b c)</span><br><span class="line">    (lambda(x)</span><br><span class="line">        (+</span><br><span class="line">            (cube x)</span><br><span class="line">            (* a (square x))</span><br><span class="line">            (* b x)</span><br><span class="line">            c</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (cube x)</span><br><span class="line">    (* x x x)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (square x)</span><br><span class="line">    (* x x)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.41.</strong>  Define a procedure <code>double</code> that takes a procedure of one argument as argument and returns a procedure that applies the original procedure twice. For example, if <code>inc</code> is a procedure that adds $1$ to its argument, then <code>(double inc)</code> should be a procedure that adds $2$. What value is returned by</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(((double (double double)) inc) 5)</span><br></pre></td></tr></table></figure>
+<p><strong>Answer 1.41.</strong></p>
+<p>We guess the procedure <code>double</code> is:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(define (double f)</span><br><span class="line">	(lambda (x) (f (f x)))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Then:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">=&gt; (((double (double double)) inc) 5) </span><br><span class="line">=&gt; (((double (lambda (x) (double (double x)))) inc) 5) </span><br><span class="line">=&gt; ((double (double (double (double inc)))) 5)</span><br></pre></td></tr></table></figure>
+<p>Since there are 4 <code>double</code> procedures, <code>call</code> procedure is invoked $2^4 = 16$ times. Thus, result is $5 + 16 = 21$</p>
+<p><strong>Exercise 1.42.</strong>  Let $f$ and $g$ be two one-argument functions. The composition $f$ after $g$ is defined to be the function $x \mapsto  f(g(x))$. Define a procedure <code>compose</code> that implements composition. For example, if inc is a procedure that adds $1$ to its argument,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">((compose square inc) 6)</span><br><span class="line">49</span><br></pre></td></tr></table></figure>
+<p><strong>Answer 1.42.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(define (compose f g)</span><br><span class="line">    (lambda(x)</span><br><span class="line">        (f (g x))</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.43.</strong>  If $f$ is a numerical function and $n$ is a positive integer, then we can form the $n$th repeated application of $f$, which is defined to be the function whose value at $x$ is $f(f(…(f(x))…))$. For example, if $f$ is the function $x \mapsto  x + 1$, then the $n$th repeated application of $f$ is the function $x \mapsto  x + n$. If $f$ is the operation of squaring a number, then the $n$th repeated application of $f$ is the function that raises its argument to the $2^n$th power. Write a procedure that takes as inputs a procedure that computes $f$ and a positive integer $n$ and returns the procedure that computes the $n$th repeated application of $f$. Your procedure should be able to be used as follows:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">((repeated square 2) 5)</span><br><span class="line">625</span><br></pre></td></tr></table></figure>
+<p>Hint: You may find it convenient to use <code>compose</code> from exercise 1.42.</p>
+<p><strong>Answer 1.43.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(define (compose f g)</span><br><span class="line">    (lambda(x)</span><br><span class="line">        (f (g x))</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (repeated f n)</span><br><span class="line">   (if (&lt; n 1)</span><br><span class="line">        (lambda(x) x)</span><br><span class="line">        (compose f (repeated f (- n 1)))</span><br><span class="line">   ) </span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.44.</strong>  The idea of <em>smoothing</em> a function is an important concept in signal processing. If $f$ is a function and $dx$ is some small number, then the smoothed version of $f$ is the function whose value at a point $x$ is the average of $f(x - dx)$, $f(x)$, and $f(x + dx)$. Write a procedure smooth that takes as input a procedure that computes $f$ and returns a procedure that computes the smoothed $f$. It is sometimes valuable to repeatedly smooth a function (that is, smooth the smoothed function, and so on) to obtained the <em>$n$-fold smoothed function</em>. Show how to generate the $n$-fold smoothed function of any given function using $smooth$ and $repeated$ from exercise 1.43.</p>
+<p><strong>Answer 1.44.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">(define (compose f g)</span><br><span class="line">    (lambda(x)</span><br><span class="line">        (f (g x))</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (repeated f n)</span><br><span class="line">   (if (&lt; n 1)</span><br><span class="line">        (lambda(x) x)</span><br><span class="line">        (compose f (repeated f (- n 1)))</span><br><span class="line">   ) </span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (smooth f)</span><br><span class="line">    (lambda (x)</span><br><span class="line">        (/ (+</span><br><span class="line">                (f (- x dx))</span><br><span class="line">                (f x)</span><br><span class="line">                (f (+ x dx))</span><br><span class="line">           )</span><br><span class="line">           3 </span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (n-fold-smooth f n)</span><br><span class="line">    ((repeated smooth n) f)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.45.</strong>  We saw in section 1.3.3 that attempting to compute square roots by naively finding a fixed point of $y \mapsto x/y$ does not converge, and that this can be fixed by average damping. The same method works for finding cube roots as fixed points of the average-damped $y \mapsto x/y^2$. Unfortunately, the process does not work for fourth roots – a single average damp is not enough to make a fixed-point search for $y \mapsto x/y^3$ converge. On the other hand, if we average damp twice (i.e., use the average damp of the average damp of $y \mapsto  x/y^3$) the fixed-point search does converge. Do some experiments to determine how many average damps are required to compute $n$th roots as a fixed-point search based upon repeated average damping of $y \mapsto x/y^{n-1}$. Use this to implement a simple procedure for computing nth roots using <code>fixed-point</code>, <code>average-damp</code>, and the <code>repeated</code> procedure of exercise 1.43. Assume that any arithmetic operations you need are available as primitives.</p>
+<p><strong>Answer 1.45.</strong> Here reference <a href="http://www.billthelizard.com/2010/08/sicp-145-computing-nth-roots.html" target="_blank" rel="noopener">SICP 1.45: Computing nth roots</a></p>
+<p>To fix the problem, we need to increase the number of times invoking <code>average-damp</code>. And we find out the number of average damps, $a$, we can say:</p>
+<p>$$<br>n_{\text{max}} = 2^{a+1} - 1 \\<br>a =  \lfloor \log _2{n} \rfloor<br>$$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">(define (nth-root x n)</span><br><span class="line">    (fixed-point</span><br><span class="line">        ((repeated average-damp (floor (/ (log x) (log 2))))</span><br><span class="line">            (lambda (y) (/ x (expt y (- n 1))))</span><br><span class="line">        )</span><br><span class="line">        1.0</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (compose f g)</span><br><span class="line">    (lambda(x)</span><br><span class="line">        (f (g x))</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (repeated f n)</span><br><span class="line">   (if (&lt; n 1)</span><br><span class="line">        (lambda(x) x)</span><br><span class="line">        (compose f (repeated f (- n 1)))</span><br><span class="line">   ) </span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define tolerance 0.00001)</span><br><span class="line"></span><br><span class="line">(define (fixed-point f first-guess)</span><br><span class="line">    (define (close-enough? v1 v2)</span><br><span class="line">        (&lt; (abs (- v1 v2)) tolerance)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    (define (try guess)</span><br><span class="line">        (let ((next (f guess)))</span><br><span class="line">            (if (close-enough? guess next)</span><br><span class="line">                next</span><br><span class="line">                (try next)</span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    (try first-guess)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (average-damp f)</span><br><span class="line">    (define (average x y)</span><br><span class="line">        (/ (+ x y) 2)</span><br><span class="line">    )</span><br><span class="line">    (lambda (x) (average x (f x)))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (expt b n)</span><br><span class="line">    (define (even? n) (= (remainder n 2) 0))</span><br><span class="line">    (define (square x) (* x x))</span><br><span class="line">    (cond </span><br><span class="line">        ((= n 0) 1)</span><br><span class="line">        ((even? n) (square (expt b (/ n 2))))</span><br><span class="line">        (else (* b (expt b (- n 1))))</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.46.</strong>  Several of the numerical methods described in this chapter are instances of an extremely general computational strategy known as <em>iterative improvement</em>. Iterative improvement says that, to compute something, we start with an initial guess for the answer, test if the guess is good enough, and otherwise improve the guess and continue the process using the improved guess as the new guess. Write a procedure <code>iterative-improve</code> that takes two procedures as arguments: a method for telling whether a guess is good enough and a method for improving a guess. <code>Iterative-improve</code> should return as its value a procedure that takes a guess as argument and keeps improving the guess until it is good enough. Rewrite the sqrt procedure of section 1.1.7 and the <code>fixed-point</code> procedure of section 1.3.3 in terms of <code>iterative-improve</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">(define (close-enough? v1 v2) </span><br><span class="line">   (define tolerance 1.e-6) </span><br><span class="line">   (&lt; (/ (abs (- v1 v2)) v2)  tolerance)) </span><br><span class="line">  </span><br><span class="line">(define (iterative-improve improve close-enough?) </span><br><span class="line">   (lambda (x) </span><br><span class="line">     (let ((xim (improve x))) </span><br><span class="line">       (if (close-enough? x xim) </span><br><span class="line">           xim </span><br><span class="line">         ((iterative-improve improve close-enough?) xim)) </span><br><span class="line">       ))) </span><br><span class="line">  </span><br><span class="line">(define (sqrt x) </span><br><span class="line">   ((iterative-improve   </span><br><span class="line">     (lambda (y) </span><br><span class="line">       (/ (+ (/ x y) y) 2)) </span><br><span class="line">     close-enough?) 1.0))</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.terryx.com/2016/12/24/sicp-1-3/" data-id="cjdws0f2g000w4l3s5203ycvz" class="article-share-link">Share</a>
+      
+        <a href="http://www.terryx.com/2016/12/24/sicp-1-3/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SICP/">SICP</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/31/sicp-2-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Introduction to Data Abstraction
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/20/sicp-1-2-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Building Abstractions with Procedures Section 2 - Part 2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java-Web/">Java Web</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-3/">Spring 3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-4/">Spring 4</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-Web/">Java Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Management/">Memory Management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCIP/">SCIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SICP/">SICP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-3/">Spring 3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-4/">Spring 4</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 12.5px;">Java Web</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Memory-Management/" style="font-size: 10px;">Memory Management</a> <a href="/tags/SCIP/" style="font-size: 10px;">SCIP</a> <a href="/tags/SICP/" style="font-size: 17.5px;">SICP</a> <a href="/tags/Spring-3/" style="font-size: 15px;">Spring 3</a> <a href="/tags/Spring-4/" style="font-size: 12.5px;">Spring 4</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/02/sicp-2-2/">Hierarchical Data and the Closure Property</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/31/sicp-2-1/">Introduction to Data Abstraction</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/24/sicp-1-3/">Formulating Abstractions with Higher-Order Procedures</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/20/sicp-1-2-2/">Building Abstractions with Procedures Section 2 - Part 2</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/15/scip-1-2/">Building Abstractions with Procedures Section 2 - Part 1</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 TerryX<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/lele94218" class="mobile-nav-link">Github</a>
+  
+    <a href="/about" class="mobile-nav-link">About Me</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'lele94218';
+  
+  var disqus_url = 'http://www.terryx.com/2016/12/24/sicp-1-3/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

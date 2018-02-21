@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-65933410-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>4.2  Using Resource | 欲說還休</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Using Resource1. ByteArrayResourceJunit test: 123456789101112131415161718192021222324252627282930313233import org.junit.Test;import org.springframework.core.io.ByteArrayResource;import org.springframe">
+<meta name="keywords" content="Spring 3,Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.2  Using Resource">
+<meta property="og:url" content="http://www.terryx.com/2016/09/28/2016-01-22-42--using-resource/index.html">
+<meta property="og:site_name" content="欲說還休">
+<meta property="og:description" content="Using Resource1. ByteArrayResourceJunit test: 123456789101112131415161718192021222324252627282930313233import org.junit.Test;import org.springframework.core.io.ByteArrayResource;import org.springframe">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2016-10-11T07:55:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="4.2  Using Resource">
+<meta name="twitter:description" content="Using Resource1. ByteArrayResourceJunit test: 123456789101112131415161718192021222324252627282930313233import org.junit.Test;import org.springframework.core.io.ByteArrayResource;import org.springframe">
+<meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
+  
+    <link rel="alternate" href="/atom.xml" title="欲說還休" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">欲說還休</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/lele94218">Github</a>
+        
+          <a class="main-nav-link" href="/about">About Me</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.terryx.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2016-01-22-42--using-resource" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/28/2016-01-22-42--using-resource/" class="article-date">
+  <time datetime="2016-09-28T15:50:16.000Z" itemprop="datePublished">2016-09-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring-3/">Spring 3</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      4.2  Using Resource
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Using-Resource"><a href="#Using-Resource" class="headerlink" title="Using Resource"></a>Using Resource</h3><h4 id="1-ByteArrayResource"><a href="#1-ByteArrayResource" class="headerlink" title="1. ByteArrayResource"></a>1. <em>ByteArrayResource</em></h4><p>Junit test:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.ByteArrayResource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResourceTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testByteArraryResorce</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Resource resource = <span class="keyword">new</span> ByteArrayResource(<span class="string">"Hello World!"</span>.getBytes());</span><br><span class="line">		<span class="keyword">if</span> (resource.exists()) &#123;</span><br><span class="line">			dumpStream(resource);</span><br><span class="line">		&#125;</span><br><span class="line">		Assert.assertEquals(<span class="keyword">false</span>, resource.isOpen());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dumpStream</span><span class="params">(Resource resource)</span> </span>&#123;</span><br><span class="line">		InputStream inputStream = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			inputStream = resource.getInputStream();</span><br><span class="line">			<span class="keyword">byte</span> [] descByte = <span class="keyword">new</span> <span class="keyword">byte</span> [inputStream.available()];</span><br><span class="line">			inputStream.read(descByte);</span><br><span class="line">			System.out.println(<span class="keyword">new</span> String(descByte));</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				inputStream.close();</span><br><span class="line">			&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><strong>NOTE:</strong> <strong><em>ByteArrayResource</em></strong> can be used repeatedly, because <strong><em>isOpen()</em></strong> always returns <em>false</em>.</p>
+<h4 id="2-InputStreamResource"><a href="#2-InputStreamResource" class="headerlink" title="2. InputStreamResource:"></a>2. <em>InputStreamResource</em>:</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInputStreamResource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		ByteArrayInputStream byteArrayInputStream = <span class="keyword">new</span> ByteArrayInputStream(<span class="string">"Hello World!"</span>.getBytes());</span><br><span class="line">		Resource resource = <span class="keyword">new</span> InputStreamResource(byteArrayInputStream);</span><br><span class="line">		<span class="keyword">if</span> (resource.exists()) &#123;</span><br><span class="line">			dumpStream(resource);</span><br><span class="line">		&#125;</span><br><span class="line">		Assert.assertEquals(<span class="keyword">true</span>, resource.isOpen());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>NOTE:</strong> <strong><em>InputStreamResource</em></strong> can be used only one time, because <strong><em>isOpen()</em></strong> always returns <em>true</em>.</p>
+<h4 id="3-FileSystemResource"><a href="#3-FileSystemResource" class="headerlink" title="3. FileSystemResource:"></a>3. <em>FileSystemResource</em>:</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFileResource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		File file = <span class="keyword">new</span> File(<span class="string">"d:/test.txt"</span>);</span><br><span class="line">		Resource resource = <span class="keyword">new</span> FileSystemResource(file);</span><br><span class="line">		<span class="keyword">if</span> (resource.exists()) &#123;</span><br><span class="line">			dumpStream(resource);</span><br><span class="line">		&#125;</span><br><span class="line">		Assert.assertEquals(<span class="keyword">false</span>, resource.isOpen());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>NOTE:</strong> <strong><em>FileSystemResource</em></strong> can be used repeatedly, because <strong><em>isOpen()</em></strong> always returns <em>false</em>.</p>
+<h4 id="4-ClassPathResource"><a href="#4-ClassPathResource" class="headerlink" title="4. ClassPathResource:"></a>4. <em>ClassPathResource</em>:</h4><p><strong><em>ClassPathResource</em></strong> replaces <strong><em>Class</em></strong> and <strong><em>ClassLoader</em></strong> to give a uniform implement. The resource can be used repeatedly, because <strong><em>isOpen()</em></strong> always returns <em>false</em>.</p>
+<p>Here are three constructors in <strong><em>ClassPathResource</em></strong>:</p>
+<ul>
+<li><p><strong><em>public ClassPathResource(String path)</em></strong>: using default <strong><em>ClassLoader</em></strong> to load resource.</p>
+</li>
+<li><p><strong><em>public ClassPathResource(String path, ClassLoader classLoader)</em></strong>: using specified <strong><em>ClassLoader</em></strong> to load path resource.</p>
+</li>
+<li><p><strong>_ public ClassPathResource(String path, Class&lt;?&gt; clazz)_</strong>: using <em>Class</em> path to load resource.</p>
+</li>
+</ul>
+<blockquote>
+<p>For example, if the Class path is “cn.javass.spring.ResourceTest”, the path is “cn/javass/spring/ResourceTest”.</p>
+</blockquote>
+<ol>
+<li><strong><em>public ClassPathResource(String path)</em></strong>:</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testClasspathResourceBydefaultClassLoader</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		Resource resource = <span class="keyword">new</span> ClassPathResource(<span class="string">"cn/javass/spring/chapter4/test.properties"</span>);</span><br><span class="line">		<span class="keyword">if</span> (resource.exists()) &#123;</span><br><span class="line">			dumpStream(resource);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"path:"</span> + resource.getFile().getAbsolutePath());</span><br><span class="line">		Assert.assertEquals(<span class="keyword">false</span>, resource.isOpen());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong><em>public ClassPathResource(String path, ClassLoader classLoader)</em></strong>:</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testClasspathResourceByClassLoader</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		ClassLoader classLoader = <span class="keyword">this</span>.getClass().getClassLoader();</span><br><span class="line">		Resource resource = <span class="keyword">new</span> ClassPathResource(<span class="string">"cn/javass/spring/chapter4/test.properties"</span>, classLoader);</span><br><span class="line">		<span class="keyword">if</span> (resource.exists()) &#123;</span><br><span class="line">			dumpStream(resource);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"path:"</span> + resource.getFile().getAbsolutePath());</span><br><span class="line">		Assert.assertEquals(<span class="keyword">false</span>, resource.isOpen());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>_ public ClassPathResource(String path, Class&lt;?&gt; clazz)_</strong>:</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testClasspathResourceByClass</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		Class clazz = <span class="keyword">this</span>.getClass();</span><br><span class="line">		Resource resource1 = <span class="keyword">new</span> ClassPathResource(<span class="string">"cn/javass/spring/chapter4/test.properties"</span>, clazz);</span><br><span class="line">		<span class="keyword">if</span> (resource1.exists()) &#123;</span><br><span class="line">			dumpStream(resource1);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"path:"</span> + resource1.getFile().getAbsolutePath());</span><br><span class="line">		Assert.assertEquals(<span class="keyword">false</span>, resource1.isOpen());</span><br><span class="line"></span><br><span class="line">		Resource resource2 = <span class="keyword">new</span> ClassPathResource(<span class="string">"cn/javass/spring/chapter4/test.properties"</span>, <span class="keyword">this</span>.getClass());</span><br><span class="line">		<span class="keyword">if</span> (resource2.exists()) &#123;</span><br><span class="line">			dumpStream(resource2);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"path:"</span> + resource2.getFile().getAbsolutePath());</span><br><span class="line">		Assert.assertEquals(<span class="keyword">false</span>, resource1.isOpen());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>If not provide the full path, it will search in the <strong><em>resource</em></strong> folder. If not found in the <strong><em>resource</em></strong> folder, it will search in other package folders.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">classpathResourceTestFromJar</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		Resource resource = <span class="keyword">new</span> ClassPathResource(<span class="string">"overview.html"</span>);</span><br><span class="line">		<span class="keyword">if</span> (resource.exists()) &#123;</span><br><span class="line">			dumpStream(resource);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"path:"</span> + resource.getURL().getPath());</span><br><span class="line">		Assert.assertEquals(<span class="keyword">false</span>, resource.isOpen());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-UrlResource"><a href="#5-UrlResource" class="headerlink" title="5. UrlResource:"></a>5. <em>UrlResource</em>:</h3><p><strong><em>isOpen()</em></strong> always return <em>false</em>. Supporting three ways to load resources:</p>
+<ul>
+<li><p><strong>http</strong></p>
+</li>
+<li><p><strong>ftp</strong></p>
+</li>
+<li><p><strong>file:</strong> For example, <strong>new <em>UrlResource</em>(“<em>file:d:/test.txt</em>“)</strong>.</p>
+</li>
+</ul>
+<h3 id="6-ServletContextResource"><a href="#6-ServletContextResource" class="headerlink" title="6. ServletContextResource:"></a>6. <em>ServletContextResource</em>:</h3><p>To simplize the <strong><em>ServletContext</em></strong> of servlet.</p>
+<h3 id="7-VfsResource"><a href="#7-VfsResource" class="headerlink" title="7. VfsResource:"></a>7. <em>VfsResource</em>:</h3><p>JBoss AS is now provide on <a href="http://wildfly.org/downloads/" target="_blank" rel="noopener">http://wildfly.org/downloads/</a>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testVfsResourceForRealFileSystem</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		<span class="comment">//New virtual path</span></span><br><span class="line">		VirtualFile home = VFS.getChild(<span class="string">"/home"</span>);</span><br><span class="line">		<span class="comment">//Mapping physical path</span></span><br><span class="line">		VFS.mount(home, <span class="keyword">new</span> RealFileSystem(<span class="keyword">new</span> File(<span class="string">"d:"</span>)));</span><br><span class="line">		<span class="comment">//Load resource from virtual path</span></span><br><span class="line">		VirtualFile virtualFile = home.getChild(<span class="string">"test.txt"</span>);</span><br><span class="line">		Resource resource = <span class="keyword">new</span> VfsResource(virtualFile);</span><br><span class="line">		<span class="keyword">if</span> (resource.exists()) &#123;</span><br><span class="line">			dumpStream(resource);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(resource.getFile().getAbsolutePath());</span><br><span class="line">		Assert.assertEquals(<span class="keyword">false</span>, resource.isOpen());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.terryx.com/2016/09/28/2016-01-22-42--using-resource/" data-id="cjdws0f0l00004l3sz359zdnb" class="article-share-link">Share</a>
+      
+        <a href="http://www.terryx.com/2016/09/28/2016-01-22-42--using-resource/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-3/">Spring 3</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/28/2016-01-21-32---bean-scopes/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          3.2 Bean Scopes
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java-Web/">Java Web</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-3/">Spring 3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-4/">Spring 4</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-Web/">Java Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Management/">Memory Management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCIP/">SCIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SICP/">SICP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-3/">Spring 3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-4/">Spring 4</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 12.5px;">Java Web</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Memory-Management/" style="font-size: 10px;">Memory Management</a> <a href="/tags/SCIP/" style="font-size: 10px;">SCIP</a> <a href="/tags/SICP/" style="font-size: 17.5px;">SICP</a> <a href="/tags/Spring-3/" style="font-size: 15px;">Spring 3</a> <a href="/tags/Spring-4/" style="font-size: 12.5px;">Spring 4</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/02/sicp-2-2/">Hierarchical Data and the Closure Property</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/31/sicp-2-1/">Introduction to Data Abstraction</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/24/sicp-1-3/">Formulating Abstractions with Higher-Order Procedures</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/20/sicp-1-2-2/">Building Abstractions with Procedures Section 2 - Part 2</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/15/scip-1-2/">Building Abstractions with Procedures Section 2 - Part 1</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 TerryX<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/lele94218" class="mobile-nav-link">Github</a>
+  
+    <a href="/about" class="mobile-nav-link">About Me</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'lele94218';
+  
+  var disqus_url = 'http://www.terryx.com/2016/09/28/2016-01-22-42--using-resource/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

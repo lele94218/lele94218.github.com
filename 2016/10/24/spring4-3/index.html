@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-65933410-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Spring IoC Container Part 3 | 欲說還休</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DefaultSingletonBeanRegistryLast time we find that in the DefaultListableBeanFactory it provides map to save bean definitions. But when getting bean instance, we need to step into DefaultSingletonBean">
+<meta name="keywords" content="Java,Spring 4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring IoC Container Part 3">
+<meta property="og:url" content="http://www.terryx.com/2016/10/24/spring4-3/index.html">
+<meta property="og:site_name" content="欲說還休">
+<meta property="og:description" content="DefaultSingletonBeanRegistryLast time we find that in the DefaultListableBeanFactory it provides map to save bean definitions. But when getting bean instance, we need to step into DefaultSingletonBean">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2016-10-24T22:59:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring IoC Container Part 3">
+<meta name="twitter:description" content="DefaultSingletonBeanRegistryLast time we find that in the DefaultListableBeanFactory it provides map to save bean definitions. But when getting bean instance, we need to step into DefaultSingletonBean">
+<meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
+  
+    <link rel="alternate" href="/atom.xml" title="欲說還休" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">欲說還休</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/lele94218">Github</a>
+        
+          <a class="main-nav-link" href="/about">About Me</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.terryx.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-spring4-3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/24/spring4-3/" class="article-date">
+  <time datetime="2016-10-24T20:28:24.000Z" itemprop="datePublished">2016-10-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring-4/">Spring 4</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring IoC Container Part 3
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="DefaultSingletonBeanRegistry"><a href="#DefaultSingletonBeanRegistry" class="headerlink" title="DefaultSingletonBeanRegistry"></a>DefaultSingletonBeanRegistry</h2><p>Last time we find that in the <code>DefaultListableBeanFactory</code> it provides map to save bean definitions. But when getting bean instance, we need to step into <code>DefaultSingletonBeanRegistry</code>. First let’s see the document: </p>
+<blockquote>
+<p>Generic registry for shared bean instances, implementing the <code>SingletonBeanRegistry</code>. <strong>Allows for registering singleton instances that should be shared for all callers of the registry, to be obtained via bean name</strong>.</p>
+</blockquote>
+<blockquote>
+<p>Also supports registration of <code>DisposableBean</code> instances, (which might or might not correspond to registered singletons), to be destroyed on shutdown of the registry. Dependencies between beans can be registered to enforce an appropriate shutdown order.</p>
+</blockquote>
+<blockquote>
+<p>This class mainly serves as base class for <code>BeanFactory</code> implementations, factoring out the common management of singleton bean instances. Note that the <code>ConfigurableBeanFactory</code> interface extends the <code>SingletonBeanRegistry</code> interface.</p>
+</blockquote>
+<blockquote>
+<p>Note that this class assumes neither a bean definition concept nor a specific creation process for bean instances, in contrast to <code>AbstractBeanFactory</code> and <code>DefaultListableBeanFactory</code> (which inherit from it). Can alternatively also be used as a nested helper to delegate to.</p>
+</blockquote>
+<a id="more"></a>
+<p>In the class, it has private variable to cache the bean instance:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Cache of singleton objects: bean name --&gt; bean instance */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; singletonObjects = <span class="keyword">new</span> ConcurrentHashMap&lt;String, Object&gt;(<span class="number">256</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="AbstractBeanFactory"><a href="#AbstractBeanFactory" class="headerlink" title="AbstractBeanFactory"></a>AbstractBeanFactory</h2><p>Again <code>AbstractBeanFactory</code> is very important <code>BeanFactory</code> implementation to get beans, and it is also a <code>SingletonBeanRegistry</code> interface implementation to save beans. </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> &lt;T&gt; <span class="function">T <span class="title">doGetBean</span><span class="params">(String name,</span></span></span><br><span class="line"><span class="function"><span class="params">                          Class&lt;T&gt; requiredType,</span></span></span><br><span class="line"><span class="function"><span class="params">                          Object[] args,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">boolean</span> typeCheckOnly)</span></span></span><br></pre></td></tr></table></figure>
+<p>When <code>ApplicationContext</code> calls <code>doGetBean(...)</code>, it will call <code>getSingleton(...)</code> which is declared in <code>SingletonBeanRegistry</code> interface and implements in <code>DefaultSingletonBeanRegistry</code>.</p>
+<blockquote>
+<p>Return the (raw) singleton object registered under the given name.<br>Only checks already instantiated singletons; does not return an Object for singleton bean definitions which have not been instantiated yet.</p>
+</blockquote>
+<blockquote>
+<p>The main purpose of this method is to access manually registered singletons (see <code>registerSingleton(java.lang.String, java.lang.Object)</code>). Can also be used to access a singleton defined by a bean definition that already been created, in a raw fashion.</p>
+</blockquote>
+<blockquote>
+<p>NOTE: This lookup method is not aware of FactoryBean prefixes or aliases. You need to resolve the canonical bean name first before obtaining the singleton instance.</p>
+</blockquote>
+<p>In this method, if the bean exists in concurrent map <code>singletonObjects&lt;String, Object&gt;</code> of <code>DefaultSingletonBeanRegistry</code>, it will call <code>getSingleton(...)</code> and return the bean object; Else the bean isn’t defined, the method will also call  <code>getSingleton(...)</code>, if the singleton bean is null then it will generate the object of bean.</p>
+<h2 id="Create-Object-of-Bean"><a href="#Create-Object-of-Bean" class="headerlink" title="Create Object of Bean"></a>Create Object of Bean</h2><p>How does spring create object from bean definition file? In <code>AbstractBeanFactory</code>, it provide an abstract bean creation method:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> Object <span class="title">createBean</span><span class="params">(String beanName, RootBeanDefinition mbd, Object[] args)</span></span></span><br><span class="line"><span class="function">			<span class="keyword">throws</span> BeanCreationException</span>;</span><br></pre></td></tr></table></figure>
+<p>Also see the document:</p>
+<blockquote>
+<p><strong>Create a bean instance for the given merged bean definition (and arguments).</strong> The bean definition will already have been merged with the parent definition in case of a child definition.</p>
+</blockquote>
+<blockquote>
+<p>All bean retrieval methods delegate to this method for actual bean creation.</p>
+</blockquote>
+<p>This method is implemented in <code>AbstractAutowireCapableBeanFactory</code>:</p>
+<blockquote>
+<p>Abstract bean factory superclass that implements default bean creation, with the full capabilities specified by the <code>RootBeanDefinition</code> class. Implements the <code>AutowireCapableBeanFactory</code> interface <strong>in addition to AbstractBeanFactory’s <code>createBean(java.lang.Class&lt;T&gt;)</code> method.</strong></p>
+</blockquote>
+<blockquote>
+<p>Provides bean creation (with constructor resolution), property population, wiring (including autowiring), and initialization. Handles runtime bean references, resolves managed collections, calls initialization methods, etc. Supports autowiring constructors, properties by name, and properties by type.</p>
+</blockquote>
+<blockquote>
+<p>The main template method to be implemented by subclasses is <code>AutowireCapableBeanFactory.resolveDependency(DependencyDescriptor, String, Set, TypeConverter)</code>, used for autowiring by type. In case of a factory which is capable of searching its bean definitions, matching beans will typically be implemented through such a search. For other factory styles, simplified matching algorithms can be implemented.</p>
+</blockquote>
+<blockquote>
+<p>Note that this class does not assume or implement bean definition registry capabilities. See <code>DefaultListableBeanFactory</code> for an implementation of the <code>ListableBeanFactory</code> and <code>BeanDefinitionRegistry</code> interfaces, which represent the API and SPI view of such a factory, respectively.</p>
+</blockquote>
+<p>Now we just move to <code>createBean(...)</code> method and its main method is <code>doCreateBean(...)</code>:</p>
+<blockquote>
+<p>Actually create the specified bean. Pre-creation processing has already happened at this point, <em>e.g. checking</em> <code>postProcessBeforeInstantiation</code> <em>callbacks</em>.</p>
+</blockquote>
+<blockquote>
+<p>Differentiates between default bean instantiation, use of a factory method, and autowiring a constructor.</p>
+</blockquote>
+<p>So we can know from the document that the method just create the specified bean which means it should get class reference in the definition file.</p>
+<p>In this method, we find <code>BeanWrapper</code> class which is the central interface of Spring’s low-level JavaBeans infrastructure. The wrapper  is initialized with <code>createBeanInstance(...)</code> method which can create a new instance for the specified bean, using an appropriate instantiation strategy: factory method, constructor autowiring, or simple instantiation. Then it call the core instantiation method <code>instantiateBean(...)</code> and it will step into <code>InstantiationStrategy</code> interface.</p>
+<h2 id="InstantiationStrategy"><a href="#InstantiationStrategy" class="headerlink" title="InstantiationStrategy"></a>InstantiationStrategy</h2><blockquote>
+<p>Interface responsible for creating instances corresponding to a root bean definition.</p>
+</blockquote>
+<blockquote>
+<p>This is pulled out into a strategy as various approaches are possible, including using CGLIB to create subclasses on the fly to support Method Injection.</p>
+</blockquote>
+<p>Here we just talk about its <code>SimpleInstantiationStrategy</code> implement class. it has <code>instantiate(...)</code> which can return an instance of the bean with the given name in this factory. First it get the <code>Class&lt;?&gt; clazz</code> of the bean, and call <code>clazz.getDeclaredConstructor(...)</code> to get the <code>Constructor&lt;?&gt;</code> of the bean, then step into <code>BeanUtils</code> class and call <code>instantiateClass(...)</code> method which can call <code>constructor.newInstance(args)</code> and return a new object created by calling the constructor this object represents.</p>
+<p>Finally, the object will be saved in the <code>singletonObjects&lt;String, Object&gt;</code> for <code>getBean(...)</code> method to get the object.</p>
+<h2 id="What’s-Next"><a href="#What’s-Next" class="headerlink" title="What’s Next?"></a>What’s Next?</h2><p>After reading the source code of Spring’s IoC, I find some TODO list.</p>
+<ul>
+<li><p><code>ThreadLocal&lt;?&gt;</code>, <code>ConcurrentMap&lt;K, V&gt;</code> and <em>volatile</em> are often appeared in the source, so I need to deal with something about Java Threads;</p>
+</li>
+<li><p><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/" target="_blank" rel="noopener">Spring Reference</a> is very useful document to read thus I need to focus more with it.</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.terryx.com/2016/10/24/spring4-3/" data-id="cjdws0f2s00184l3sljmfjwlz" class="article-share-link">Share</a>
+      
+        <a href="http://www.terryx.com/2016/10/24/spring4-3/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-4/">Spring 4</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/09/LRU-replacement-algorithms/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          LRU-based Replacement Algorithms Application of Flash Memory
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/21/spring4-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spring IoC Container Part 2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java-Web/">Java Web</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-3/">Spring 3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-4/">Spring 4</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-Web/">Java Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Management/">Memory Management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCIP/">SCIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SICP/">SICP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-3/">Spring 3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-4/">Spring 4</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 12.5px;">Java Web</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Memory-Management/" style="font-size: 10px;">Memory Management</a> <a href="/tags/SCIP/" style="font-size: 10px;">SCIP</a> <a href="/tags/SICP/" style="font-size: 17.5px;">SICP</a> <a href="/tags/Spring-3/" style="font-size: 15px;">Spring 3</a> <a href="/tags/Spring-4/" style="font-size: 12.5px;">Spring 4</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/02/sicp-2-2/">Hierarchical Data and the Closure Property</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/31/sicp-2-1/">Introduction to Data Abstraction</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/24/sicp-1-3/">Formulating Abstractions with Higher-Order Procedures</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/20/sicp-1-2-2/">Building Abstractions with Procedures Section 2 - Part 2</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/15/scip-1-2/">Building Abstractions with Procedures Section 2 - Part 1</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 TerryX<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/lele94218" class="mobile-nav-link">Github</a>
+  
+    <a href="/about" class="mobile-nav-link">About Me</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'lele94218';
+  
+  var disqus_url = 'http://www.terryx.com/2016/10/24/spring4-3/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

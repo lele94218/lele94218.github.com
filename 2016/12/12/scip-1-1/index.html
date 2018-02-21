@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-65933410-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>Building Abstractions with Procedures Section 1 | 欲說還休</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Section 1.1 The Elements of ProgramingExercises in this section of SCIP. Exercise 1.1. Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression?">
+<meta name="keywords" content="SCIP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Building Abstractions with Procedures Section 1">
+<meta property="og:url" content="http://www.terryx.com/2016/12/12/scip-1-1/index.html">
+<meta property="og:site_name" content="欲說還休">
+<meta property="og:description" content="Section 1.1 The Elements of ProgramingExercises in this section of SCIP. Exercise 1.1. Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression?">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2016-12-18T03:36:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Building Abstractions with Procedures Section 1">
+<meta name="twitter:description" content="Section 1.1 The Elements of ProgramingExercises in this section of SCIP. Exercise 1.1. Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression?">
+<meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
+  
+    <link rel="alternate" href="/atom.xml" title="欲說還休" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">欲說還休</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/lele94218">Github</a>
+        
+          <a class="main-nav-link" href="/about">About Me</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.terryx.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-scip-1-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/12/scip-1-1/" class="article-date">
+  <time datetime="2016-12-12T06:22:45.000Z" itemprop="datePublished">2016-12-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Building Abstractions with Procedures Section 1
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Section-1-1-The-Elements-of-Programing"><a href="#Section-1-1-The-Elements-of-Programing" class="headerlink" title="Section 1.1 The Elements of Programing"></a>Section 1.1 The Elements of Programing</h2><p>Exercises in this section of <a href="https://mitpress.mit.edu/books/structure-and-interpretation-computer-programs" target="_blank" rel="noopener">SCIP</a>.</p>
+<p><strong>Exercise 1.1.</strong> Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">(+ 5 3 4)</span><br><span class="line">(- 9 1)</span><br><span class="line">(/ 6 2)</span><br><span class="line">(+ (* 2 4) (- 4 6))</span><br><span class="line">(define a 3)</span><br><span class="line">(define b (+ a 1))</span><br><span class="line">(+ a b (* a b))</span><br><span class="line">(= a b)</span><br><span class="line">(if (and (&gt; b a) (&lt; b (* a b)))</span><br><span class="line">    b</span><br><span class="line">    a)</span><br><span class="line">(cond ((= a 4) 6)</span><br><span class="line">      ((= b 4) (+ 6 7 a))</span><br><span class="line">      (else 25))</span><br><span class="line">(+ 2 (if (&gt; b a) b a))</span><br><span class="line">(* (cond ((&gt; a b) a)</span><br><span class="line">         ((&lt; a b) b)</span><br><span class="line">         (else -1))</span><br><span class="line">   (+ a 1))</span><br></pre></td></tr></table></figure>
+<p><strong>Answer 1.1.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">12</span><br><span class="line">8</span><br><span class="line">3</span><br><span class="line">6</span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">19</span><br><span class="line">#f</span><br><span class="line">4</span><br><span class="line">16</span><br><span class="line">6</span><br><span class="line">16</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.2.</strong> Translate the following expression into prefix form</p>
+<p>$$<br>\frac{5+4+(2-(3-6&plus;\frac{4}{5}))}{3(6-2)(2-7)}<br>$$</p>
+<p><strong>Answer 1.2.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 3))))) (* 3 (- 6 2) (- 2 7)))</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.3.</strong> Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.</p>
+<p><strong>Answer 1.3.</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(DEFINE (SOS x y) (+ (* x x) (* y y)))</span><br><span class="line">(DEFINE (F x y z)</span><br><span class="line">	(COND ((AND (&lt;= x y) (&lt;= x z)) (SOS y z))</span><br><span class="line">	      ((AND (&lt;= y x) (&lt;= y z)) (SOS x z))</span><br><span class="line">	      ((AND (&lt;= z x) (&lt;= z y)) (SOS x y))</span><br><span class="line">	)	</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.4.</strong> Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(define (a-plus-abs-b a b)</span><br><span class="line">  ((if (&gt; b 0) + -) a b))</span><br></pre></td></tr></table></figure>
+<p><strong>Answer 1.4.</strong></p>
+<p>$$<br>a+|b|<br>$$</p>
+<p>_a_ plus the absolute value of _b_.</p>
+<p><strong>Exercise 1.5.</strong> Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation. He defines the following two procedures:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(define (p) (p))</span><br><span class="line"></span><br><span class="line">(define (test x y)</span><br><span class="line">  (if (= x 0)</span><br><span class="line">      0</span><br><span class="line">      y))</span><br></pre></td></tr></table></figure>
+<p>Then he evaluates the expression:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(test 0 (p))</span><br></pre></td></tr></table></figure>
+<p>What behavior will Ben observe with an interpreter that uses applicative-order evaluation? What behavior will he observe with an interpreter that uses normal-order evaluation? Explain your answer. (Assume that the evaluation rule for the special form <code>if</code> is the same whether the interpreter is using normal or applicative order: The predicate expression is evaluated first, and the result determines whether to evaluate the consequent or the alternative expression.)</p>
+<p><strong>Answer 1.5.</strong></p>
+<p>The applicative-order evaluation:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">=&gt; (test 0 (p))</span><br><span class="line">=&gt; (test 0 ((p)))</span><br><span class="line">=&gt; (test 0 (((p))))</span><br></pre></td></tr></table></figure>
+<p>As we see, the evaluation of <code>(test 0 (p))</code> is infinitive.</p>
+<p>The normal-order evaluation:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">=&gt; (test 0 (p))</span><br><span class="line">=&gt; (if (= 0 0) 0 (p))</span><br><span class="line">=&gt; (if #t 0 (p))</span><br><span class="line">=&gt; 0</span><br></pre></td></tr></table></figure>
+<p>The expression evaluates to <code>0</code>.</p>
+<p><strong>Exercise 1.6.</strong>  Alyssa P. Hacker doesn’t see why if needs to be provided as a special form. “Why can’t I just define it as an ordinary procedure in terms of <code>cond</code>?” she asks. Alyssa’s friend Eva Lu Ator claims this can indeed be done, and she defines a new version of <code>if</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(define (new-if predicate then-clause else-clause)</span><br><span class="line">  (cond (predicate then-clause)</span><br><span class="line">        (else else-clause)))</span><br></pre></td></tr></table></figure>
+<p>Eva demonstrates the program for Alyssa:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(new-if (= 2 3) 0 5)</span><br><span class="line">5</span><br><span class="line"></span><br><span class="line">(new-if (= 1 1) 0 5)</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+<p>Delighted, Alyssa uses new-if to rewrite the square-root program:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(define (sqrt-iter guess x)</span><br><span class="line">  (new-if (good-enough? guess x)</span><br><span class="line">          guess</span><br><span class="line">          (sqrt-iter (improve guess x)</span><br><span class="line">                     x)))</span><br></pre></td></tr></table></figure>
+<p>What happens when Alyssa attempts to use this to compute square roots? Explain.</p>
+<p><strong>Answer 1.6.</strong> I believe this program is incorrect, because <code>new-if</code> uses applicative-order evaluation. Thus, it always expands the <code>else-clause</code> and causes an infinite recursion. In contrast, <code>if</code> uses normal-order evaluation.</p>
+<p><strong>Exercise 1.7.</strong>  The <code>good-enough</code>? test used in computing square roots will not be very effective for finding the square roots of very small numbers. Also, in real computers, arithmetic operations are almost always performed with limited precision. This makes our test inadequate for very large numbers. Explain these statements, with examples showing how the test fails for small and large numbers. An alternative strategy for implementing <code>good-enough</code>? is to watch how guess changes from one iteration to the next and to stop when the change is a very small fraction of the guess. Design a square-root procedure that uses this kind of end test. Does this work better for small and large numbers?</p>
+<p><strong>Answer 1.7.</strong> The results are very inaccurate when calculating <code>sqrt(0.0001)</code> and <code>sqrt(100000000)</code>. We can modify <code>good-enough</code> using current guess and previous guess below:</p>
+<p>$$<br>\frac{|G-G_{pre}|}{G}&lt;0.001<br>$$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">(define (good-enough? guess prev-guess)</span><br><span class="line">  (&lt; (/ (abs (- guess prev-guess))</span><br><span class="line">        guess)</span><br><span class="line">     0.001))</span><br><span class="line"></span><br><span class="line">(define (sqrt-iter guess prev-guess x)</span><br><span class="line">  (if (good-enough? guess prev-guess)</span><br><span class="line">    guess</span><br><span class="line">    (sqrt-iter (improve guess x)</span><br><span class="line">               guess</span><br><span class="line">               x)))</span><br><span class="line"></span><br><span class="line">(define (sqrt x) </span><br><span class="line">   (sqrt-iter 1.0 0 x))</span><br></pre></td></tr></table></figure>
+<p><strong>Exercise 1.8.</strong> Newton’s method for cube roots is based on the fact that if y is an approximation to the cube root of x, then a better approximation is given by the value</p>
+<p>$$<br>\frac{x/y^2+2y}{3}<br>$$</p>
+<p>Use this formula to implement a cube-root procedure analogous to the square-root procedure. </p>
+<p><strong>Answer 1.8.</strong> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(define (cub-iter guess prev-guess x)</span><br><span class="line">  (if (good-enough? guess prev-guess)</span><br><span class="line">    guess</span><br><span class="line">    (cub-iter (improve guess x) guess x)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">(define (good-enough? guess prev-guess)</span><br><span class="line">  (&lt; (/ (abs (- guess prev-guess)) guess) 0.001)</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">(define (improve guess x)</span><br><span class="line">  (/ (+ (/ x (square guess)) (* 2 guess)) 3)</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">(define (square x)</span><br><span class="line">  (* x x)</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">(define (cubroot x) </span><br><span class="line">  ((if (&lt; x 0) - +) (cub-iter (improve 1.0 (abs x)) 1 (abs x)))</span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.terryx.com/2016/12/12/scip-1-1/" data-id="cjdws0f1y000h4l3sqynmzota" class="article-share-link">Share</a>
+      
+        <a href="http://www.terryx.com/2016/12/12/scip-1-1/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SCIP/">SCIP</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/15/scip-1-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Building Abstractions with Procedures Section 2 - Part 1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/09/LRU-replacement-algorithms/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">LRU-based Replacement Algorithms Application of Flash Memory</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java-Web/">Java Web</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-3/">Spring 3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-4/">Spring 4</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-Web/">Java Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Management/">Memory Management</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCIP/">SCIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SICP/">SICP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-3/">Spring 3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-4/">Spring 4</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 12.5px;">Java Web</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Memory-Management/" style="font-size: 10px;">Memory Management</a> <a href="/tags/SCIP/" style="font-size: 10px;">SCIP</a> <a href="/tags/SICP/" style="font-size: 17.5px;">SICP</a> <a href="/tags/Spring-3/" style="font-size: 15px;">Spring 3</a> <a href="/tags/Spring-4/" style="font-size: 12.5px;">Spring 4</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/02/sicp-2-2/">Hierarchical Data and the Closure Property</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/31/sicp-2-1/">Introduction to Data Abstraction</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/24/sicp-1-3/">Formulating Abstractions with Higher-Order Procedures</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/20/sicp-1-2-2/">Building Abstractions with Procedures Section 2 - Part 2</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/15/scip-1-2/">Building Abstractions with Procedures Section 2 - Part 1</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 TerryX<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/lele94218" class="mobile-nav-link">Github</a>
+  
+    <a href="/about" class="mobile-nav-link">About Me</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'lele94218';
+  
+  var disqus_url = 'http://www.terryx.com/2016/12/12/scip-1-1/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
