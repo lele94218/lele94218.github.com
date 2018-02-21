@@ -15,23 +15,33 @@ ga('send', 'pageview');
 
 </script>
 <!-- End Google Analytics -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: {
+    inlineMath: [["\\\(", "\\)"]],
+    displayMath: [["\\\[", "\\]"]]
+    }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 
 
   
   <title>Spring IoC Container Part 2 | 欲說還休</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Log4JWhen using Spring framework, we must use Apache Common Logging to print log in console or binary files. As we known, Spring log configuration can change in the web.xml when it works on server. Bu">
+  <meta name="description" content="Log4J When using Spring framework, we must use Apache Common Logging to print log in console or binary files. As we known, Spring log configuration can change in the web.xml when it works on server. B">
 <meta name="keywords" content="Java,Spring 4">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring IoC Container Part 2">
 <meta property="og:url" content="http://www.terryx.com/2016/10/21/spring4-2/index.html">
 <meta property="og:site_name" content="欲說還休">
-<meta property="og:description" content="Log4JWhen using Spring framework, we must use Apache Common Logging to print log in console or binary files. As we known, Spring log configuration can change in the web.xml when it works on server. Bu">
+<meta property="og:description" content="Log4J When using Spring framework, we must use Apache Common Logging to print log in console or binary files. As we known, Spring log configuration can change in the web.xml when it works on server. B">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2016-10-24T02:42:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring IoC Container Part 2">
-<meta name="twitter:description" content="Log4JWhen using Spring framework, we must use Apache Common Logging to print log in console or binary files. As we known, Spring log configuration can change in the web.xml when it works on server. Bu">
+<meta name="twitter:description" content="Log4J When using Spring framework, we must use Apache Common Logging to print log in console or binary files. As we known, Spring log configuration can change in the web.xml when it works on server. B">
 <meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
   
     <link rel="alternate" href="/atom.xml" title="欲說還休" type="application/atom+xml">
@@ -109,8 +119,9 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Log4J"><a href="#Log4J" class="headerlink" title="Log4J"></a>Log4J</h2><p>When using Spring framework, we must use <a href="https://commons.apache.org/proper/commons-logging/" target="_blank" rel="noopener">Apache Common Logging</a> to print log in console or binary files. As we known, Spring log configuration can change in the <code>web.xml</code> when it works on server. But in these series of articles, we try to analyze the Spring core techniques without works on server. So there should have another way to configure log without <code>web.xml</code> because we want to see the debug informations.</p>
-<p>Spring gives <code>Log4jConfigurer.initLogging()</code> method (has been deprecated in Spring 4.2.1) to  initialize log4j from the given file location. Note that we always use Maven to build project, but maven might mash <code>src</code> and <code>resources</code> folders to one. Thus we should use <code>classpath:</code> ,<strong>without slash</strong>, to represent <code>resources</code> folder in the project.</p>
+        <h2 id="log4j">Log4J</h2>
+<p>When using Spring framework, we must use <a href="https://commons.apache.org/proper/commons-logging/" target="_blank" rel="noopener">Apache Common Logging</a> to print log in console or binary files. As we known, Spring log configuration can change in the <code>web.xml</code> when it works on server. But in these series of articles, we try to analyze the Spring core techniques without works on server. So there should have another way to configure log without <code>web.xml</code> because we want to see the debug informations.</p>
+<p>Spring gives <code>Log4jConfigurer.initLogging()</code> method (has been deprecated in Spring 4.2.1) to initialize log4j from the given file location. Note that we always use Maven to build project, but maven might mash <code>src</code> and <code>resources</code> folders to one. Thus we should use <code>classpath:</code> ,<strong>without slash</strong>, to represent <code>resources</code> folder in the project.</p>
 <p>Now Apache Commons Logging (JCL) provides thin-wrapper Log implementations for other logging tools, including Log4J. But <code>Log4jConfigurer.initLogging()</code> calls methods from log4j 1.x. It means that we should add log4j 1.x dependency to make sure that our log configuration file works smoothly.</p>
 <a id="more"></a>
 <p>Here is the configure file <code>log4j.properties</code>, and just opening debug function in <code>org.springframework.beans</code> because we want to know the IOC process:</p>
@@ -118,14 +129,16 @@ ga('send', 'pageview');
 <p>As last article, we run the same code but add our log configuration before:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Log4jConfigurer.initLogging(<span class="string">"classpath:log4j.properties"</span>);</span><br><span class="line">ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"services.xml"</span>);</span><br><span class="line">PetStoreServiceImpl petStoreService = context.getBean(<span class="string">"petStore"</span>, PetStoreServiceImpl.class);</span><br></pre></td></tr></table></figure>
 <p>Now we can follow the log information to know the IOC clearly.</p>
-<h2 id="ClassPathXmlApplicationContext"><a href="#ClassPathXmlApplicationContext" class="headerlink" title="ClassPathXmlApplicationContext"></a>ClassPathXmlApplicationContext</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">17:23:15,265  INFO main ClassPathXmlApplicationContext org.springframework.context.support.AbstractApplicationContext.prepareRefresh:581 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@42dafa95: startup date [Fri Oct 21 17:23:15 EDT 2016]; root of context hierarchy</span><br></pre></td></tr></table></figure>
+<h2 id="classpathxmlapplicationcontext">ClassPathXmlApplicationContext</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">17:23:15,265  INFO main ClassPathXmlApplicationContext org.springframework.context.support.AbstractApplicationContext.prepareRefresh:581 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@42dafa95: startup date [Fri Oct 21 17:23:15 EDT 2016]; root of context hierarchy</span><br></pre></td></tr></table></figure>
 <p>First we step into <code>ClassPathXmlApplicationContext</code> constructor and it calls <code>refresh()</code>. This method is declared in the interface <code>ConfigurableApplicationContext</code>, implements in <code>AbstractApplicationContext</code>, finally called in <code>ClassPathXmlApplicationContext</code> which is a subclass of <code>AbstractApplicationContext</code>.</p>
 <blockquote>
-<p>This method can load or refresh the <strong>persistent representation</strong> of the configuration, which might an XML file, properties file, or relational database schema. As this is a startup method, it should destroy already created singletons if it fails, to avoid dangling resources. In other words, after invocation  of that method, either all or no singletons at all should be instantiated.</p>
+<p>This method can load or refresh the <strong>persistent representation</strong> of the configuration, which might an XML file, properties file, or relational database schema. As this is a startup method, it should destroy already created singletons if it fails, to avoid dangling resources. In other words, after invocation of that method, either all or no singletons at all should be instantiated.</p>
 </blockquote>
 <p>As we see in the document, <code>refresh()</code> is used to load and refresh persistent representation configuration. It should be done first of all.</p>
-<h2 id="XmlBeanDefinitionReader"><a href="#XmlBeanDefinitionReader" class="headerlink" title="XmlBeanDefinitionReader"></a>XmlBeanDefinitionReader</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">17:23:15,555  INFO main XmlBeanDefinitionReader org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions:317 - Loading XML bean definitions from class path resource [services.xml]</span><br></pre></td></tr></table></figure>
-<p>The <code>refresh()</code> method calls <code>obtainFreshBeanFactory()</code> in  which can tell the subclass to refresh the internal bean factory. So how to let a class to call the method (in this case it is <code>refreshBeanFactory()</code>) in its subclass? It is a very classical design pattern.</p>
+<h2 id="xmlbeandefinitionreader">XmlBeanDefinitionReader</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">17:23:15,555  INFO main XmlBeanDefinitionReader org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions:317 - Loading XML bean definitions from class path resource [services.xml]</span><br></pre></td></tr></table></figure>
+<p>The <code>refresh()</code> method calls <code>obtainFreshBeanFactory()</code> in which can tell the subclass to refresh the internal bean factory. So how to let a class to call the method (in this case it is <code>refreshBeanFactory()</code>) in its subclass? It is a very classical design pattern.</p>
 <p>First, the <code>AbstractApplicationContext</code> declares:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">refreshBeanFactory</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
 <p>This method is implemented in <code>AbstractRefreshableApplicationContext</code> which is a subclass of <code>AbstractApplicationContext</code>:</p>
@@ -133,25 +146,27 @@ ga('send', 'pageview');
 <p>Therefore the father class can call the method which implemented in its subclass.</p>
 <p>Here is <code>XmlBeanDefinitionReader</code>:</p>
 <blockquote>
-<p>Bean definition reader for XML bean definitions. Delegates the actual XML document reading to an implementation of the <code>BeanDefinitionDocumentReader</code> interface. Typically applied to a<br><code>DefaultListableBeanFactory</code> or a <code>GenericApplicationContext</code>.</p>
+<p>Bean definition reader for XML bean definitions. Delegates the actual XML document reading to an implementation of the <code>BeanDefinitionDocumentReader</code> interface. Typically applied to a <code>DefaultListableBeanFactory</code> or a <code>GenericApplicationContext</code>.</p>
 </blockquote>
 <blockquote>
 <p>This class loads a DOM document and applies the <code>BeanDefinitionDocumentReader</code> to it.</p>
 </blockquote>
 <blockquote>
-<p>The document reader will register each bean definition with the given bean factory, talking to the latter’s implementation of the <code>BeanDefinitionRegistry</code> interface.</p>
+<p>The document reader will register each bean definition with the given bean factory, talking to the latter's implementation of the <code>BeanDefinitionRegistry</code> interface.</p>
 </blockquote>
 <p><code>loadBeanDefinition()</code> method is used to load bean definitions from the specified XML file.</p>
-<h2 id="DefaultDocumentLoader"><a href="#DefaultDocumentLoader" class="headerlink" title="DefaultDocumentLoader"></a>DefaultDocumentLoader</h2><p><code>XmlBeanDefinitionReader</code> calls <code>doLoadDocument()</code> and it has local variable <code>DocumentLoader</code> documentLoader which calls <code>loadDocument()</code>.</p>
+<h2 id="defaultdocumentloader">DefaultDocumentLoader</h2>
+<p><code>XmlBeanDefinitionReader</code> calls <code>doLoadDocument()</code> and it has local variable <code>DocumentLoader</code> documentLoader which calls <code>loadDocument()</code>.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">19:38:23,603 DEBUG main DefaultDocumentLoader org.springframework.beans.factory.xml.DefaultDocumentLoader.loadDocument:73 - Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]</span><br></pre></td></tr></table></figure>
 <p>Here is <code>DefaultDocumentLoader</code>:</p>
 <blockquote>
-<p> Spring’s default {@link DocumentLoader} implementation. Simply loads <code>Document</code> documents using the standard JAXP-configured XML parser. If you want to change the <code>DocumentBuilder</code> that is used to load documents, then one strategy is to define a corresponding Java system property when starting your JVM. For example, to use the Oracle <code>DocumentBuilder</code>, might start your application like as follows:</p>
+<p>Spring's default {<span class="citation">@link</span> DocumentLoader} implementation. Simply loads <code>Document</code> documents using the standard JAXP-configured XML parser. If you want to change the <code>DocumentBuilder</code> that is used to load documents, then one strategy is to define a corresponding Java system property when starting your JVM. For example, to use the Oracle <code>DocumentBuilder</code>, might start your application like as follows:</p>
 <p><code>java -Djavax.xml.parsers.DocumentBuilderFactory=oracle.xml.jaxp.JXDocumentBuilderFactory MyMainClass</code></p>
 </blockquote>
-<h2 id="DefaultBeanDefinitionDocumentReader"><a href="#DefaultBeanDefinitionDocumentReader" class="headerlink" title="DefaultBeanDefinitionDocumentReader"></a>DefaultBeanDefinitionDocumentReader</h2><p>Here is <code>DefaultBeanDefinitionDocumentReader</code> which is used to read bean definitions:</p>
+<h2 id="defaultbeandefinitiondocumentreader">DefaultBeanDefinitionDocumentReader</h2>
+<p>Here is <code>DefaultBeanDefinitionDocumentReader</code> which is used to read bean definitions:</p>
 <blockquote>
-<p>Default implementation of the <code>BeanDefinitionDocumentReader</code> interface that reads bean definitions according to the “spring-beans” DTD and XSD format (Spring’s default XML bean definition format).</p>
+<p>Default implementation of the <code>BeanDefinitionDocumentReader</code> interface that reads bean definitions according to the &quot;spring-beans&quot; DTD and XSD format (Spring's default XML bean definition format).</p>
 </blockquote>
 <blockquote>
 <p>The structure, elements, and attribute names of the required XML document are hard-coded in this class. (Of course a transform could be run if necessary to produce this format). <code>&lt;beans&gt;</code> does not need to be the root element of the XML document: this class will parse all bean definition elements in the XML file, regardless of the actual root element.</p>
@@ -163,8 +178,9 @@ ga('send', 'pageview');
 <blockquote>
 <p><code>doc</code> the DOM document <code>readerContext</code> the current context of the reader (includes the target registry and the resource being parsed)</p>
 </blockquote>
-<h2 id="DefaultListableBeanFactory"><a href="#DefaultListableBeanFactory" class="headerlink" title="DefaultListableBeanFactory"></a>DefaultListableBeanFactory</h2><blockquote>
-<p>Default implementation of the <code>ListableBeanFactory</code> and <code>BeanDefinitionRegistry</code> interfaces: a full-fledged bean factory based on bean definition objects.<br><strong>Typical usage is registering all bean definitions first (possibly read from a bean definition file), before accessing beans</strong>. Bean definition lookup is therefore an inexpensive operation in a local bean definition table, operating on pre-built bean definition metadata objects.</p>
+<h2 id="defaultlistablebeanfactory">DefaultListableBeanFactory</h2>
+<blockquote>
+<p>Default implementation of the <code>ListableBeanFactory</code> and <code>BeanDefinitionRegistry</code> interfaces: a full-fledged bean factory based on bean definition objects. <strong>Typical usage is registering all bean definitions first (possibly read from a bean definition file), before accessing beans</strong>. Bean definition lookup is therefore an inexpensive operation in a local bean definition table, operating on pre-built bean definition metadata objects.</p>
 </blockquote>
 <blockquote>
 <p>Can be used as a standalone bean factory, or as a superclass for custom bean factories. Note that readers for specific bean definition formats are typically implemented separately rather than as bean factory subclasses: see for example <code>PropertiesBeanDefinitionReader</code> and <code>XmlBeanDefinitionReader</code>.</p>
@@ -185,7 +201,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.terryx.com/2016/10/21/spring4-2/" data-id="cjdwuiitn0025io3shiyzziqy" class="article-share-link">Share</a>
+      <a data-url="http://www.terryx.com/2016/10/21/spring4-2/" data-id="cjdxdrjrg001g853shmai760x" class="article-share-link">Share</a>
       
         <a href="http://www.terryx.com/2016/10/21/spring4-2/#disqus_thread" class="article-comment-link">Comments</a>
       

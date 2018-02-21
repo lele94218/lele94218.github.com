@@ -15,23 +15,33 @@ ga('send', 'pageview');
 
 </script>
 <!-- End Google Analytics -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: {
+    inlineMath: [["\\\(", "\\)"]],
+    displayMath: [["\\\[", "\\]"]]
+    }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 
 
   
   <title>4.3  Access Resource | 欲說還休</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Access Resource1. ResourceLoaderSpring has a DefaultResourceLoader which can return ClassPathResource, UrlResource, and ServletContextResourceLoader which extends all functions of DefaultResourceLoade">
+  <meta name="description" content="Access Resource 1. ResourceLoader Spring has a DefaultResourceLoader which can return ClassPathResource, UrlResource, and ServletContextResourceLoader which extends all functions of DefaultResourceLoa">
 <meta name="keywords" content="Spring 3,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="4.3  Access Resource">
 <meta property="og:url" content="http://www.terryx.com/2016/09/28/2016-01-22-43--access-resource/index.html">
 <meta property="og:site_name" content="欲說還休">
-<meta property="og:description" content="Access Resource1. ResourceLoaderSpring has a DefaultResourceLoader which can return ClassPathResource, UrlResource, and ServletContextResourceLoader which extends all functions of DefaultResourceLoade">
+<meta property="og:description" content="Access Resource 1. ResourceLoader Spring has a DefaultResourceLoader which can return ClassPathResource, UrlResource, and ServletContextResourceLoader which extends all functions of DefaultResourceLoa">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2016-10-11T07:55:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="4.3  Access Resource">
-<meta name="twitter:description" content="Access Resource1. ResourceLoaderSpring has a DefaultResourceLoader which can return ClassPathResource, UrlResource, and ServletContextResourceLoader which extends all functions of DefaultResourceLoade">
+<meta name="twitter:description" content="Access Resource 1. ResourceLoader Spring has a DefaultResourceLoader which can return ClassPathResource, UrlResource, and ServletContextResourceLoader which extends all functions of DefaultResourceLoa">
 <meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
   
     <link rel="alternate" href="/atom.xml" title="欲說還休" type="application/atom+xml">
@@ -109,24 +119,25 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Access-Resource"><a href="#Access-Resource" class="headerlink" title="Access Resource"></a>Access Resource</h3><h4 id="1-ResourceLoader"><a href="#1-ResourceLoader" class="headerlink" title="1. ResourceLoader"></a>1. <em>ResourceLoader</em></h4><p>Spring has a <strong><em>DefaultResourceLoader</em></strong> which can return <strong><em>ClassPathResource</em></strong>, <strong><em>UrlResource</em></strong>, and <strong><em>ServletContextResourceLoader</em></strong> which extends all functions of <strong><em>DefaultResourceLoader</em></strong>.</p>
+        <h3 id="access-resource">Access Resource</h3>
+<h4 id="resourceloader">1. <em>ResourceLoader</em></h4>
+<p>Spring has a <strong><em>DefaultResourceLoader</em></strong> which can return <strong><em>ClassPathResource</em></strong>, <strong><em>UrlResource</em></strong>, and <strong><em>ServletContextResourceLoader</em></strong> which extends all functions of <strong><em>DefaultResourceLoader</em></strong>.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testResourceLoad</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">	ResourceLoader loader = <span class="keyword">new</span> DefaultResourceLoader();</span><br><span class="line">	Resource resource = loader.getResource(<span class="string">"classpath:cn/javass/spring/chapter4/test.txt"</span>);</span><br><span class="line">	Assert.assertEquals(ClassPathResource.class, resource.getClass());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>In <strong><em>ApplicationContext</em></strong> also can implement <strong><em>ResourceLoader</em></strong>:</p>
 <ul>
-<li><p><strong><em>ClassPathXmlApplicationContext</em></strong></p>
-</li>
-<li><p><strong><em>FileSystemXmlApplicationContext</em></strong></p>
-</li>
-<li><p><strong><em>WebApplicationContext</em></strong></p>
-</li>
+<li><p><strong><em>ClassPathXmlApplicationContext</em></strong></p></li>
+<li><p><strong><em>FileSystemXmlApplicationContext</em></strong></p></li>
+<li><p><strong><em>WebApplicationContext</em></strong></p></li>
 </ul>
-<h4 id="2-ResourceLoaderAware"><a href="#2-ResourceLoaderAware" class="headerlink" title="2. ResourceLoaderAware"></a>2. <em>ResourceLoaderAware</em></h4><p>Injection via <strong><em>ApplicationContext</em></strong>:</p>
+<h4 id="resourceloaderaware">2. <em>ResourceLoaderAware</em></h4>
+<p>Injection via <strong><em>ApplicationContext</em></strong>:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.context.ResourceLoaderAware;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.ResourceLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResourceBean</span> <span class="keyword">implements</span> <span class="title">ResourceLoaderAware</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> ResourceLoader resourceLoader;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setResourceLoader</span><span class="params">(ResourceLoader resourceLoader)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.resourceLoader = resourceLoader;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> ResourceLoader <span class="title">getResourceLoader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> resourceLoader;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"cn.javass.spring.chapter4.ResourceBean"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>JUnit test:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"chapter4/resourceLoaderAware.xml"</span>);</span><br><span class="line">		ResourceBean bean = context.getBean(ResourceBean.class);</span><br><span class="line">		ResourceLoader loader = bean.getResourceLoader();</span><br><span class="line">		Assert.assertTrue(loader <span class="keyword">instanceof</span> ApplicationContext);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="3-Resource-Injection"><a href="#3-Resource-Injection" class="headerlink" title="3. Resource Injection"></a>3. Resource Injection</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResourceBean3</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Resource resource;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Resource <span class="title">getResource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.resource;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setResource</span><span class="params">(Resource resource)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.resource = resource;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="resource-injection">3. Resource Injection</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResourceBean3</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Resource resource;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Resource <span class="title">getResource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.resource;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setResource</span><span class="params">(Resource resource)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.resource = resource;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"resourceBean1"</span> <span class="attr">class</span>=<span class="string">"cn.javass.spring.chapter4.ResourceBean3"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"resource"</span> <span class="attr">value</span>=<span class="string">"cn/javass/spring/chapter4/test.properties"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"resourceBean2"</span> <span class="attr">class</span>=<span class="string">"cn.javass.spring.chapter4.ResourceBean3"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"resource"</span> <span class="attr">value</span>=<span class="string">"classpath:cn/javass/spring/chapter4/test.properties"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>JUnit test:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"chapter4/resourceInject.xml"</span>);</span><br><span class="line"></span><br><span class="line">		ResourceBean3 resourceBean1 = context.getBean(<span class="string">"resourceBean1"</span>, ResourceBean3.class);</span><br><span class="line"></span><br><span class="line">		ResourceBean3 resourceBean2 = context.getBean(<span class="string">"resourceBean2"</span>, ResourceBean3.class);</span><br><span class="line"></span><br><span class="line">		Assert.assertTrue(resourceBean1.getResource() <span class="keyword">instanceof</span> ClassPathResource);</span><br><span class="line">		Assert.assertTrue(resourceBean2.getResource() <span class="keyword">instanceof</span> ClassPathResource);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -134,7 +145,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.terryx.com/2016/09/28/2016-01-22-43--access-resource/" data-id="cjdwuiiq90004io3stzgsk4af" class="article-share-link">Share</a>
+      <a data-url="http://www.terryx.com/2016/09/28/2016-01-22-43--access-resource/" data-id="cjdxdrjq1000c853s8at95rh5" class="article-share-link">Share</a>
       
         <a href="http://www.terryx.com/2016/09/28/2016-01-22-43--access-resource/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -147,19 +158,19 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2016/09/28/2016-01-21-41-resource/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/09/28/2016-01-22-42--using-resource/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          4.1 Resource
+          4.2  Using Resource
         
       </div>
     </a>
   
   
-    <a href="/2016/09/28/2016-01-22-42--using-resource/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/09/28/2016-01-21-41-resource/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">4.2  Using Resource</div>
+      <div class="article-nav-title">4.1 Resource</div>
     </a>
   
 </nav>

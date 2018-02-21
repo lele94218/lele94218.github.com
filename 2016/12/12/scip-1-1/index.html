@@ -15,23 +15,33 @@ ga('send', 'pageview');
 
 </script>
 <!-- End Google Analytics -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: {
+    inlineMath: [["\\\(", "\\)"]],
+    displayMath: [["\\\[", "\\]"]]
+    }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 
 
   
   <title>Building Abstractions with Procedures Section 1 | 欲說還休</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Section 1.1 The Elements of ProgramingExercises in this section of SCIP. Exercise 1.1. Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression?">
+  <meta name="description" content="Section 1.1 The Elements of Programing Exercises in this section of SCIP. Exercise 1.1. Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression">
 <meta name="keywords" content="SCIP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Building Abstractions with Procedures Section 1">
 <meta property="og:url" content="http://www.terryx.com/2016/12/12/scip-1-1/index.html">
 <meta property="og:site_name" content="欲說還休">
-<meta property="og:description" content="Section 1.1 The Elements of ProgramingExercises in this section of SCIP. Exercise 1.1. Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression?">
+<meta property="og:description" content="Section 1.1 The Elements of Programing Exercises in this section of SCIP. Exercise 1.1. Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2016-12-18T03:36:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Building Abstractions with Procedures Section 1">
-<meta name="twitter:description" content="Section 1.1 The Elements of ProgramingExercises in this section of SCIP. Exercise 1.1. Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression?">
+<meta name="twitter:description" content="Section 1.1 The Elements of Programing Exercises in this section of SCIP. Exercise 1.1. Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression">
 <meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
   
     <link rel="alternate" href="/atom.xml" title="欲說還休" type="application/atom+xml">
@@ -105,14 +115,17 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Section-1-1-The-Elements-of-Programing"><a href="#Section-1-1-The-Elements-of-Programing" class="headerlink" title="Section 1.1 The Elements of Programing"></a>Section 1.1 The Elements of Programing</h2><p>Exercises in this section of <a href="https://mitpress.mit.edu/books/structure-and-interpretation-computer-programs" target="_blank" rel="noopener">SCIP</a>.</p>
+        <h2 id="section-1.1-the-elements-of-programing">Section 1.1 The Elements of Programing</h2>
+<p>Exercises in this section of <a href="https://mitpress.mit.edu/books/structure-and-interpretation-computer-programs" target="_blank" rel="noopener">SCIP</a>.</p>
 <p><strong>Exercise 1.1.</strong> Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.</p>
 <a id="more"></a>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">(+ 5 3 4)</span><br><span class="line">(- 9 1)</span><br><span class="line">(/ 6 2)</span><br><span class="line">(+ (* 2 4) (- 4 6))</span><br><span class="line">(define a 3)</span><br><span class="line">(define b (+ a 1))</span><br><span class="line">(+ a b (* a b))</span><br><span class="line">(= a b)</span><br><span class="line">(if (and (&gt; b a) (&lt; b (* a b)))</span><br><span class="line">    b</span><br><span class="line">    a)</span><br><span class="line">(cond ((= a 4) 6)</span><br><span class="line">      ((= b 4) (+ 6 7 a))</span><br><span class="line">      (else 25))</span><br><span class="line">(+ 2 (if (&gt; b a) b a))</span><br><span class="line">(* (cond ((&gt; a b) a)</span><br><span class="line">         ((&lt; a b) b)</span><br><span class="line">         (else -1))</span><br><span class="line">   (+ a 1))</span><br></pre></td></tr></table></figure>
 <p><strong>Answer 1.1.</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">12</span><br><span class="line">8</span><br><span class="line">3</span><br><span class="line">6</span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">19</span><br><span class="line">#f</span><br><span class="line">4</span><br><span class="line">16</span><br><span class="line">6</span><br><span class="line">16</span><br></pre></td></tr></table></figure>
 <p><strong>Exercise 1.2.</strong> Translate the following expression into prefix form</p>
-<p>$$<br>\frac{5+4+(2-(3-6&plus;\frac{4}{5}))}{3(6-2)(2-7)}<br>$$</p>
+<p><span class="math display">\[
+\frac{5+4+(2-(3-6&amp;plus;\frac{4}{5}))}{3(6-2)(2-7)}
+\]</span></p>
 <p><strong>Answer 1.2.</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 3))))) (* 3 (- 6 2) (- 2 7)))</span><br></pre></td></tr></table></figure>
 <p><strong>Exercise 1.3.</strong> Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.</p>
@@ -121,8 +134,10 @@ ga('send', 'pageview');
 <p><strong>Exercise 1.4.</strong> Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(define (a-plus-abs-b a b)</span><br><span class="line">  ((if (&gt; b 0) + -) a b))</span><br></pre></td></tr></table></figure>
 <p><strong>Answer 1.4.</strong></p>
-<p>$$<br>a+|b|<br>$$</p>
-<p>_a_ plus the absolute value of _b_.</p>
+<p><span class="math display">\[
+a+|b|
+\]</span></p>
+<p><em>a</em> plus the absolute value of <em>b</em>.</p>
 <p><strong>Exercise 1.5.</strong> Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation. He defines the following two procedures:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(define (p) (p))</span><br><span class="line"></span><br><span class="line">(define (test x y)</span><br><span class="line">  (if (= x 0)</span><br><span class="line">      0</span><br><span class="line">      y))</span><br></pre></td></tr></table></figure>
 <p>Then he evaluates the expression:</p>
@@ -135,7 +150,7 @@ ga('send', 'pageview');
 <p>The normal-order evaluation:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">=&gt; (test 0 (p))</span><br><span class="line">=&gt; (if (= 0 0) 0 (p))</span><br><span class="line">=&gt; (if #t 0 (p))</span><br><span class="line">=&gt; 0</span><br></pre></td></tr></table></figure>
 <p>The expression evaluates to <code>0</code>.</p>
-<p><strong>Exercise 1.6.</strong>  Alyssa P. Hacker doesn’t see why if needs to be provided as a special form. “Why can’t I just define it as an ordinary procedure in terms of <code>cond</code>?” she asks. Alyssa’s friend Eva Lu Ator claims this can indeed be done, and she defines a new version of <code>if</code>:</p>
+<p><strong>Exercise 1.6.</strong> Alyssa P. Hacker doesn't see why if needs to be provided as a special form. &quot;Why can't I just define it as an ordinary procedure in terms of <code>cond</code>?&quot; she asks. Alyssa's friend Eva Lu Ator claims this can indeed be done, and she defines a new version of <code>if</code>:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(define (new-if predicate then-clause else-clause)</span><br><span class="line">  (cond (predicate then-clause)</span><br><span class="line">        (else else-clause)))</span><br></pre></td></tr></table></figure>
 <p>Eva demonstrates the program for Alyssa:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(new-if (= 2 3) 0 5)</span><br><span class="line">5</span><br><span class="line"></span><br><span class="line">(new-if (= 1 1) 0 5)</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
@@ -143,19 +158,24 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(define (sqrt-iter guess x)</span><br><span class="line">  (new-if (good-enough? guess x)</span><br><span class="line">          guess</span><br><span class="line">          (sqrt-iter (improve guess x)</span><br><span class="line">                     x)))</span><br></pre></td></tr></table></figure>
 <p>What happens when Alyssa attempts to use this to compute square roots? Explain.</p>
 <p><strong>Answer 1.6.</strong> I believe this program is incorrect, because <code>new-if</code> uses applicative-order evaluation. Thus, it always expands the <code>else-clause</code> and causes an infinite recursion. In contrast, <code>if</code> uses normal-order evaluation.</p>
-<p><strong>Exercise 1.7.</strong>  The <code>good-enough</code>? test used in computing square roots will not be very effective for finding the square roots of very small numbers. Also, in real computers, arithmetic operations are almost always performed with limited precision. This makes our test inadequate for very large numbers. Explain these statements, with examples showing how the test fails for small and large numbers. An alternative strategy for implementing <code>good-enough</code>? is to watch how guess changes from one iteration to the next and to stop when the change is a very small fraction of the guess. Design a square-root procedure that uses this kind of end test. Does this work better for small and large numbers?</p>
+<p><strong>Exercise 1.7.</strong> The <code>good-enough</code>? test used in computing square roots will not be very effective for finding the square roots of very small numbers. Also, in real computers, arithmetic operations are almost always performed with limited precision. This makes our test inadequate for very large numbers. Explain these statements, with examples showing how the test fails for small and large numbers. An alternative strategy for implementing <code>good-enough</code>? is to watch how guess changes from one iteration to the next and to stop when the change is a very small fraction of the guess. Design a square-root procedure that uses this kind of end test. Does this work better for small and large numbers?</p>
 <p><strong>Answer 1.7.</strong> The results are very inaccurate when calculating <code>sqrt(0.0001)</code> and <code>sqrt(100000000)</code>. We can modify <code>good-enough</code> using current guess and previous guess below:</p>
-<p>$$<br>\frac{|G-G_{pre}|}{G}&lt;0.001<br>$$</p>
+<p><span class="math display">\[
+\frac{|G-G_{pre}|}{G}&lt;0.001
+\]</span></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">(define (good-enough? guess prev-guess)</span><br><span class="line">  (&lt; (/ (abs (- guess prev-guess))</span><br><span class="line">        guess)</span><br><span class="line">     0.001))</span><br><span class="line"></span><br><span class="line">(define (sqrt-iter guess prev-guess x)</span><br><span class="line">  (if (good-enough? guess prev-guess)</span><br><span class="line">    guess</span><br><span class="line">    (sqrt-iter (improve guess x)</span><br><span class="line">               guess</span><br><span class="line">               x)))</span><br><span class="line"></span><br><span class="line">(define (sqrt x) </span><br><span class="line">   (sqrt-iter 1.0 0 x))</span><br></pre></td></tr></table></figure>
-<p><strong>Exercise 1.8.</strong> Newton’s method for cube roots is based on the fact that if y is an approximation to the cube root of x, then a better approximation is given by the value</p>
-<p>$$<br>\frac{x/y^2+2y}{3}<br>$$</p>
-<p>Use this formula to implement a cube-root procedure analogous to the square-root procedure. </p>
-<p><strong>Answer 1.8.</strong> </p>
+<p><strong>Exercise 1.8.</strong> Newton's method for cube roots is based on the fact that if y is an approximation to the cube root of x, then a better approximation is given by the value</p>
+<p><span class="math display">\[
+\frac{x/y^2+2y}{3}
+\]</span></p>
+<p>Use this formula to implement a cube-root procedure analogous to the square-root procedure.</p>
+<p><strong>Answer 1.8.</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(define (cub-iter guess prev-guess x)</span><br><span class="line">  (if (good-enough? guess prev-guess)</span><br><span class="line">    guess</span><br><span class="line">    (cub-iter (improve guess x) guess x)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">(define (good-enough? guess prev-guess)</span><br><span class="line">  (&lt; (/ (abs (- guess prev-guess)) guess) 0.001)</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">(define (improve guess x)</span><br><span class="line">  (/ (+ (/ x (square guess)) (* 2 guess)) 3)</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">(define (square x)</span><br><span class="line">  (* x x)</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">(define (cubroot x) </span><br><span class="line">  ((if (&lt; x 0) - +) (cub-iter (improve 1.0 (abs x)) 1 (abs x)))</span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.terryx.com/2016/12/12/scip-1-1/" data-id="cjdwuiirm000mio3seue7pdp5" class="article-share-link">Share</a>
+      <a data-url="http://www.terryx.com/2016/12/12/scip-1-1/" data-id="cjdxdrjqi000r853sabhaumd6" class="article-share-link">Share</a>
       
         <a href="http://www.terryx.com/2016/12/12/scip-1-1/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -320,23 +340,6 @@ ga('send', 'pageview');
 
 
 
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config("");
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="custom_mathjax_source">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

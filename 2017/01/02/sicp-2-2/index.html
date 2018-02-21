@@ -15,23 +15,33 @@ ga('send', 'pageview');
 
 </script>
 <!-- End Google Analytics -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: {
+    inlineMath: [["\\\(", "\\)"]],
+    displayMath: [["\\\[", "\\]"]]
+    }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 
 
   
   <title>Hierarchical Data and the Closure Property | 欲說還休</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Section 2.2  Hierarchical Data and the Closure PropertyExercises in this section of SCIP.">
+  <meta name="description" content="Section 2.2 Hierarchical Data and the Closure Property Exercises in this section of SCIP.">
 <meta name="keywords" content="SICP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hierarchical Data and the Closure Property">
 <meta property="og:url" content="http://www.terryx.com/2017/01/02/sicp-2-2/index.html">
 <meta property="og:site_name" content="欲說還休">
-<meta property="og:description" content="Section 2.2  Hierarchical Data and the Closure PropertyExercises in this section of SCIP.">
+<meta property="og:description" content="Section 2.2 Hierarchical Data and the Closure Property Exercises in this section of SCIP.">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-01-04T00:42:18.000Z">
+<meta property="og:updated_time" content="2018-02-21T17:55:08.543Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hierarchical Data and the Closure Property">
-<meta name="twitter:description" content="Section 2.2  Hierarchical Data and the Closure PropertyExercises in this section of SCIP.">
+<meta name="twitter:description" content="Section 2.2 Hierarchical Data and the Closure Property Exercises in this section of SCIP.">
 <meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
   
     <link rel="alternate" href="/atom.xml" title="欲說還休" type="application/atom+xml">
@@ -105,17 +115,18 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Section-2-2-Hierarchical-Data-and-the-Closure-Property"><a href="#Section-2-2-Hierarchical-Data-and-the-Closure-Property" class="headerlink" title="Section 2.2  Hierarchical Data and the Closure Property"></a>Section 2.2  Hierarchical Data and the Closure Property</h2><p>Exercises in this section of <a href="https://mitpress.mit.edu/books/structure-and-interpretation-computer-programs" target="_blank" rel="noopener">SCIP</a>.</p>
+        <h2 id="section-2.2-hierarchical-data-and-the-closure-property">Section 2.2 Hierarchical Data and the Closure Property</h2>
+<p>Exercises in this section of <a href="https://mitpress.mit.edu/books/structure-and-interpretation-computer-programs" target="_blank" rel="noopener">SCIP</a>.</p>
 <a id="more"></a>
-<p><strong>Exercise 2.17.</strong>  Define a procedure <code>last-pair</code> that returns the list that contains only the last element of a given (nonempty) list:</p>
+<p><strong>Exercise 2.17.</strong> Define a procedure <code>last-pair</code> that returns the list that contains only the last element of a given (nonempty) list:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(last-pair (list 23 72 149 34))</span><br><span class="line">(34)</span><br></pre></td></tr></table></figure>
 <p><strong>Answer 2.17.</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(define (last-pair items)</span><br><span class="line">    (if (null? (cdr items))</span><br><span class="line">        items</span><br><span class="line">        (last-pair (cdr items))</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><strong>Exercise 2.18.</strong>  Define a procedure <code>reverse</code> that takes a list as argument and returns a list of the same elements in reverse order:</p>
+<p><strong>Exercise 2.18.</strong> Define a procedure <code>reverse</code> that takes a list as argument and returns a list of the same elements in reverse order:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(reverse (list 1 4 9 16 25))</span><br><span class="line">(25 16 9 4 1)</span><br></pre></td></tr></table></figure>
 <p><strong>Answer 2.18.</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(define (reverse items)</span><br><span class="line">    (if (null? (cdr items))</span><br><span class="line">        items</span><br><span class="line">        (append (reverse (cdr items)) (cons (car items) ()))</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><strong>Exercise 2.19.</strong>  Consider the change-counting program of section 1.2.2. It would be nice to be able to easily change the currency used by the program, so that we could compute the number of ways to change a British pound, for example. As the program is written, the knowledge of the currency is distributed partly into the procedure <code>first-denomination</code> and partly into the procedure <code>count-change</code> (which knows that there are five kinds of U.S. coins). It would be nicer to be able to supply a list of coins to be used for making change.</p>
+<p><strong>Exercise 2.19.</strong> Consider the change-counting program of section 1.2.2. It would be nice to be able to easily change the currency used by the program, so that we could compute the number of ways to change a British pound, for example. As the program is written, the knowledge of the currency is distributed partly into the procedure <code>first-denomination</code> and partly into the procedure <code>count-change</code> (which knows that there are five kinds of U.S. coins). It would be nicer to be able to supply a list of coins to be used for making change.</p>
 <p>We want to rewrite the procedure cc so that its second argument is a list of the values of the coins to use rather than an integer specifying which coins to use. We could then have lists that defined each kind of currency:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(define us-coins (list 50 25 10 5 1))</span><br><span class="line">(define uk-coins (list 100 50 20 10 5 2 1 0.5))</span><br></pre></td></tr></table></figure>
 <p>We could then call cc as follows:</p>
@@ -125,11 +136,11 @@ ga('send', 'pageview');
 <p>Define the procedures <code>first-denomination</code>, <code>except-first-denomination</code>, and <code>no-more?</code> in terms of primitive operations on list structures. Does the order of the list <code>coin-values</code> affect the answer produced by <code>cc</code>? Why or why not?</p>
 <p><strong>Answer 2.19.</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">(define (cc amount coin-values)</span><br><span class="line">  (cond ((= amount 0) 1)</span><br><span class="line">        ((or (&lt; amount 0) (no-more? coin-values)) 0)</span><br><span class="line">        (else</span><br><span class="line">         (+ (cc amount</span><br><span class="line">                (except-first-denomination coin-values))</span><br><span class="line">            (cc (- amount</span><br><span class="line">                   (first-denomination coin-values))</span><br><span class="line">                coin-values)))))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(define (no-more? coin-values)</span><br><span class="line">    (null? coin-values)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (except-first-denomination coin-values)</span><br><span class="line">    (cdr coin-values)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (first-denomination coin-values)</span><br><span class="line">    (car coin-values)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define us-coins (list 50 25 10 5 1))</span><br><span class="line">(define uk-coins (list 100 50 20 10 5 2 1 0.5))</span><br><span class="line"></span><br><span class="line">(cc 100 us-coins)</span><br></pre></td></tr></table></figure>
-<p><strong>Exercise 2.20.</strong>  The procedures <code>+</code>, <code>*</code>, and list take arbitrary numbers of arguments. One way to define such procedures is to use define with <em>dotted-tail notation</em>. In a procedure definition, a parameter list that has a dot before the last parameter name indicates that, when the procedure is called, the initial parameters (if any) will have as values the initial arguments, as usual, but the final parameter’s value will be a <em>list</em> of any remaining arguments. For instance, given the definition</p>
+<p><strong>Exercise 2.20.</strong> The procedures <code>+</code>, <code>*</code>, and list take arbitrary numbers of arguments. One way to define such procedures is to use define with <em>dotted-tail notation</em>. In a procedure definition, a parameter list that has a dot before the last parameter name indicates that, when the procedure is called, the initial parameters (if any) will have as values the initial arguments, as usual, but the final parameter's value will be a <em>list</em> of any remaining arguments. For instance, given the definition</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(define (f x y . z) &lt;body&gt;)</span><br></pre></td></tr></table></figure>
 <p>the procedure <code>f</code> can be called with two or more arguments. If we evaluate</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(f 1 2 3 4 5 6)</span><br></pre></td></tr></table></figure>
-<p>then in the body of <code>f</code>, <code>x</code> will be $1$, <code>y</code> will be $2$, and <code>z</code> will be the list <code>(3 4 5 6)</code>. Given the definition</p>
+<p>then in the body of <code>f</code>, <code>x</code> will be <span class="math inline">\(1\)</span>, <code>y</code> will be <span class="math inline">\(2\)</span>, and <code>z</code> will be the list <code>(3 4 5 6)</code>. Given the definition</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(define (g . w) &lt;body&gt;)</span><br></pre></td></tr></table></figure>
 <p>the procedure <code>g</code> can be called with zero or more arguments. If we evaluate</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(g 1 2 3 4 5 6)</span><br></pre></td></tr></table></figure>
@@ -138,39 +149,43 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(same-parity 1 2 3 4 5 6 7)</span><br><span class="line">(1 3 5 7)</span><br><span class="line"></span><br><span class="line">(same-parity 2 3 4 5 6 7)</span><br><span class="line">(2 4 6)</span><br></pre></td></tr></table></figure>
 <p><strong>Answer 2.20.</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(define (same-parity first . rest)</span><br><span class="line">    (define (filter x)</span><br><span class="line">        (if (even? x)</span><br><span class="line">            even?</span><br><span class="line">            odd?</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    (define (parity f l)</span><br><span class="line">        (cond ((null? l) ())</span><br><span class="line">              ((f (car l)) (cons (car l) (parity f (cdr l))))</span><br><span class="line">              (else (parity f (cdr l)))</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">    (parity (filter first) rest)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><strong>Exercise 2.21.</strong>  The procedure <code>square-list</code> takes a list of numbers as argument and returns a list of the squares of those numbers.</p>
+<p><strong>Exercise 2.21.</strong> The procedure <code>square-list</code> takes a list of numbers as argument and returns a list of the squares of those numbers.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(square-list (list 1 2 3 4))</span><br><span class="line">(1 4 9 16)</span><br></pre></td></tr></table></figure>
 <p>Here are two different definitions of <code>square-list</code>. Complete both of them by filling in the missing expressions:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(define (square-list items)</span><br><span class="line">  (if (null? items)</span><br><span class="line">      nil</span><br><span class="line">      (cons &lt;??&gt; &lt;??&gt;)))</span><br><span class="line">(define (square-list items)</span><br><span class="line">  (map &lt;??&gt; &lt;??&gt;))</span><br></pre></td></tr></table></figure>
 <p><strong>Answer 2.21.</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(define (square-list items)</span><br><span class="line">    (if (null? items)</span><br><span class="line">        `()</span><br><span class="line">        (cons (square (car items)) (square-list (cdr items)))</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(define (square x) (* x x))</span><br><span class="line"></span><br><span class="line">(define (square-list-map items)</span><br><span class="line">    (map square items)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><strong>Exercise 2.22.</strong>  Louis Reasoner tries to rewrite the first <code>square-list</code> procedure of exercise 2.21 so that it evolves an iterative process:</p>
+<p><strong>Exercise 2.22.</strong> Louis Reasoner tries to rewrite the first <code>square-list</code> procedure of exercise 2.21 so that it evolves an iterative process:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(define (square-list items)</span><br><span class="line">  (define (iter things answer)</span><br><span class="line">    (if (null? things)</span><br><span class="line">        answer</span><br><span class="line">        (iter (cdr things) </span><br><span class="line">              (cons (square (car things))</span><br><span class="line">                    answer))))</span><br><span class="line">  (iter items nil))</span><br></pre></td></tr></table></figure>
 <p>Unfortunately, defining square-list this way produces the answer list in the reverse order of the one desired. Why?</p>
 <p>Louis then tries to fix his bug by interchanging the arguments to <code>cons</code>:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(define (square-list items)</span><br><span class="line">  (define (iter things answer)</span><br><span class="line">    (if (null? things)</span><br><span class="line">        answer</span><br><span class="line">        (iter (cdr things)</span><br><span class="line">              (cons answer</span><br><span class="line">                    (square (car things))))))</span><br><span class="line">  (iter items nil))</span><br></pre></td></tr></table></figure>
-<p>This doesn’t work either. Explain.</p>
-<p><strong>Answer 2.22.</strong> The first procedure doesn’t work because it constructs the last item from the front of the list to the answer. The second procedure seems right at first glance, but result is:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(square-list (list 1 2 3 4))</span><br><span class="line">((((`() 1) 4) 9) 16)</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">Let&apos;s look the definition of `list`:</span><br></pre></td></tr></table></figure>
-<p>(list &lt;a_1&gt; &lt;a_2&gt; … &lt;a_n&gt;)<br>(cons &lt;a_1&gt; (cons &lt;a_2&gt; … (cons &lt;a_n&gt; nil) … ))<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">And the substitution of the procedure:</span><br></pre></td></tr></table></figure></p>
-<p>(square-list (list 1 2 3 4))</p>
-<p>(iter (list 1 2 3 4) ‘())</p>
-<p>(iter (list 2 3 4) (cons ‘() (square 1)))</p>
-<p>(iter (list 3 4) (cons (cons ‘() 1)<br>                       (square 2)))</p>
-<p>(iter (list 4)  (cons (cons (cons ‘() 1) 4)<br>                      (square 3)))</p>
-<p>(iter ‘() (cons (cons (cons (cons ‘() 1) 4) 9)<br>                (square 4)))</p>
-<p>(iter ‘() (cons (cons (cons (cons ‘() 1) 4) 9) 16))</p>
-<p>(cons (cons (cons (cons ‘() 1) 4) 9) 16)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Therefore, the structure of answer is wrong.</span><br><span class="line"></span><br><span class="line">**Exercise 2.23.**  The procedure `for-each` is similar to `map`. It takes as arguments a procedure and a list of elements. However, rather than forming a list of the results, `for-each` just applies the procedure to each of the elements in turn, from left to right. The values returned by applying the procedure to the elements are not used at all -- `for-each` is used with procedures that perform an action, such as printing. For example,</span><br></pre></td></tr></table></figure></p>
-<p>(for-each (lambda (x) (newline) (display x))<br>          (list 57 321 88))<br>57<br>321<br>88<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">The value returned by the call to `for-each` (not illustrated above) can be something arbitrary, such as true. Give an implementation of `for-each`.</span><br><span class="line"></span><br><span class="line">**Answer 2.23.**  I find a feature between `cond` and `if` in Lisp. If we want to use `if` instead of `cond`, one things should be concerned. Here are definitions:</span><br></pre></td></tr></table></figure></p>
-<p>(cond (<predicate> <expression> …)<br>      …<br>      (else <expression> ..)<br>)</expression></expression></predicate></p>
-<p>(if <predicate><br>    <consequent><br>    <alternative><br>)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">In `cond`, one clause has one predicate and several expressions, meanwhile consequent and alternative of `if` only have one expression for each. Thus, in this exercise we should use `cond` because `(newline)` and `(display x)` are two expressions.</span><br></pre></td></tr></table></figure></alternative></consequent></predicate></p>
-<p>(define (for-each f l)<br>    (cond ((null? l) ‘())<br>          (else (f (car l))<br>                (for-each f (cdr l)))<br>    )<br>)<br><code>`</code> </p>
-<p><strong>Exercise 2.24.</strong>  Suppose we evaluate the expression (list 1 (list 2 (list 3 4))). Give the result printed by the interpreter, the corresponding box-and-pointer structure, and the interpretation of this as a tree (as in figure 2.6).</p>
+<p>This doesn't work either. Explain.</p>
+<p><strong>Answer 2.22.</strong> The first procedure doesn't work because it constructs the last item from the front of the list to the answer. The second procedure seems right at first glance, but result is:</p>
+<p><code>(square-list (list 1 2 3 4)) ((((() 1) 4) 9) 16)</code></p>
+<p>Let's look the definition of <code>list</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(list &lt;a_1&gt; &lt;a_2&gt; ... &lt;a_n&gt;)</span><br><span class="line">(cons &lt;a_1&gt; (cons &lt;a_2&gt; ... (cons &lt;a_n&gt; nil) ... ))</span><br></pre></td></tr></table></figure>
+<p>And the substitution of the procedure:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">(square-list (list 1 2 3 4))</span><br><span class="line"></span><br><span class="line">(iter (list 1 2 3 4) &apos;())</span><br><span class="line"></span><br><span class="line">(iter (list 2 3 4) (cons &apos;() (square 1)))</span><br><span class="line"></span><br><span class="line">(iter (list 3 4) (cons (cons &apos;() 1)</span><br><span class="line">                       (square 2)))</span><br><span class="line"></span><br><span class="line">(iter (list 4)  (cons (cons (cons &apos;() 1) 4)</span><br><span class="line">                      (square 3)))</span><br><span class="line"></span><br><span class="line">(iter &apos;() (cons (cons (cons (cons &apos;() 1) 4) 9)</span><br><span class="line">                (square 4)))</span><br><span class="line"></span><br><span class="line">(iter &apos;() (cons (cons (cons (cons &apos;() 1) 4) 9) 16))</span><br><span class="line"></span><br><span class="line">(cons (cons (cons (cons &apos;() 1) 4) 9) 16)</span><br></pre></td></tr></table></figure>
+<p>Therefore, the structure of answer is wrong.</p>
+<p><strong>Exercise 2.23.</strong> The procedure <code>for-each</code> is similar to <code>map</code>. It takes as arguments a procedure and a list of elements. However, rather than forming a list of the results, <code>for-each</code> just applies the procedure to each of the elements in turn, from left to right. The values returned by applying the procedure to the elements are not used at all -- <code>for-each</code> is used with procedures that perform an action, such as printing. For example,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(for-each (lambda (x) (newline) (display x))</span><br><span class="line">          (list 57 321 88))</span><br><span class="line">57</span><br><span class="line">321</span><br><span class="line">88</span><br></pre></td></tr></table></figure>
+<p>The value returned by the call to <code>for-each</code> (not illustrated above) can be something arbitrary, such as true. Give an implementation of <code>for-each</code>.</p>
+<p><strong>Answer 2.23.</strong> I find a feature between <code>cond</code> and <code>if</code> in Lisp. If we want to use <code>if</code> instead of <code>cond</code>, one things should be concerned. Here are definitions:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(cond (&lt;predicate&gt; &lt;expression&gt; ...)</span><br><span class="line">	  ...</span><br><span class="line">	  (else &lt;expression&gt; ..)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">(if &lt;predicate&gt;</span><br><span class="line">	&lt;consequent&gt;</span><br><span class="line">	&lt;alternative&gt;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>In <code>cond</code>, one clause has one predicate and several expressions, meanwhile consequent and alternative of <code>if</code> only have one expression for each. Thus, in this exercise we should use <code>cond</code> because <code>(newline)</code> and <code>(display x)</code> are two expressions.</p>
+<pre><code>(define (for-each f l)
+    (cond ((null? l) &#39;()) 
+          (else (f (car l))
+                (for-each f (cdr l)))
+    )
+)</code></pre>
+<p><strong>Exercise 2.24.</strong> Suppose we evaluate the expression <code>(list 1 (list 2 (list 3 4)))</code>. Give the result printed by the interpreter, the corresponding box-and-pointer structure, and the interpretation of this as a tree (as in figure 2.6).</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.terryx.com/2017/01/02/sicp-2-2/" data-id="cjdwuiisr001sio3s18l9ah9z" class="article-share-link">Share</a>
+      <a data-url="http://www.terryx.com/2017/01/02/sicp-2-2/" data-id="cjdxdrjr8001a853skigegy1w" class="article-share-link">Share</a>
       
         <a href="http://www.terryx.com/2017/01/02/sicp-2-2/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -335,23 +350,6 @@ ga('send', 'pageview');
 
 
 
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config("");
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="custom_mathjax_source">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

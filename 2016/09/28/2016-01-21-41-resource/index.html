@@ -15,23 +15,33 @@ ga('send', 'pageview');
 
 </script>
 <!-- End Google Analytics -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: {
+    inlineMath: [["\\\(", "\\)"]],
+    displayMath: [["\\\[", "\\]"]]
+    }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 
 
   
   <title>4.1 Resource | 欲說還休</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Resource1. Resource API123public interface InputStreamSource &amp;#123;      InputStream getInputStream() throws IOException;  &amp;#125; 12345678910111213public interface Resource extends InputStreamSource &amp;">
+  <meta name="description" content="Resource 1. Resource API 123public interface InputStreamSource &amp;#123;      InputStream getInputStream() throws IOException;  &amp;#125; 12345678910111213public interface Resource extends InputStreamSource">
 <meta name="keywords" content="Spring 3,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="4.1 Resource">
 <meta property="og:url" content="http://www.terryx.com/2016/09/28/2016-01-21-41-resource/index.html">
 <meta property="og:site_name" content="欲說還休">
-<meta property="og:description" content="Resource1. Resource API123public interface InputStreamSource &amp;#123;      InputStream getInputStream() throws IOException;  &amp;#125; 12345678910111213public interface Resource extends InputStreamSource &amp;">
+<meta property="og:description" content="Resource 1. Resource API 123public interface InputStreamSource &amp;#123;      InputStream getInputStream() throws IOException;  &amp;#125; 12345678910111213public interface Resource extends InputStreamSource">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2016-10-11T07:55:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="4.1 Resource">
-<meta name="twitter:description" content="Resource1. Resource API123public interface InputStreamSource &amp;#123;      InputStream getInputStream() throws IOException;  &amp;#125; 12345678910111213public interface Resource extends InputStreamSource &amp;">
+<meta name="twitter:description" content="Resource 1. Resource API 123public interface InputStreamSource &amp;#123;      InputStream getInputStream() throws IOException;  &amp;#125; 12345678910111213public interface Resource extends InputStreamSource">
 <meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
   
     <link rel="alternate" href="/atom.xml" title="欲說還休" type="application/atom+xml">
@@ -109,52 +119,37 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h3><h4 id="1-Resource-API"><a href="#1-Resource-API" class="headerlink" title="1. Resource API"></a>1. Resource API</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">InputStreamSource</span> </span>&#123;  </span><br><span class="line">    <span class="function">InputStream <span class="title">getInputStream</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="resource">Resource</h3>
+<h4 id="resource-api">1. Resource API</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">InputStreamSource</span> </span>&#123;  </span><br><span class="line">    <span class="function">InputStream <span class="title">getInputStream</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Resource</span> <span class="keyword">extends</span> <span class="title">InputStreamSource</span> </span>&#123;  </span><br><span class="line">       <span class="function"><span class="keyword">boolean</span> <span class="title">exists</span><span class="params">()</span></span>;  </span><br><span class="line">       <span class="function"><span class="keyword">boolean</span> <span class="title">isReadable</span><span class="params">()</span></span>;  </span><br><span class="line">       <span class="function"><span class="keyword">boolean</span> <span class="title">isOpen</span><span class="params">()</span></span>;  </span><br><span class="line">       <span class="function">URL <span class="title">getURL</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">       <span class="function">URI <span class="title">getURI</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">       <span class="function">File <span class="title">getFile</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">       <span class="function"><span class="keyword">long</span> <span class="title">contentLength</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">       <span class="function"><span class="keyword">long</span> <span class="title">lastModified</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">       <span class="function">Resource <span class="title">createRelative</span><span class="params">(String relativePath)</span> <span class="keyword">throws</span> IOException</span>;  </span><br><span class="line">       <span class="function">String <span class="title">getFilename</span><span class="params">()</span></span>;  </span><br><span class="line">       <span class="function">String <span class="title">getDescription</span><span class="params">()</span></span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <ul>
-<li><p><strong><em>InputStreamSource</em>:</strong></p>
-<ul>
-<li><strong><em>getInputStream</em></strong>: Return new <em>java.io.InputStream</em> which needs close after used.</li>
-</ul>
-</li>
-<li><p><strong><em>Resource</em> extends <em>InputStreamSource</em>:</strong></p>
-<ul>
-<li><p><strong><em>exists</em></strong>: Resource exists?</p>
-</li>
-<li><p><strong><em>isReadable</em></strong>: Resource readable?</p>
-</li>
-<li><p><strong><em>isOpen</em></strong>: Resource open?</p>
-</li>
-<li><p><strong><em>getURL</em></strong>: <em>java.util.URL</em>.</p>
-</li>
-<li><p><strong><em>getURI</em></strong>: <em>java.util.URI</em>.</p>
-</li>
+<li><p><strong><em>InputStreamSource</em>:</strong></p></li>
+<li><p><strong><em>getInputStream</em></strong>: Return new <em>java.io.InputStream</em> which needs close after used.</p></li>
+<li><p><strong><em>Resource</em> extends <em>InputStreamSource</em>:</strong></p></li>
+<li><p><strong><em>exists</em></strong>: Resource exists?</p></li>
+<li><p><strong><em>isReadable</em></strong>: Resource readable?</p></li>
+<li><p><strong><em>isOpen</em></strong>: Resource open?</p></li>
+<li><p><strong><em>getURL</em></strong>: <em>java.util.URL</em>.</p></li>
+<li><p><strong><em>getURI</em></strong>: <em>java.util.URI</em>.</p></li>
 </ul>
 <blockquote>
 <p>URIs identify and URLs locate; however, locators are also identifiers, so every URL is also a URI, but there are URIs which are not URLs.</p>
 </blockquote>
 <ul>
-<li><p><strong><em>getFile</em></strong>: <em>java.io.File</em>.</p>
-</li>
-<li><p><strong><em>contentLength</em></strong>: Resource length.</p>
-</li>
-<li><p><strong>lastModified_</strong>: Modified date.</p>
-</li>
-<li><p><strong><em>createRelateive</em></strong>: create file in Resource.</p>
-</li>
-<li><p><strong><em>getFilename</em></strong>: ONLY return <strong>file path</strong>.</p>
-</li>
-<li><p><strong><em>getDescription</em></strong> return <strong>full file path</strong>.</p>
-</li>
-</ul>
-</li>
+<li><p><strong><em>getFile</em></strong>: <em>java.io.File</em>.</p></li>
+<li><p><strong><em>contentLength</em></strong>: Resource length.</p></li>
+<li><p><strong>lastModified_</strong>: Modified date.</p></li>
+<li><p><strong><em>createRelateive</em></strong>: create file in Resource.</p></li>
+<li><p><strong><em>getFilename</em></strong>: ONLY return <strong>file path</strong>.</p></li>
+<li><p><strong><em>getDescription</em></strong> return <strong>full file path</strong>.</p></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.terryx.com/2016/09/28/2016-01-21-41-resource/" data-id="cjdwuiiqd0005io3scngjcl28" class="article-share-link">Share</a>
+      <a data-url="http://www.terryx.com/2016/09/28/2016-01-21-41-resource/" data-id="cjdxdrjpy000b853sw5vwkngp" class="article-share-link">Share</a>
       
         <a href="http://www.terryx.com/2016/09/28/2016-01-21-41-resource/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -167,19 +162,19 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2016/09/28/2016-02-17-http-session-summary/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/09/28/2016-01-22-43--access-resource/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          深入理解 HTTP Session
+          4.3  Access Resource
         
       </div>
     </a>
   
   
-    <a href="/2016/09/28/2016-01-22-43--access-resource/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/09/28/2016-04-27-redis/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">4.3  Access Resource</div>
+      <div class="article-nav-title">用 Redis 实现分布式锁 与 实现任务队列</div>
     </a>
   
 </nav>

@@ -15,23 +15,33 @@ ga('send', 'pageview');
 
 </script>
 <!-- End Google Analytics -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: {
+    inlineMath: [["\\\(", "\\)"]],
+    displayMath: [["\\\[", "\\]"]]
+    }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 
 
   
   <title>Java Web 系统总结 (一) | 欲說還休</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一. JSP 总结9个隐含对象及其常用方法 (虽然为 Java 代码, 但是使用 _EL_ 表达式完全可以进行调用相关 get 方法):1. Request (HttpServletRequest)  Attribute 相关: 可以理解在 request 作用域范围内的一个存储空间, 实现方法是将键值对放入一个 HashMap.     123Object getAttribute(String">
+  <meta name="description" content="一. JSP 总结 9个隐含对象及其常用方法 (虽然为 Java 代码, 但是使用 EL 表达式完全可以进行调用相关 get 方法): 1. Request (HttpServletRequest)  Attribute 相关:  可以理解在 request 作用域范围内的一个存储空间, 实现方法是将键值对放入一个 HashMap. 123Object getAttribute(String na">
 <meta name="keywords" content="Java,Java Web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java Web 系统总结 (一)">
 <meta property="og:url" content="http://www.terryx.com/2016/09/28/2016-02-16-java-web-summary-1/index.html">
 <meta property="og:site_name" content="欲說還休">
-<meta property="og:description" content="一. JSP 总结9个隐含对象及其常用方法 (虽然为 Java 代码, 但是使用 _EL_ 表达式完全可以进行调用相关 get 方法):1. Request (HttpServletRequest)  Attribute 相关: 可以理解在 request 作用域范围内的一个存储空间, 实现方法是将键值对放入一个 HashMap.     123Object getAttribute(String">
+<meta property="og:description" content="一. JSP 总结 9个隐含对象及其常用方法 (虽然为 Java 代码, 但是使用 EL 表达式完全可以进行调用相关 get 方法): 1. Request (HttpServletRequest)  Attribute 相关:  可以理解在 request 作用域范围内的一个存储空间, 实现方法是将键值对放入一个 HashMap. 123Object getAttribute(String na">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2016-10-11T07:55:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Web 系统总结 (一)">
-<meta name="twitter:description" content="一. JSP 总结9个隐含对象及其常用方法 (虽然为 Java 代码, 但是使用 _EL_ 表达式完全可以进行调用相关 get 方法):1. Request (HttpServletRequest)  Attribute 相关: 可以理解在 request 作用域范围内的一个存储空间, 实现方法是将键值对放入一个 HashMap.     123Object getAttribute(String">
+<meta name="twitter:description" content="一. JSP 总结 9个隐含对象及其常用方法 (虽然为 Java 代码, 但是使用 EL 表达式完全可以进行调用相关 get 方法): 1. Request (HttpServletRequest)  Attribute 相关:  可以理解在 request 作用域范围内的一个存储空间, 实现方法是将键值对放入一个 HashMap. 123Object getAttribute(String na">
 <meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
   
     <link rel="alternate" href="/atom.xml" title="欲說還休" type="application/atom+xml">
@@ -109,143 +119,150 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="一-JSP-总结"><a href="#一-JSP-总结" class="headerlink" title="一. JSP 总结"></a>一. <em>JSP</em> 总结</h3><h4 id="9个隐含对象及其常用方法-虽然为-Java-代码-但是使用-EL-表达式完全可以进行调用相关-get-方法"><a href="#9个隐含对象及其常用方法-虽然为-Java-代码-但是使用-EL-表达式完全可以进行调用相关-get-方法" class="headerlink" title="9个隐含对象及其常用方法 (虽然为 Java 代码, 但是使用 _EL_ 表达式完全可以进行调用相关 get 方法):"></a>9个隐含对象及其常用方法 (虽然为 <em>Java</em> 代码, 但是使用 _EL_ 表达式完全可以进行调用相关 <em>get</em> 方法):</h4><p><strong>1. <em>Request (HttpServletRequest)</em></strong></p>
+        <h3 id="一.-jsp-总结">一. <em>JSP</em> 总结</h3>
+<h4 id="个隐含对象及其常用方法-虽然为-java-代码-但是使用-el-表达式完全可以进行调用相关-get-方法">9个隐含对象及其常用方法 (虽然为 <em>Java</em> 代码, 但是使用 <em>EL</em> 表达式完全可以进行调用相关 <em>get</em> 方法):</h4>
+<p><strong>1. <em>Request (HttpServletRequest)</em></strong></p>
 <ul>
-<li><p><strong>Attribute</strong> 相关:</p>
-<p>可以理解在 <code>request</code> 作用域范围内的一个存储空间, 实现方法是将键值对放入一个 <code>HashMap</code>.</p>
-</li>
+<li><strong>Attribute</strong> 相关:</li>
 </ul>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">getAttribute</span><span class="params">(String name)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setAttribute</span><span class="params">(String name, Object o)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">removeAttribute</span><span class="params">(String name)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>可以理解在 <code>request</code> 作用域范围内的一个存储空间, 实现方法是将键值对放入一个 <code>HashMap</code>.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">getAttribute</span><span class="params">(String name)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setAttribute</span><span class="params">(String name, Object o)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">removeAttribute</span><span class="params">(String name)</span></span>;</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <ul>
-<li><p><strong>Paramater</strong> 相关:</p>
+<li><strong>Paramater</strong> 相关:</li>
+</ul>
 <p>一般用于与 <code>html</code>, <code>jsp</code>页面 及 <code>url</code> 地址传递参数, 仅能传递字符串. 注意: 没有 <code>setParamater</code> 方法.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getParameter</span><span class="params">(String name)</span></span>;</span><br><span class="line">String[] getParameterValues(String name);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>Cookie</strong> 相关:</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getParameter</span><span class="params">(String name)</span></span>;</span><br><span class="line">String[] getParameterValues(String name);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>Cookie</strong> 相关:</li>
+</ul>
 <p>作为浏览器端持久化储存的一种实现方法, 由服务器加入 <code>response</code> 中, 并在 <code>request</code> 中取出.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cookie[] getCookies();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>Session</strong> 相关:</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cookie[] getCookies();</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>Session</strong> 相关:</li>
+</ul>
 <p>作为服务器持久化储存的一种实现方法, 在浏览器第一次访问服务器资源时自动创建.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HttpSession <span class="title">getSession</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>URI</strong> 路径:</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HttpSession <span class="title">getSession</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>URI</strong> 路径:</li>
+</ul>
 <p><strong>应用名称 + 页面路径</strong></p>
 <p>比如: <code>/day_15/bbs/bbs.jsp</code> .</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getRequestURI</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>URL</strong> 路径:</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getRequestURI</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>URL</strong> 路径:</li>
+</ul>
 <p><strong>站点地址 + URI路径</strong></p>
 <p>比如: <code>http://localhost:8080/day_15/bbs/bbs.jsp</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">StringBuffer <span class="title">getRequestURL</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>ServletPath</strong> 路径:</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">StringBuffer <span class="title">getRequestURL</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>ServletPath</strong> 路径:</li>
+</ul>
 <p><strong>页面路径</strong></p>
 <p>一般用于 <code>filter</code> 进行页面筛选. 比如: <code>/bbs/bbs.jsp</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getServletPath</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>转发地址:</p>
-<p>可以将 <code>request</code> 转发到另一页面或 <code>Servlet</code>. 注意: <code>path</code> 为 <code>Servlet context path</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">RequestDispatcher <span class="title">getRequestDispatcher</span><span class="params">(String path)</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编码问题:</p>
-<p>对于携带中文作为 <code>Paramater</code> 的 <code>request</code> 在打印时会出现乱码, 所以需要进行编码.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setCharacterEncoding</span><span class="params">(String env)</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getServletPath</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>转发地址:</li>
 </ul>
+<p>可以将 <code>request</code> 转发到另一页面或 <code>Servlet</code>. 注意: <code>path</code> 为 <code>Servlet context path</code>.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">RequestDispatcher <span class="title">getRequestDispatcher</span><span class="params">(String path)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>编码问题:</li>
+</ul>
+<p>对于携带中文作为 <code>Paramater</code> 的 <code>request</code> 在打印时会出现乱码, 所以需要进行编码.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setCharacterEncoding</span><span class="params">(String env)</span></span>;</span><br></pre></td></tr></table></figure></p>
 <p><strong>2. <em>Response (HttpServletResponse)</em></strong></p>
 <ul>
-<li><p><strong>Cookie</strong> 相关:</p>
-<p>作为浏览器端持久化储存的一种实现方法, 由服务器加入 <code>response</code> 中, 并在 <code>request</code> 中取出.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addCookie</span><span class="params">(Cookie cookie)</span></span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>重定向地址</p>
-<p>可以跳转到另一页面, 但不转发 <code>request</code>. <code>location</code> 必须包含 <code>application context path</code> 或为 <code>URL</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sendRedirect</span><span class="params">(String location)</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
+<li><strong>Cookie</strong> 相关:</li>
 </ul>
+<p>作为浏览器端持久化储存的一种实现方法, 由服务器加入 <code>response</code> 中, 并在 <code>request</code> 中取出.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addCookie</span><span class="params">(Cookie cookie)</span></span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>重定向地址</li>
+</ul>
+<p>可以跳转到另一页面, 但不转发 <code>request</code>. <code>location</code> 必须包含 <code>application context path</code> 或为 <code>URL</code>.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sendRedirect</span><span class="params">(String location)</span></span>;</span><br></pre></td></tr></table></figure></p>
 <p><strong>3. <em>Session (HttpSession)</em></strong></p>
 <ul>
-<li><p><strong>Attribute</strong> 相关:</p>
+<li><strong>Attribute</strong> 相关:</li>
+</ul>
 <p>和 <code>request</code> 类似, <code>session</code> 也可以携带键值对, 使用方法完全类似.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">getAttribute</span><span class="params">(String name)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setAttribute</span><span class="params">(String name, Object value)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">removeAttribute</span><span class="params">(String name)</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置生命周期:</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">getAttribute</span><span class="params">(String name)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setAttribute</span><span class="params">(String name, Object value)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">removeAttribute</span><span class="params">(String name)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>设置生命周期:</li>
+</ul>
 <p>从创建到销毁的时间.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setMaxInactiveInterval</span><span class="params">(<span class="keyword">int</span> interval)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getMaxInactiveInterval</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setMaxInactiveInterval</span><span class="params">(<span class="keyword">int</span> interval)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getMaxInactiveInterval</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
 <p>立即销毁 <code>session</code>:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">invalidate</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>JSessionId</strong>:</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">invalidate</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>JSessionId</strong>:</li>
+</ul>
 <p>以 <code>JSessionId</code> 为名称存入 <code>Cookie</code> 中.</p>
 <p>获取 <code>JSessionId</code>:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getId</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>时间信息:</p>
-<p>获取创建与最近访问时间:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">getCreationTime</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">getLastAccessedTime</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取 <strong>ServletContext</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ServletContext <span class="title">getServletContext</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getId</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>时间信息:</li>
 </ul>
+<p>获取创建与最近访问时间:</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">getCreationTime</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">getLastAccessedTime</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>获取 <strong>ServletContext</strong></li>
+</ul>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ServletContext <span class="title">getServletContext</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
 <p>以上总结的三个隐含对象 <code>request</code> <code>response</code> <code>session</code>, 不只是对于 <code>JSP</code> , 而在整个 <code>Java Web</code> 技术中都极为重要, 对其常用的实现方法必须使用熟练.</p>
 <p><strong>4. <em>Application (ServletContext)</em></strong></p>
 <ul>
-<li><p><strong>Attribute</strong> 相关:</p>
-<p>和 <code>request</code> <code>session</code> 类似, <code>Servlet</code> 也可以携带键值对, 使用方法完全类似.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">getAttribute</span><span class="params">(String name)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setAttribute</span><span class="params">(String name, Object value)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">removeAttribute</span><span class="params">(String name)</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>Paramater</strong> 相关:</p>
-<p>获取在 <code>web.xml</code> 中设置的 <code>Servlet</code> 初始化参数.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getInitParameter</span><span class="params">(String name)</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>Servlet Context Path</strong></p>
-<p>为服务器应用的路径名, 如: <code>/day_15</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getContextPath</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-<p>仅获取应用名称,  如: <code>day_15</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getServletContextName</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
+<li><strong>Attribute</strong> 相关:</li>
 </ul>
+<p>和 <code>request</code> <code>session</code> 类似, <code>Servlet</code> 也可以携带键值对, 使用方法完全类似.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">getAttribute</span><span class="params">(String name)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setAttribute</span><span class="params">(String name, Object value)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">removeAttribute</span><span class="params">(String name)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>Paramater</strong> 相关:</li>
+</ul>
+<p>获取在 <code>web.xml</code> 中设置的 <code>Servlet</code> 初始化参数.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getInitParameter</span><span class="params">(String name)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>Servlet Context Path</strong></li>
+</ul>
+<p>为服务器应用的路径名, 如: <code>/day_15</code>.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getContextPath</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>仅获取应用名称, 如: <code>day_15</code>.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getServletContextName</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
 <p><strong>5. <em>Config (ServletConfig)</em></strong></p>
 <p><code>ServletContext</code> 可以覆盖其实现的所有功能.</p>
 <ul>
-<li><p><strong>Paramater</strong> 相关:</p>
-<p>获取在 <code>web.xml</code> 中设置的 <code>Servlet</code> 初始化参数.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getInitParameter</span><span class="params">(String name)</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取 <strong>ServletContext</strong>:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ServletContext <span class="title">getServletContext</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取应用名称:</p>
-<p>如: <code>day_15</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getServletContextName</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
+<li><strong>Paramater</strong> 相关:</li>
 </ul>
+<p>获取在 <code>web.xml</code> 中设置的 <code>Servlet</code> 初始化参数.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getInitParameter</span><span class="params">(String name)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>获取 <strong>ServletContext</strong>:</li>
+</ul>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ServletContext <span class="title">getServletContext</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>获取应用名称:</li>
+</ul>
+<p>如: <code>day_15</code>.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getServletContextName</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
 <p><strong>6. <em>PageContext (PageContext)</em></strong></p>
 <ul>
-<li><p>可以获取其他所有隐藏对象 <strong>Request Response Session ServletContext ServletConfig Out Page Exception</strong>:</p>
-<p>直接调用 <code>get</code> 方法既可. 因为可以调用所有功能, 多用于 <code>EL</code> 表达式.</p>
-</li>
+<li>可以获取其他所有隐藏对象 <strong>Request Response Session ServletContext ServletConfig Out Page Exception</strong>:</li>
 </ul>
+<p>直接调用 <code>get</code> 方法既可. 因为可以调用所有功能, 多用于 <code>EL</code> 表达式.</p>
 <p><strong>7. 其余不常用的三个: Out Page Exception</strong>:</p>
 <p>以上9个隐藏对象包含 <code>Java Web</code> 最重要的四个作用域:</p>
 <ul>
-<li><p><strong>Application</strong>: 作用于整个 Web 应用, 生命周期为 <strong>应用的添加到移除</strong>.</p>
-</li>
-<li><p><strong>Session</strong>: 作用于一次会话, 生命周期为 <strong>浏览器第一次访问生成到生命周期结束自动注销</strong>.</p>
-</li>
-<li><p><strong>Request</strong>: 作用于一次请求, 生命周期为 <strong>发送请求到请求处理结束</strong>.</p>
-</li>
-<li><p><strong>Page</strong>: 仅作用于本页面, 无生命周期.</p>
-</li>
+<li><p><strong>Application</strong>: 作用于整个 Web 应用, 生命周期为 <strong>应用的添加到移除</strong>.</p></li>
+<li><p><strong>Session</strong>: 作用于一次会话, 生命周期为 <strong>浏览器第一次访问生成到生命周期结束自动注销</strong>.</p></li>
+<li><p><strong>Request</strong>: 作用于一次请求, 生命周期为 <strong>发送请求到请求处理结束</strong>.</p></li>
+<li><p><strong>Page</strong>: 仅作用于本页面, 无生命周期.</p></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.terryx.com/2016/09/28/2016-02-16-java-web-summary-1/" data-id="cjdwuiiqx0009io3s80qz309x" class="article-share-link">Share</a>
+      <a data-url="http://www.terryx.com/2016/09/28/2016-02-16-java-web-summary-1/" data-id="cjdxdrjpr0007853sxlv5mmvq" class="article-share-link">Share</a>
       
         <a href="http://www.terryx.com/2016/09/28/2016-02-16-java-web-summary-1/#disqus_thread" class="article-comment-link">Comments</a>
       
