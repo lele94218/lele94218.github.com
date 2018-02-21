@@ -172,10 +172,10 @@ R_p = \frac{1}{1/R_1+1/R_2} = \frac{R_1+R_2}{R_1 R_2}, \text{where } R_1 R_2 \ne
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/12/31/sicp-2-1/" data-id="cjdxemgv30010713sw0gtygmy" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2016/12/31/sicp-2-1/" data-id="cjdxjkehv0017yw3skiamblsj" class="article-share-link">Share</a> -->
       
       
-        <a href="http://www.terryx.com/2016/12/31/sicp-2-1/#disqus_thread" class="article-comment-link">Comments</a>
+        <a id="a-comments" href="http://www.terryx.com/2016/12/31/sicp-2-1/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SICP/">SICP</a></li></ul>
@@ -281,12 +281,20 @@ R_p = \frac{1}{1/R_1+1/R_2} = \frac{R_1+R_2}{R_1 R_2}, \text{where } R_1 R_2 \ne
   
 </nav>
     
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
 <script>
   var disqus_shortname = 'lele94218';
   
   var disqus_url = 'http://www.terryx.com/2016/12/31/sicp-2-1/';
   
   (function(){
+    if ($("#cf").length > 0) {
+      $("#comments").remove();
+      $("#a-comments").remove();
+      return;
+    }
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
@@ -296,7 +304,6 @@ R_p = \frac{1}{1/R_1+1/R_2} = \frac{R_1+R_2}{R_1 R_2}, \text{where } R_1 R_2 \ne
 </script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">

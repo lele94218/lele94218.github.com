@@ -139,10 +139,10 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/10/10/spring4-1/" data-id="cjdxemgvb0015713sq7isa49l" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2016/10/10/spring4-1/" data-id="cjdxjkeh90011yw3s8wi60svy" class="article-share-link">Share</a> -->
       
       
-        <a href="http://www.terryx.com/2016/10/10/spring4-1/#disqus_thread" class="article-comment-link">Comments</a>
+        <a id="a-comments" href="http://www.terryx.com/2016/10/10/spring4-1/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-4/">Spring 4</a></li></ul>
@@ -163,9 +163,9 @@ ga('send', 'pageview');
     </a>
   
   
-    <a href="/2016/09/28/2016-01-21-32---bean-scopes/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/09/28/2016-01-22-43--access-resource/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">3.2 Bean Scopes</div>
+      <div class="article-nav-title">4.3  Access Resource</div>
     </a>
   
 </nav>
@@ -248,12 +248,20 @@ ga('send', 'pageview');
   
 </nav>
     
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
 <script>
   var disqus_shortname = 'lele94218';
   
   var disqus_url = 'http://www.terryx.com/2016/10/10/spring4-1/';
   
   (function(){
+    if ($("#cf").length > 0) {
+      $("#comments").remove();
+      $("#a-comments").remove();
+      return;
+    }
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
@@ -263,7 +271,6 @@ ga('send', 'pageview');
 </script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">

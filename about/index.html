@@ -28,19 +28,19 @@ ga('send', 'pageview');
 
 
   
-  <title>关于我 - About me | 欲說還休</title>
+  <title>欲說還休</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我 一个计算机专业学生。喜欢编程，以及编程竞赛。最近在学习网站开发，我希望可以再这里展示更多的项目 希望阅读，看电影，以及游戏">
+  <meta name="description" content="span.rated-user {         font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif!important;         text-decoration: none!important;         font-weight: bold     }      .user-fire,     .use">
 <meta property="og:type" content="website">
-<meta property="og:title" content="关于我 - About me">
+<meta property="og:title" content="欲說還休">
 <meta property="og:url" content="http://www.terryx.com/about/index.html">
 <meta property="og:site_name" content="欲說還休">
-<meta property="og:description" content="我 一个计算机专业学生。喜欢编程，以及编程竞赛。最近在学习网站开发，我希望可以再这里展示更多的项目 希望阅读，看电影，以及游戏">
+<meta property="og:description" content="span.rated-user {         font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif!important;         text-decoration: none!important;         font-weight: bold     }      .user-fire,     .use">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-02-21T08:08:36.215Z">
+<meta property="og:updated_time" content="2018-02-21T20:34:29.689Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于我 - About me">
-<meta name="twitter:description" content="我 一个计算机专业学生。喜欢编程，以及编程竞赛。最近在学习网站开发，我希望可以再这里展示更多的项目 希望阅读，看电影，以及游戏">
+<meta name="twitter:title" content="欲說還休">
+<meta name="twitter:description" content="span.rated-user {         font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif!important;         text-decoration: none!important;         font-weight: bold     }      .user-fire,     .use">
 <meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
   
   
@@ -91,34 +91,102 @@ ga('send', 'pageview');
         <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/about/index.html" class="article-date">
-  <time datetime="2018-02-21T07:46:31.000Z" itemprop="datePublished">2018-02-21</time>
+  <time datetime="2018-02-21T20:34:29.689Z" itemprop="datePublished">2018-02-21</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      关于我 - About me
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="我">我</h2>
-<p>一个计算机专业学生。喜欢编程，以及编程竞赛。最近在学习网站开发，我希望可以再这里展示更多的项目</p>
-<p>希望阅读，看电影，以及游戏</p>
+        <style>
+    span.rated-user {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif!important;
+        text-decoration: none!important;
+        font-weight: bold
+    }
 
+    .user-fire,
+    .user-red {
+        color: red!important
+    }
+
+    .user-yellow {
+        color: #bb0!important
+    }
+
+    .user-violet {
+        color: #a0a!important
+    }
+
+    .user-orange {
+        color: #FF8C00!important
+    }
+
+    .user-blue {
+        color: #00f!important
+    }
+
+    .user-cyan {
+        color: #03A89E!important
+    }
+
+    .user-green {
+        color: green!important
+    }
+
+    .user-gray {
+        color: gray!important
+    }
+</style>
+
+<h2 id="我">我</h2>
+<p>一个计算机专业学生。喜欢编程，以及编程竞赛。最近在学习网站开发，我希望可以再这里展示更多的项目</p>
+<p>阅读，看电影，以及游戏</p>
+<p>
+    Codeforces Profile: &nbsp;
+    <span class="rated-user">
+        <a href="http://codeforces.com/profile/ACMega" target="_blank" id="cf">ACMega</a>
+    </span>
+    <br>
+    Leetcode Profile: &nbsp;
+    <a href="https://leetcode.com/voidmian/" target="_blank"><strong>voidmian</strong></a>
+</p>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.get("http://codeforces.com/api/user.info?handles=ACMega", function (data, status) {
+            var rating = data.result[0].rating;
+            var str = "";
+            if (rating > 2400) {
+                str = "user-red";
+            } else if (rating > 2200) {
+                str = "user-orange";
+            } else if (rating > 1900) {
+                str = "user-violet";
+            } else if (rating > 1600) {
+                str = "user-blue";
+            } else if (rating > 1400) {
+                str = "user-cyan";
+            } else if (rating > 1200) {
+                str = "user-green";
+            } else {
+                str = "user-gray";
+            }
+            $("#cf").addClass(str);
+        }, "json");
+    });
+</script>
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/about/index.html" data-id="cjdxemgta0001713s6y3j80m6" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/about/index.html" data-id="cjdxjkeeu0001yw3sf4hozgyn" class="article-share-link">Share</a> -->
       
+      
+        <a id="a-comments" href="http://www.terryx.com/about/index.html#disqus_thread" class="article-comment-link">Comments</a>
       
       
     </footer>
@@ -129,6 +197,12 @@ ga('send', 'pageview');
 </article>
 
 
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 </section>
         
           <aside id="sidebar">
@@ -197,22 +271,29 @@ ga('send', 'pageview');
   
 </nav>
     
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
 <script>
   var disqus_shortname = 'lele94218';
   
   var disqus_url = 'http://www.terryx.com/about/index.html';
   
   (function(){
+    if ($("#cf").length > 0) {
+      $("#comments").remove();
+      $("#a-comments").remove();
+      return;
+    }
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">

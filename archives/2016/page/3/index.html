@@ -100,13 +100,13 @@ ga('send', 'pageview');
     <article class="archive-article archive-type-post">
   <div class="archive-article-inner">
     <header class="archive-article-header">
-      <a href="/2016/09/28/2016-04-27-redis/" class="archive-article-date">
+      <a href="/2016/09/28/2016-02-17-http-session-summary/" class="archive-article-date">
   <time datetime="2016-09-28T15:50:16.000Z" itemprop="datePublished">Sep 28</time>
 </a>
       
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/28/2016-04-27-redis/">用 Redis 实现分布式锁 与 实现任务队列</a>
+      <a class="archive-article-title" href="/2016/09/28/2016-02-17-http-session-summary/">深入理解 HTTP Session</a>
     </h1>
   
 
@@ -119,13 +119,13 @@ ga('send', 'pageview');
     <article class="archive-article archive-type-post">
   <div class="archive-article-inner">
     <header class="archive-article-header">
-      <a href="/2016/09/28/2016-02-17-http-session-summary/" class="archive-article-date">
+      <a href="/2016/09/28/2016-01-21-32---bean-scopes/" class="archive-article-date">
   <time datetime="2016-09-28T15:50:16.000Z" itemprop="datePublished">Sep 28</time>
 </a>
       
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/28/2016-02-17-http-session-summary/">深入理解 HTTP Session</a>
+      <a class="archive-article-title" href="/2016/09/28/2016-01-21-32---bean-scopes/">3.2 Bean Scopes</a>
     </h1>
   
 
@@ -157,13 +157,13 @@ ga('send', 'pageview');
     <article class="archive-article archive-type-post">
   <div class="archive-article-inner">
     <header class="archive-article-header">
-      <a href="/2016/09/28/2016-01-22-43--access-resource/" class="archive-article-date">
+      <a href="/2016/09/28/2016-04-27-redis/" class="archive-article-date">
   <time datetime="2016-09-28T15:50:16.000Z" itemprop="datePublished">Sep 28</time>
 </a>
       
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/28/2016-01-22-43--access-resource/">4.3  Access Resource</a>
+      <a class="archive-article-title" href="/2016/09/28/2016-04-27-redis/">用 Redis 实现分布式锁 与 实现任务队列</a>
     </h1>
   
 
@@ -268,10 +268,18 @@ ga('send', 'pageview');
   
 </nav>
     
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
 <script>
   var disqus_shortname = 'lele94218';
   
   (function(){
+    if ($("#cf").length > 0) {
+      $("#comments").remove();
+      $("#a-comments").remove();
+      return;
+    }
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
@@ -281,7 +289,6 @@ ga('send', 'pageview');
 </script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">

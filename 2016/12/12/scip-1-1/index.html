@@ -171,10 +171,10 @@ a+|b|
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/12/12/scip-1-1/" data-id="cjdxemguo000o713skxdgzmz1" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2016/12/12/scip-1-1/" data-id="cjdxjkegk000oyw3sfa7lsprx" class="article-share-link">Share</a> -->
       
       
-        <a href="http://www.terryx.com/2016/12/12/scip-1-1/#disqus_thread" class="article-comment-link">Comments</a>
+        <a id="a-comments" href="http://www.terryx.com/2016/12/12/scip-1-1/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SICP/">SICP</a></li></ul>
@@ -280,12 +280,20 @@ a+|b|
   
 </nav>
     
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
 <script>
   var disqus_shortname = 'lele94218';
   
   var disqus_url = 'http://www.terryx.com/2016/12/12/scip-1-1/';
   
   (function(){
+    if ($("#cf").length > 0) {
+      $("#comments").remove();
+      $("#a-comments").remove();
+      return;
+    }
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
@@ -295,7 +303,6 @@ a+|b|
 </script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">

@@ -171,10 +171,10 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/" data-id="cjdxemgte0002713s3fs20fol" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/" data-id="cjdxjkeex0002yw3s6fuqqay7" class="article-share-link">Share</a> -->
       
       
-        <a href="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/#disqus_thread" class="article-comment-link">Comments</a>
+        <a id="a-comments" href="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-3/">Spring 3</a></li></ul>
@@ -185,19 +185,19 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2016/10/10/spring4-1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/09/28/2016-02-17-http-session-summary/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Spring IoC Container Part 1
+          深入理解 HTTP Session
         
       </div>
     </a>
   
   
-    <a href="/2016/09/28/2016-04-27-redis/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/09/28/2016-02-16-java-web-summary-1/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">用 Redis 实现分布式锁 与 实现任务队列</div>
+      <div class="article-nav-title">Java Web 系统总结 (一)</div>
     </a>
   
 </nav>
@@ -280,12 +280,20 @@ ga('send', 'pageview');
   
 </nav>
     
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
 <script>
   var disqus_shortname = 'lele94218';
   
   var disqus_url = 'http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/';
   
   (function(){
+    if ($("#cf").length > 0) {
+      $("#comments").remove();
+      $("#a-comments").remove();
+      return;
+    }
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
@@ -295,7 +303,6 @@ ga('send', 'pageview');
 </script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">

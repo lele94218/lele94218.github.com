@@ -262,10 +262,10 @@ q&#39; &amp;= 2pq + q^2
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/12/15/scip-1-2/" data-id="cjdxemgur000p713suwm4uhjj" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2016/12/15/scip-1-2/" data-id="cjdxjkegn000pyw3ssxxcj28b" class="article-share-link">Share</a> -->
       
       
-        <a href="http://www.terryx.com/2016/12/15/scip-1-2/#disqus_thread" class="article-comment-link">Comments</a>
+        <a id="a-comments" href="http://www.terryx.com/2016/12/15/scip-1-2/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SICP/">SICP</a></li></ul>
@@ -371,12 +371,20 @@ q&#39; &amp;= 2pq + q^2
   
 </nav>
     
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
 <script>
   var disqus_shortname = 'lele94218';
   
   var disqus_url = 'http://www.terryx.com/2016/12/15/scip-1-2/';
   
   (function(){
+    if ($("#cf").length > 0) {
+      $("#comments").remove();
+      $("#a-comments").remove();
+      return;
+    }
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
@@ -386,7 +394,6 @@ q&#39; &amp;= 2pq + q^2
 </script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">

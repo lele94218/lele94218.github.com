@@ -119,10 +119,10 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2018/02/21/new-year/" data-id="cjdxemgug000g713smz1p2luu" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2018/02/21/new-year/" data-id="cjdxjkega000gyw3s8pegafn1" class="article-share-link">Share</a> -->
       
       
-        <a href="http://www.terryx.com/2018/02/21/new-year/#disqus_thread" class="article-comment-link">Comments</a>
+        <a id="a-comments" href="http://www.terryx.com/2018/02/21/new-year/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Soul/">Soul</a></li></ul>
@@ -219,12 +219,20 @@ ga('send', 'pageview');
   
 </nav>
     
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
 <script>
   var disqus_shortname = 'lele94218';
   
   var disqus_url = 'http://www.terryx.com/2018/02/21/new-year/';
   
   (function(){
+    if ($("#cf").length > 0) {
+      $("#comments").remove();
+      $("#a-comments").remove();
+      return;
+    }
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
@@ -234,7 +242,6 @@ ga('send', 'pageview');
 </script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">

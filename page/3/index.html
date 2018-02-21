@@ -124,10 +124,10 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/10/10/spring4-1/" data-id="cjdxemgvb0015713sq7isa49l" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2016/10/10/spring4-1/" data-id="cjdxjkeh90011yw3s8wi60svy" class="article-share-link">Share</a> -->
       
       
-        <a href="http://www.terryx.com/2016/10/10/spring4-1/#disqus_thread" class="article-comment-link">Comments</a>
+        <a id="a-comments" href="http://www.terryx.com/2016/10/10/spring4-1/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-4/">Spring 4</a></li></ul>
@@ -140,9 +140,9 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-2016-01-21-32---bean-scopes" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-2016-01-22-43--access-resource" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/09/28/2016-01-21-32---bean-scopes/" class="article-date">
+    <a href="/2016/09/28/2016-01-22-43--access-resource/" class="article-date">
   <time datetime="2016-09-28T15:50:16.000Z" itemprop="datePublished">2016-09-28</time>
 </a>
     
@@ -158,7 +158,7 @@ ga('send', 'pageview');
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/28/2016-01-21-32---bean-scopes/">3.2 Bean Scopes</a>
+      <a class="article-title" href="/2016/09/28/2016-01-22-43--access-resource/">4.3  Access Resource</a>
     </h1>
   
 
@@ -166,87 +166,25 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="bean-scopes-singleton-and-prototype">Bean scopes: <em>singleton</em> and <em>prototype</em></h3>
-<h4 id="singleton">1. <em>singleton</em></h4>
-<p>Only one instance in Spring IoC container. Only return the same Bean.</p>
-<blockquote>
-<p>One instance of the bean is created for the entire application.</p>
-</blockquote>
-<p>Two ways to implement, we could learn how Spring work through the code bellow:</p>
-<ul>
-<li><strong>Define static attribute to hold the instance:</strong></li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.javass.spring.chapter3.bean;  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;  </span><br><span class="line">    <span class="comment">//1. Private constructor  </span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InstanceHolder</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="comment">//3.Global accession  </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> InstanceHolder.INSTANCE;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="access-resource">Access Resource</h3>
+<h4 id="resourceloader">1. <em>ResourceLoader</em></h4>
+<p>Spring has a <strong><em>DefaultResourceLoader</em></strong> which can return <strong><em>ClassPathResource</em></strong>, <strong><em>UrlResource</em></strong>, and <strong><em>ServletContextResourceLoader</em></strong> which extends all functions of <strong><em>DefaultResourceLoader</em></strong>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testResourceLoad</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">	ResourceLoader loader = <span class="keyword">new</span> DefaultResourceLoader();</span><br><span class="line">	Resource resource = loader.getResource(<span class="string">"classpath:cn/javass/spring/chapter4/test.txt"</span>);</span><br><span class="line">	Assert.assertEquals(ClassPathResource.class, resource.getClass());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         
           <p class="article-more-link">
-            <a href="/2016/09/28/2016-01-21-32---bean-scopes/#more">Read More</a>
+            <a href="/2016/09/28/2016-01-22-43--access-resource/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/" data-id="cjdxemgte0002713s3fs20fol" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-01-22-43--access-resource/" data-id="cjdxjkefl0007yw3sxqdfc75j" class="article-share-link">Share</a> -->
       
       
-        <a href="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/#disqus_thread" class="article-comment-link">Comments</a>
+        <a id="a-comments" href="http://www.terryx.com/2016/09/28/2016-01-22-43--access-resource/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-3/">Spring 3</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-2016-04-27-redis" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/09/28/2016-04-27-redis/" class="article-date">
-  <time datetime="2016-09-28T15:50:16.000Z" itemprop="datePublished">2016-09-28</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Java-Web/">Java Web</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/28/2016-04-27-redis/">用 Redis 实现分布式锁 与 实现任务队列</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>转载于 <a href="http://www.cnblogs.com/it-cen/p/4984272.html" target="_blank" rel="noopener">用 Redis 实现分布式锁 与 实现任务队列</a></p>
-</blockquote>
-<p>这一次总结和分享用Redis实现分布式锁 与 实现任务队列 这两大强大的功能. 先扯点个人观点, 之前我看了一篇博文说博客园的文章大部分都是分享代码, 博文里强调说分享思路比分享代码更重要 (貌似大概是这个意思, 若有误请谅解) , 但我觉得, 分享思路固然重要, 但有了思路, 却没有实现的代码, 那会让人觉得很浮夸的, 在工作中的程序猿都知道, 你去实现一个功能模块, 一段代码, 虽然你有了思路, 但是实现的过程也是很耗时的, 特别是代码调试, 还有各种测试等等. 所以我认为, 思路+代码, 才是一篇好博文的主要核心.</p>
-<p>直接进入主题.</p>
-        
-          <p class="article-more-link">
-            <a href="/2016/09/28/2016-04-27-redis/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-04-27-redis/" data-id="cjdxemgua000c713s2ffrhmbt" class="article-share-link">Share</a> -->
-      
-      
-        <a href="http://www.terryx.com/2016/09/28/2016-04-27-redis/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-Web/">Java Web</a></li></ul>
 
     </footer>
   </div>
@@ -319,13 +257,74 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-02-17-http-session-summary/" data-id="cjdxemgu6000b713sz883qeef" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-02-17-http-session-summary/" data-id="cjdxjkefz000cyw3sqjsazfnt" class="article-share-link">Share</a> -->
       
       
-        <a href="http://www.terryx.com/2016/09/28/2016-02-17-http-session-summary/#disqus_thread" class="article-comment-link">Comments</a>
+        <a id="a-comments" href="http://www.terryx.com/2016/09/28/2016-02-17-http-session-summary/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-Web/">Java Web</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-2016-01-21-32---bean-scopes" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/28/2016-01-21-32---bean-scopes/" class="article-date">
+  <time datetime="2016-09-28T15:50:16.000Z" itemprop="datePublished">2016-09-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring-3/">Spring 3</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/28/2016-01-21-32---bean-scopes/">3.2 Bean Scopes</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="bean-scopes-singleton-and-prototype">Bean scopes: <em>singleton</em> and <em>prototype</em></h3>
+<h4 id="singleton">1. <em>singleton</em></h4>
+<p>Only one instance in Spring IoC container. Only return the same Bean.</p>
+<blockquote>
+<p>One instance of the bean is created for the entire application.</p>
+</blockquote>
+<p>Two ways to implement, we could learn how Spring work through the code bellow:</p>
+<ul>
+<li><strong>Define static attribute to hold the instance:</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.javass.spring.chapter3.bean;  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;  </span><br><span class="line">    <span class="comment">//1. Private constructor  </span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InstanceHolder</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="comment">//3.Global accession  </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> InstanceHolder.INSTANCE;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2016/09/28/2016-01-21-32---bean-scopes/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/" data-id="cjdxjkeex0002yw3s6fuqqay7" class="article-share-link">Share</a> -->
+      
+      
+        <a id="a-comments" href="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-3/">Spring 3</a></li></ul>
 
     </footer>
   </div>
@@ -377,10 +376,10 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-02-16-java-web-summary-1/" data-id="cjdxemgu20008713sf0wyzg54" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-02-16-java-web-summary-1/" data-id="cjdxjkefw000byw3specgae1p" class="article-share-link">Share</a> -->
       
       
-        <a href="http://www.terryx.com/2016/09/28/2016-02-16-java-web-summary-1/#disqus_thread" class="article-comment-link">Comments</a>
+        <a id="a-comments" href="http://www.terryx.com/2016/09/28/2016-02-16-java-web-summary-1/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-Web/">Java Web</a></li></ul>
@@ -468,10 +467,18 @@ ga('send', 'pageview');
   
 </nav>
     
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
 <script>
   var disqus_shortname = 'lele94218';
   
   (function(){
+    if ($("#cf").length > 0) {
+      $("#comments").remove();
+      $("#a-comments").remove();
+      return;
+    }
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
@@ -481,7 +488,6 @@ ga('send', 'pageview');
 </script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">

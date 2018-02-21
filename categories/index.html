@@ -112,7 +112,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/categories/index.html" data-id="cjdxemgti0003713s6yft2l8g" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/categories/index.html" data-id="cjdxjkef20003yw3sz6kfjx4o" class="article-share-link">Share</a> -->
       
       
       
@@ -192,12 +192,20 @@ ga('send', 'pageview');
   
 </nav>
     
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
 <script>
   var disqus_shortname = 'lele94218';
   
   var disqus_url = 'http://www.terryx.com/categories/index.html';
   
   (function(){
+    if ($("#cf").length > 0) {
+      $("#comments").remove();
+      $("#a-comments").remove();
+      return;
+    }
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
@@ -207,7 +215,6 @@ ga('send', 'pageview');
 </script>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
