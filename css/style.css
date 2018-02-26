@@ -356,11 +356,11 @@ body {
 }
 #header-title {
   text-align: center;
-  height: 40px;
+  height: 60px;
   position: absolute;
   top: 50%;
   left: 0;
-  margin-top: -20px;
+  margin-top: -30px;
 }
 #logo,
 #subtitle {
@@ -368,10 +368,11 @@ body {
   color: #fff;
   font-weight: 300;
   text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
 }
 #logo {
-  font-size: 40px;
-  line-height: 40px;
+  font-size: 60px;
+  line-height: 60px;
   letter-spacing: 2px;
 }
 #subtitle {
