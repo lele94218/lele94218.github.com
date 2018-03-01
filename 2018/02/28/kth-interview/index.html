@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-65933410-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: {
+    inlineMath: [["\\\(", "\\)"]],
+    displayMath: [["\\\[", "\\]"]]
+    }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+  
+  <title>K-th Problems in Interview | 欲說還休</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="K-th问题是说在给定数据集中，找到排名第k个的数据。通常这个数据集极大是没办法存在内存中，或者遍历一遍数据集的时间代价很高。通常解决这种方法是维护一个k大小的最大堆，这样我们可以一直维护top k个数据。这种方法比较常见且简单，这里我想说得是一般这种K-th类问题是可以通过Binary Search解决。">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K-th Problems in Interview">
+<meta property="og:url" content="http://www.terryx.com/2018/02/28/kth-interview/index.html">
+<meta property="og:site_name" content="欲說還休">
+<meta property="og:description" content="K-th问题是说在给定数据集中，找到排名第k个的数据。通常这个数据集极大是没办法存在内存中，或者遍历一遍数据集的时间代价很高。通常解决这种方法是维护一个k大小的最大堆，这样我们可以一直维护top k个数据。这种方法比较常见且简单，这里我想说得是一般这种K-th类问题是可以通过Binary Search解决。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-03-01T02:32:49.825Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="K-th Problems in Interview">
+<meta name="twitter:description" content="K-th问题是说在给定数据集中，找到排名第k个的数据。通常这个数据集极大是没办法存在内存中，或者遍历一遍数据集的时间代价很高。通常解决这种方法是维护一个k大小的最大堆，这样我们可以一直维护top k个数据。这种方法比较常见且简单，这里我想说得是一般这种K-th类问题是可以通过Binary Search解决。">
+<meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">欲說還休</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="https://github.com/lele94218">Github</a>
+        
+          <a class="main-nav-link" href="/about">About Me</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.terryx.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-kth-interview" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/28/kth-interview/" class="article-date">
+  <time datetime="2018-02-28T21:36:51.000Z" itemprop="datePublished">2018-02-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      K-th Problems in Interview
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>K-th问题是说在给定数据集中，找到排名第k个的数据。通常这个数据集极大是没办法存在内存中，或者遍历一遍数据集的时间代价很高。通常解决这种方法是维护一个k大小的最大堆，这样我们可以一直维护top k个数据。这种方法比较常见且简单，这里我想说得是一般这种K-th类问题是可以通过Binary Search解决。</p>
+<a id="more"></a>
+<h2 id="binary-search">Binary Search</h2>
+<p>二分查找，是非常简单的算法。但是这种算法应用非常灵活，首先想一次性写对二分查找并不是一件容易的事情。这里我想简单总结一下二分查找的使用背景。众所周知，最最常见应用二分查找的地方就是对于一个已经排好序的数组中，找到一个我们已知的值的位置。这个问题背后隐藏着什么呢？记得我在初次学习二分查找的时候，看到有人总结说二分查找的应用条件就是这个问题是否可以证明是“单调的”。对于数组查找中，我们可以简化问题为一个函数<code>f</code>，<code>f(index)</code>就是对于查找<code>index</code>的值是否大于等于目标值，这样我们就发现函数<code>f</code>在定义域<code>[0, n)</code>是满足单调性质的，因为必然有个界限让小于的<code>f</code>为false，大于等于的时候是true（当然这个界限也有可能不存在，就是我们没有找到这个值的时候）。再举个例子，我们想找到实数取决一个满足<code>f(x)=y</code>的值，也可以对整个实数区域进行二分，然后求解<code>x</code>，就像解方程一样。</p>
+<p>说完了背景，再说说写法。首先是整数的写法：</p>
+<p>因为整数的二分会自动去掉小数部分，这就会遇到一个头疼的问题，如果当<code>low = k, high = k + 1</code> 这时候我们做二分，中间值永远是<code>k</code>。如果我们写的代码是<code>while (low &lt; high) {if (f(mid)) { low = mid; } else { high = mid - 1; }}</code> 且这个时候<code>f(mid)</code>为true，那么我们永远也无法跳出这个循环。解决这个问题有两种思路：1. 因为我们停止的条件是<code>low == high</code>所以不妨把循环条件设置为 <code>while (low + 1 &lt; high)</code> 但是这又会引起一个问题，我们需要在最后再double check一下low和high我们需要的答案是什么。 2. 也可以把二分的结果向上取整 <code>mid = (low + high + 1) / 2</code> 这样在遇到这种情况是我们总会选择<code>high</code>。所以在写完二分解法后最好想一下，两个答案的时候程序能不能成功运行出结果。第二个是值域分布的问题，有可能我们的判断函数<code>f(x)</code>永远都是false，这样的结果是我们最后的二分结果也是错的。</p>
+<p>下面是实数二分的写法：</p>
+<p>这里就不会遇到那个头疼问题，我们只要保证精度就可以了 <code>while (left &lt; high &amp;&amp; Math.abs(left - high) &lt; 1e-5)</code> 但是我不喜欢这么写，会因为精度的问题陷入死循环。我们单纯循环100次就可以把精度控制在小数点后30位。</p>
+<h2 id="k-th-with-binary-search">K-th with Binary Search</h2>
+<p>这里说一下为什么K-th问题都可以借用二分查找解决。因为K-th问题必然是单调性的，因为我们有函数<code>f(x)=k</code>表示<code>x</code>在数据集中的排序为<code>k</code>，那么比x大的数字，<code>f(x)</code>就会变大，反之亦然，单调性很容易证明。所以我们只要在合理的时间计算出<code>x</code>的排序，就可以二分查找出排序为<code>k</code>的数值。下面我们来看几道题：</p>
+<p><a href="https://leetcode.com/problems/find-k-th-smallest-pair-distance/description/" target="_blank" rel="noopener">Find K-th Smallest Pair Distance</a> 给了一个数组，让找出两两pair中相差值为k-th小的值。我们可以对数组排序，然后二分这个相差值。然后根据这个值找出有多少个pair比这个值小。这里注意并不是如果比这个值小的元素有<code>k-1</code>个就证明了就是答案，因为我们不知道这个相差值是否真的存在。所以我们要找到答案为<code>k-1</code>且这个值最小的那个。因为这个值是处于一个分界点，比这个值小排序的序号就减少1，就说明了这个差值是存在的。这里我们用sliding window来找到多少个差值比target要小。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">smallestDistancePair</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">	Arrays.sort(nums);</span><br><span class="line">	<span class="keyword">int</span> low = <span class="number">0</span>, high = Integer.MAX_VALUE;</span><br><span class="line">	<span class="keyword">while</span> (low &lt; high) &#123;</span><br><span class="line">		<span class="keyword">int</span> mid = (low + high) / <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span> begin = <span class="number">0</span>, end = <span class="number">0</span>, cnt = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (; end &lt; nums.length; ++ end) &#123;</span><br><span class="line">			<span class="keyword">while</span> (begin &lt; nums.length &amp;&amp; nums[end] - nums[begin] &gt; mid) &#123;</span><br><span class="line">				begin++;</span><br><span class="line">			&#125;</span><br><span class="line">			cnt += (end - begin);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (cnt &gt;= k) &#123;</span><br><span class="line">			high = mid;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			low = mid + <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> low;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://leetcode.com/problems/k-th-smallest-prime-fraction/description/" target="_blank" rel="noopener">K-th Smallest Prime Fraction</a> 给一个排序好的素数数组，对于 <code>p &lt; q find p / q</code> 找出所有值中第k小的。同样，这里我们对实数值域进行二分，找到多少个分数比当前值小，同样找到这些满足条件中的最小值。我们也可以通过比较巧妙的线性方法的找出所有满足小于查找值的分数个数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] kthSmallestPrimeFraction(<span class="keyword">int</span>[] A, <span class="keyword">int</span> K) &#123;</span><br><span class="line">	<span class="keyword">int</span> n = A.length;</span><br><span class="line">	<span class="keyword">double</span> low = (<span class="keyword">double</span>)A[<span class="number">0</span>]/A[n - <span class="number">1</span>];</span><br><span class="line">	<span class="keyword">double</span> high = (<span class="keyword">double</span>)A[n - <span class="number">1</span>]/A[<span class="number">0</span>];</span><br><span class="line">	Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> a : A) set.add(a);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> itr = <span class="number">0</span>; itr &lt; <span class="number">100</span>; ++itr) &#123;</span><br><span class="line">		<span class="keyword">double</span> mid = (low + high) * <span class="number">0.5</span>;</span><br><span class="line">		<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>, cnt = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (; i &lt; n; ++ i) &#123;</span><br><span class="line">			<span class="keyword">for</span> (; j &lt; n; ++ j) &#123;</span><br><span class="line">				<span class="keyword">if</span> (i &lt; j &amp;&amp; A[i] &lt; mid * A[j]) &#123;</span><br><span class="line">					cnt += (n - j);</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (cnt &lt; K) &#123;</span><br><span class="line">			low = mid;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			high = mid;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> a : A) &#123;</span><br><span class="line">		<span class="keyword">double</span> p = Math.round(low * (<span class="keyword">double</span>)a);</span><br><span class="line">		<span class="keyword">if</span> (Math.abs(p - low * (<span class="keyword">double</span>)a) &lt; <span class="number">1e-5</span> &amp;&amp; set.contains((<span class="keyword">int</span>)p)) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;(<span class="keyword">int</span>)p, a&#125;;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/" target="_blank" rel="noopener">Kth Smallest Element in a Sorted Matrix</a> 给一个行和列都排序的矩阵，找到其中第k小的。我们二分来查找这个值，然后通过每行进行二分查找来统计多少个值比这个数要小。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">kthSmallest</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = matrix.length;</span><br><span class="line">	<span class="keyword">int</span> low = matrix[<span class="number">0</span>][<span class="number">0</span>], high = matrix[n - <span class="number">1</span>][n - <span class="number">1</span>];</span><br><span class="line">	<span class="keyword">while</span> (low &lt; high) &#123;</span><br><span class="line">		<span class="keyword">int</span> mid = (low + high) / <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++ i) &#123;</span><br><span class="line">			<span class="keyword">int</span> l = <span class="number">0</span>, h = n - <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">while</span> (l &lt; h) &#123;</span><br><span class="line">				<span class="keyword">int</span> m = (l + h + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">				<span class="keyword">if</span> (matrix[i][m] &lt;= mid) &#123;</span><br><span class="line">					l = m;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					h = m - <span class="number">1</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (matrix[i][l] &lt;= mid) &#123;</span><br><span class="line">				count += l + <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (count &lt; k) &#123;</span><br><span class="line">			low = mid + <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			high = mid;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> low;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://leetcode.com/problems/kth-smallest-number-in-multiplication-table/description/" target="_blank" rel="noopener">Kth Smallest Number in Multiplication Table</a> 和上道题类似，每行换成了等比数列。免去了进行二分查找统计，直接算除法就可以统计数量。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findKthNumber</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> low = <span class="number">1</span>, high = m * n;</span><br><span class="line">	<span class="keyword">while</span> (low &lt; high) &#123;</span><br><span class="line">		<span class="keyword">int</span> mid = (low + high) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; ++ i) &#123;</span><br><span class="line">			count += Math.min(n, mid / i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (count &lt; k) &#123;</span><br><span class="line">			low = mid + <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			high = mid;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> low;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <!-- <a data-url="http://www.terryx.com/2018/02/28/kth-interview/" data-id="cje7waq3f000o90v9rsz9snpv" class="article-share-link">Share</a> -->
+      
+      
+        <a id="a-comments" href="http://www.terryx.com/2018/02/28/kth-interview/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/02/24/bst/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Binary Search Tree in Interview</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java-Web/" style="font-size: 14px;">Java Web</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Memory-Management/" style="font-size: 10px;">Memory Management</a> <a href="/tags/SICP/" style="font-size: 18px;">SICP</a> <a href="/tags/Soul/" style="font-size: 10px;">Soul</a> <a href="/tags/Spring-3/" style="font-size: 16px;">Spring 3</a> <a href="/tags/Spring-4/" style="font-size: 14px;">Spring 4</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/02/28/kth-interview/">K-th Problems in Interview</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/24/bst/">Binary Search Tree in Interview</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/21/new-year/">新年</a>
+          </li>
+        
+          <li>
+            <a href="/2017/01/02/sicp-2-2/">Hierarchical Data and the Closure Property</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/31/sicp-2-1/">Introduction to Data Abstraction</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 <a href="https://github.com/lele94218" target="_blank">TerryX</a><br>
+      <!-- Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> -->
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="https://github.com/lele94218" class="mobile-nav-link">Github</a>
+  
+    <a href="/about" class="mobile-nav-link">About Me</a>
+  
+</nav>
+    
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<script>
+  var disqus_shortname = 'lele94218';
+  
+  var disqus_url = 'http://www.terryx.com/2018/02/28/kth-interview/';
+  
+  (function(){
+    if ($("#cf").length > 0) {
+      $("#comments").remove();
+      $("#a-comments").remove();
+      return;
+    }
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
