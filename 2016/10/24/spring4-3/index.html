@@ -3,15 +3,15 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-<!-- Google Analytics -->
-<script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-89485836-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-ga('create', 'UA-65933410-1', 'auto');
-ga('send', 'pageview');
+  gtag('config', 'UA-89485836-2');
+</script>
 
 </script>
 <!-- End Google Analytics -->
@@ -30,18 +30,18 @@ ga('send', 'pageview');
   
   <title>Spring IoC Container Part 3 | 欲說還休</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="DefaultSingletonBeanRegistry Last time we find that in the DefaultListableBeanFactory it provides map to save bean definitions. But when getting bean instance, we need to step into DefaultSingletonBea">
+  <meta name="description" content="DefaultSingletonBeanRegistryLast time we find that in the DefaultListableBeanFactory it provides map to save bean definitions. But when getting bean instance, we need to step into DefaultSingletonBean">
 <meta name="keywords" content="Java,Spring 4">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring IoC Container Part 3">
 <meta property="og:url" content="http://www.terryx.com/2016/10/24/spring4-3/index.html">
 <meta property="og:site_name" content="欲說還休">
-<meta property="og:description" content="DefaultSingletonBeanRegistry Last time we find that in the DefaultListableBeanFactory it provides map to save bean definitions. But when getting bean instance, we need to step into DefaultSingletonBea">
+<meta property="og:description" content="DefaultSingletonBeanRegistryLast time we find that in the DefaultListableBeanFactory it provides map to save bean definitions. But when getting bean instance, we need to step into DefaultSingletonBean">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2016-10-24T22:59:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring IoC Container Part 3">
-<meta name="twitter:description" content="DefaultSingletonBeanRegistry Last time we find that in the DefaultListableBeanFactory it provides map to save bean definitions. But when getting bean instance, we need to step into DefaultSingletonBea">
+<meta name="twitter:description" content="DefaultSingletonBeanRegistryLast time we find that in the DefaultListableBeanFactory it provides map to save bean definitions. But when getting bean instance, we need to step into DefaultSingletonBean">
 <meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
   
   
@@ -113,8 +113,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="defaultsingletonbeanregistry">DefaultSingletonBeanRegistry</h2>
-<p>Last time we find that in the <code>DefaultListableBeanFactory</code> it provides map to save bean definitions. But when getting bean instance, we need to step into <code>DefaultSingletonBeanRegistry</code>. First let's see the document:</p>
+        <h2 id="DefaultSingletonBeanRegistry"><a href="#DefaultSingletonBeanRegistry" class="headerlink" title="DefaultSingletonBeanRegistry"></a>DefaultSingletonBeanRegistry</h2><p>Last time we find that in the <code>DefaultListableBeanFactory</code> it provides map to save bean definitions. But when getting bean instance, we need to step into <code>DefaultSingletonBeanRegistry</code>. First let’s see the document: </p>
 <blockquote>
 <p>Generic registry for shared bean instances, implementing the <code>SingletonBeanRegistry</code>. <strong>Allows for registering singleton instances that should be shared for all callers of the registry, to be obtained via bean name</strong>.</p>
 </blockquote>
@@ -130,12 +129,11 @@ ga('send', 'pageview');
 <a id="more"></a>
 <p>In the class, it has private variable to cache the bean instance:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Cache of singleton objects: bean name --&gt; bean instance */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; singletonObjects = <span class="keyword">new</span> ConcurrentHashMap&lt;String, Object&gt;(<span class="number">256</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="abstractbeanfactory">AbstractBeanFactory</h2>
-<p>Again <code>AbstractBeanFactory</code> is very important <code>BeanFactory</code> implementation to get beans, and it is also a <code>SingletonBeanRegistry</code> interface implementation to save beans.</p>
+<h2 id="AbstractBeanFactory"><a href="#AbstractBeanFactory" class="headerlink" title="AbstractBeanFactory"></a>AbstractBeanFactory</h2><p>Again <code>AbstractBeanFactory</code> is very important <code>BeanFactory</code> implementation to get beans, and it is also a <code>SingletonBeanRegistry</code> interface implementation to save beans. </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> &lt;T&gt; <span class="function">T <span class="title">doGetBean</span><span class="params">(String name,</span></span></span><br><span class="line"><span class="function"><span class="params">                          Class&lt;T&gt; requiredType,</span></span></span><br><span class="line"><span class="function"><span class="params">                          Object[] args,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">boolean</span> typeCheckOnly)</span></span></span><br></pre></td></tr></table></figure>
 <p>When <code>ApplicationContext</code> calls <code>doGetBean(...)</code>, it will call <code>getSingleton(...)</code> which is declared in <code>SingletonBeanRegistry</code> interface and implements in <code>DefaultSingletonBeanRegistry</code>.</p>
 <blockquote>
-<p>Return the (raw) singleton object registered under the given name. Only checks already instantiated singletons; does not return an Object for singleton bean definitions which have not been instantiated yet.</p>
+<p>Return the (raw) singleton object registered under the given name.<br>Only checks already instantiated singletons; does not return an Object for singleton bean definitions which have not been instantiated yet.</p>
 </blockquote>
 <blockquote>
 <p>The main purpose of this method is to access manually registered singletons (see <code>registerSingleton(java.lang.String, java.lang.Object)</code>). Can also be used to access a singleton defined by a bean definition that already been created, in a raw fashion.</p>
@@ -143,9 +141,8 @@ ga('send', 'pageview');
 <blockquote>
 <p>NOTE: This lookup method is not aware of FactoryBean prefixes or aliases. You need to resolve the canonical bean name first before obtaining the singleton instance.</p>
 </blockquote>
-<p>In this method, if the bean exists in concurrent map <code>singletonObjects&lt;String, Object&gt;</code> of <code>DefaultSingletonBeanRegistry</code>, it will call <code>getSingleton(...)</code> and return the bean object; Else the bean isn't defined, the method will also call <code>getSingleton(...)</code>, if the singleton bean is null then it will generate the object of bean.</p>
-<h2 id="create-object-of-bean">Create Object of Bean</h2>
-<p>How does spring create object from bean definition file? In <code>AbstractBeanFactory</code>, it provide an abstract bean creation method:</p>
+<p>In this method, if the bean exists in concurrent map <code>singletonObjects&lt;String, Object&gt;</code> of <code>DefaultSingletonBeanRegistry</code>, it will call <code>getSingleton(...)</code> and return the bean object; Else the bean isn’t defined, the method will also call  <code>getSingleton(...)</code>, if the singleton bean is null then it will generate the object of bean.</p>
+<h2 id="Create-Object-of-Bean"><a href="#Create-Object-of-Bean" class="headerlink" title="Create Object of Bean"></a>Create Object of Bean</h2><p>How does spring create object from bean definition file? In <code>AbstractBeanFactory</code>, it provide an abstract bean creation method:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> Object <span class="title">createBean</span><span class="params">(String beanName, RootBeanDefinition mbd, Object[] args)</span></span></span><br><span class="line"><span class="function">			<span class="keyword">throws</span> BeanCreationException</span>;</span><br></pre></td></tr></table></figure>
 <p>Also see the document:</p>
 <blockquote>
@@ -156,7 +153,7 @@ ga('send', 'pageview');
 </blockquote>
 <p>This method is implemented in <code>AbstractAutowireCapableBeanFactory</code>:</p>
 <blockquote>
-<p>Abstract bean factory superclass that implements default bean creation, with the full capabilities specified by the <code>RootBeanDefinition</code> class. Implements the <code>AutowireCapableBeanFactory</code> interface <strong>in addition to AbstractBeanFactory's <code>createBean(java.lang.Class&lt;T&gt;)</code> method.</strong></p>
+<p>Abstract bean factory superclass that implements default bean creation, with the full capabilities specified by the <code>RootBeanDefinition</code> class. Implements the <code>AutowireCapableBeanFactory</code> interface <strong>in addition to AbstractBeanFactory’s <code>createBean(java.lang.Class&lt;T&gt;)</code> method.</strong></p>
 </blockquote>
 <blockquote>
 <p>Provides bean creation (with constructor resolution), property population, wiring (including autowiring), and initialization. Handles runtime bean references, resolves managed collections, calls initialization methods, etc. Supports autowiring constructors, properties by name, and properties by type.</p>
@@ -175,9 +172,8 @@ ga('send', 'pageview');
 <p>Differentiates between default bean instantiation, use of a factory method, and autowiring a constructor.</p>
 </blockquote>
 <p>So we can know from the document that the method just create the specified bean which means it should get class reference in the definition file.</p>
-<p>In this method, we find <code>BeanWrapper</code> class which is the central interface of Spring's low-level JavaBeans infrastructure. The wrapper is initialized with <code>createBeanInstance(...)</code> method which can create a new instance for the specified bean, using an appropriate instantiation strategy: factory method, constructor autowiring, or simple instantiation. Then it call the core instantiation method <code>instantiateBean(...)</code> and it will step into <code>InstantiationStrategy</code> interface.</p>
-<h2 id="instantiationstrategy">InstantiationStrategy</h2>
-<blockquote>
+<p>In this method, we find <code>BeanWrapper</code> class which is the central interface of Spring’s low-level JavaBeans infrastructure. The wrapper  is initialized with <code>createBeanInstance(...)</code> method which can create a new instance for the specified bean, using an appropriate instantiation strategy: factory method, constructor autowiring, or simple instantiation. Then it call the core instantiation method <code>instantiateBean(...)</code> and it will step into <code>InstantiationStrategy</code> interface.</p>
+<h2 id="InstantiationStrategy"><a href="#InstantiationStrategy" class="headerlink" title="InstantiationStrategy"></a>InstantiationStrategy</h2><blockquote>
 <p>Interface responsible for creating instances corresponding to a root bean definition.</p>
 </blockquote>
 <blockquote>
@@ -185,17 +181,18 @@ ga('send', 'pageview');
 </blockquote>
 <p>Here we just talk about its <code>SimpleInstantiationStrategy</code> implement class. it has <code>instantiate(...)</code> which can return an instance of the bean with the given name in this factory. First it get the <code>Class&lt;?&gt; clazz</code> of the bean, and call <code>clazz.getDeclaredConstructor(...)</code> to get the <code>Constructor&lt;?&gt;</code> of the bean, then step into <code>BeanUtils</code> class and call <code>instantiateClass(...)</code> method which can call <code>constructor.newInstance(args)</code> and return a new object created by calling the constructor this object represents.</p>
 <p>Finally, the object will be saved in the <code>singletonObjects&lt;String, Object&gt;</code> for <code>getBean(...)</code> method to get the object.</p>
-<h2 id="whats-next">What's Next?</h2>
-<p>After reading the source code of Spring's IoC, I find some TODO list.</p>
+<h2 id="What’s-Next"><a href="#What’s-Next" class="headerlink" title="What’s Next?"></a>What’s Next?</h2><p>After reading the source code of Spring’s IoC, I find some TODO list.</p>
 <ul>
-<li><p><code>ThreadLocal&lt;?&gt;</code>, <code>ConcurrentMap&lt;K, V&gt;</code> and <em>volatile</em> are often appeared in the source, so I need to deal with something about Java Threads;</p></li>
-<li><p><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/" target="_blank" rel="noopener">Spring Reference</a> is very useful document to read thus I need to focus more with it.</p></li>
+<li><p><code>ThreadLocal&lt;?&gt;</code>, <code>ConcurrentMap&lt;K, V&gt;</code> and <em>volatile</em> are often appeared in the source, so I need to deal with something about Java Threads;</p>
+</li>
+<li><p><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/" target="_blank" rel="noopener">Spring Reference</a> is very useful document to read thus I need to focus more with it.</p>
+</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/10/24/spring4-3/" data-id="cjf1r5txf001nvknpz8zsfxes" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2016/10/24/spring4-3/" data-id="cjgss8n0h001kjmv98b8fyu49" class="article-share-link">Share</a> -->
       
       
         <a id="a-comments" href="http://www.terryx.com/2016/10/24/spring4-3/#disqus_thread" class="article-comment-link">Comments</a>

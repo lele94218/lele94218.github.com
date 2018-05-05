@@ -3,15 +3,15 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-<!-- Google Analytics -->
-<script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-89485836-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-ga('create', 'UA-65933410-1', 'auto');
-ga('send', 'pageview');
+  gtag('config', 'UA-89485836-2');
+</script>
 
 </script>
 <!-- End Google Analytics -->
@@ -119,23 +119,15 @@ ga('send', 'pageview');
 <p>这一次总结和分享用Redis实现分布式锁 与 实现任务队列 这两大强大的功能. 先扯点个人观点, 之前我看了一篇博文说博客园的文章大部分都是分享代码, 博文里强调说分享思路比分享代码更重要 (貌似大概是这个意思, 若有误请谅解) , 但我觉得, 分享思路固然重要, 但有了思路, 却没有实现的代码, 那会让人觉得很浮夸的, 在工作中的程序猿都知道, 你去实现一个功能模块, 一段代码, 虽然你有了思路, 但是实现的过程也是很耗时的, 特别是代码调试, 还有各种测试等等. 所以我认为, 思路+代码, 才是一篇好博文的主要核心.</p>
 <p>直接进入主题.</p>
 <a id="more"></a>
-<h3 id="一前言">一、前言</h3>
-<p>双十一刚过不久, 大家都知道在天猫、京东、苏宁等等电商网站上有很多秒杀活动, 例如在某一个时刻抢购一个原价1999现在秒杀价只要999的手机时, 会迎来一个用户请求的高峰期, 可能会有几十万几百万的并发量, 来抢这个手机, 在高并发的情形下会对数据库服务器或者是文件服务器应用服务器造成巨大的压力, 严重时说不定就宕机了, 另一个问题是, 秒杀的东西都是有量的, 例如一款手机只有10台的量秒杀, 那么, 在高并发的情况下, 成千上万条数据更新数据库 (例如10台的量被人抢一台就会在数据集某些记录下 减1) , 那次这个时候的先后顺序是很乱的, 很容易出现10台的量, 抢到的人就不止10个这种严重的问题. 那么, 以后所说的问题我们该如何去解决呢？ 接下来我所分享的技术就可以拿来处理以上的问题： 分布式锁 和 任务队列.</p>
-<h3 id="二实现思路">二、实现思路</h3>
-<h4 id="redis-实现分布式锁思路">1.Redis 实现分布式锁思路</h4>
-<p>思路很简单, 主要用到的 <code>redis</code> 函数是 <code>setnx()</code> , 这个应该是实现分布式锁最主要的函数. 首先是将某一任务标识名 (这里用 <code>Lock:order</code> 作为标识名的例子) 作为键存到 <code>redis</code> 里, 并为其设个过期时间, 如果是还有 <code>Lock:order</code> 请求过来, 先是通过 <code>setnx()</code> 看看是否能将 <code>Lock:order</code> 插入到 redis 里, 可以的话就返回 true, 不可以就返回 false. 当然, 在我的代码里会比这个思路复杂一些, 我会在分析代码时进一步说明.</p>
-<h4 id="redis-实现任务队列">2.Redis 实现任务队列</h4>
-<p>这里的实现会用到上面的 <code>Redis</code> 分布式的锁机制, 主要是用到了<code>Redis</code> 里的有序集合这一数据结构. 例如入队时, 通过 <code>zset</code> 的 <code>add()</code> 函数进行入队, 而出对时, 可以用到 <code>zset</code> 的 <code>getScore()</code> 函数. 另外还可以弹出顶部的几个任务.</p>
+<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>双十一刚过不久, 大家都知道在天猫、京东、苏宁等等电商网站上有很多秒杀活动, 例如在某一个时刻抢购一个原价1999现在秒杀价只要999的手机时, 会迎来一个用户请求的高峰期, 可能会有几十万几百万的并发量, 来抢这个手机, 在高并发的情形下会对数据库服务器或者是文件服务器应用服务器造成巨大的压力, 严重时说不定就宕机了, 另一个问题是, 秒杀的东西都是有量的, 例如一款手机只有10台的量秒杀, 那么, 在高并发的情况下, 成千上万条数据更新数据库 (例如10台的量被人抢一台就会在数据集某些记录下 减1) , 那次这个时候的先后顺序是很乱的, 很容易出现10台的量, 抢到的人就不止10个这种严重的问题. 那么, 以后所说的问题我们该如何去解决呢？ 接下来我所分享的技术就可以拿来处理以上的问题： 分布式锁 和 任务队列.</p>
+<h3 id="二、实现思路"><a href="#二、实现思路" class="headerlink" title="二、实现思路"></a>二、实现思路</h3><h4 id="1-Redis-实现分布式锁思路"><a href="#1-Redis-实现分布式锁思路" class="headerlink" title="1.Redis 实现分布式锁思路"></a>1.Redis 实现分布式锁思路</h4><p>思路很简单, 主要用到的 <code>redis</code> 函数是 <code>setnx()</code> , 这个应该是实现分布式锁最主要的函数. 首先是将某一任务标识名 (这里用 <code>Lock:order</code> 作为标识名的例子) 作为键存到 <code>redis</code> 里, 并为其设个过期时间, 如果是还有 <code>Lock:order</code> 请求过来, 先是通过 <code>setnx()</code> 看看是否能将 <code>Lock:order</code> 插入到 redis 里, 可以的话就返回 true, 不可以就返回 false. 当然, 在我的代码里会比这个思路复杂一些, 我会在分析代码时进一步说明.</p>
+<h4 id="2-Redis-实现任务队列"><a href="#2-Redis-实现任务队列" class="headerlink" title="2.Redis 实现任务队列"></a>2.Redis 实现任务队列</h4><p>这里的实现会用到上面的 <code>Redis</code> 分布式的锁机制, 主要是用到了<code>Redis</code> 里的有序集合这一数据结构. 例如入队时, 通过 <code>zset</code> 的 <code>add()</code> 函数进行入队, 而出对时, 可以用到 <code>zset</code> 的 <code>getScore()</code> 函数. 另外还可以弹出顶部的几个任务.</p>
 <p>以上就是实现 分布式锁 和 任务队列 的简单思路, 如果你看完有点模棱两可, 那请看接下来的代码实现.</p>
-<h3 id="三代码分析">三、代码分析</h3>
-<h4 id="一-先来分析redis分布式锁的代码实现">(一) 先来分析Redis分布式锁的代码实现　　</h4>
-<ul>
-<li><ol style="list-style-type: decimal">
-<li>为避免特殊原因导致锁无法释放, 在加锁成功后, 锁会被赋予一个生存时间 (通过 <code>lock</code>方法的参数设置或者使用默认值) , 超出生存时间锁会被自动释放锁的生存时间默认比较短 (秒级) , 因此, 若需要长时间加锁, 可以通过 <code>expire</code> 方法延长锁的生存时间为适当时间, 比如在循环内.</li>
-</ol></li>
-<li><ol start="2" style="list-style-type: decimal">
-<li>系统级的锁当进程无论何种原因时出现 crash 时, 操作系统会自己回收锁, 所以不会出现资源丢失, 但分布式锁不用, 若一次性设置很长时间, 一旦由于各种原因出现进程crash 或者其他异常导致unlock未被调用时, 则该锁在剩下的时间就会变成垃圾锁, 导致其他进程或者进程重启后无法进入加锁区域.</li>
-</ol></li>
+<h3 id="三、代码分析"><a href="#三、代码分析" class="headerlink" title="三、代码分析"></a>三、代码分析</h3><h4 id="一-先来分析Redis分布式锁的代码实现"><a href="#一-先来分析Redis分布式锁的代码实现" class="headerlink" title="(一) 先来分析Redis分布式锁的代码实现　　"></a>(一) 先来分析Redis分布式锁的代码实现　　</h4><ul>
+<li><p>(1) 为避免特殊原因导致锁无法释放, 在加锁成功后, 锁会被赋予一个生存时间 (通过 <code>lock</code>方法的参数设置或者使用默认值) , 超出生存时间锁会被自动释放锁的生存时间默认比较短 (秒级) , 因此, 若需要长时间加锁, 可以通过 <code>expire</code> 方法延长锁的生存时间为适当时间, 比如在循环内.</p>
+</li>
+<li><p>(2) 系统级的锁当进程无论何种原因时出现 crash 时, 操作系统会自己回收锁, 所以不会出现资源丢失, 但分布式锁不用, 若一次性设置很长时间, 一旦由于各种原因出现进程crash 或者其他异常导致unlock未被调用时, 则该锁在剩下的时间就会变成垃圾锁, 导致其他进程或者进程重启后无法进入加锁区域.</p>
+</li>
 </ul>
 <p>先看加锁的实现代码：这里需要主要两个参数, 一个是 <code>$timeout</code>,这个是循环获取锁的等待时间, 在这个时间内会一直尝试获取锁知道超时, 如果为 0, 则表示获取锁失败后直接返回而不再等待；另一个重要参数的 <code>$expire</code>, 这个参数指当前锁的最大生存时间, 以秒为单位的, 它必须大于0, 如果超过生存时间锁仍未被释放, 则系统会自动强制释放. 这个参数的最要作用请看上面的 (1) 里的解释.</p>
 <p>这里先取得当前时间, 然后再获取到锁失败时的等待超时的时刻 (是个时间戳), 再获取到锁的最大生存时刻是多少. 这里 redis 的 key 用这种格式：<code>Lock: 锁的标识名</code>, 这里就开始进入循环了, 先是插入数据到redis里, 使用 <code>setnx()</code> 函数, 这函数的意思是, 如果该键不存在则插入数据, 将最大生存时刻作为值存储, 假如插入成功, 则对该键进行失效时间的设置, 并将该键放在 <code>$lockedName</code> 数组里, 返回 true, 也就是上锁成功；如果该键存在, 则不会插入操作了, 这里有一步严谨的操作, 那就是取得当前键的剩余时间, 假如这个时间小于 0, 表示 key 上没有设置生存时间 (key是不会不存在的, 因为前面setnx会自动创建) 如果出现这种状况, 那就是进程的某个实例 setnx 成功后 crash 导致紧跟着的 expire 没有被调用, 这时可以直接设置expire并把锁纳为己用. 如果没设置锁失败的等待时间或者已超过最大等待时间了, 那就退出循环, 反之则隔 <code>$waitIntervalUs</code> 后继续请求. 这就是加锁的整一个代码分析.</p>
@@ -144,7 +136,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-04-27-redis/" data-id="cjf1r5tv8000cvknpaemy0p2x" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-04-27-redis/" data-id="cjgss8myb000cjmv91fnppmk7" class="article-share-link">Share</a> -->
       
       
         <a id="a-comments" href="http://www.terryx.com/2016/09/28/2016-04-27-redis/#disqus_thread" class="article-comment-link">Comments</a>
@@ -168,9 +160,9 @@ ga('send', 'pageview');
     </a>
   
   
-    <a href="/2016/09/28/2016-02-17-http-session-summary/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/09/28/2016-02-16-java-web-summary-1/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">深入理解 HTTP Session</div>
+      <div class="article-nav-title">Java Web 系统总结 (一)</div>
     </a>
   
 </nav>

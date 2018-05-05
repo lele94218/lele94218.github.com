@@ -3,15 +3,15 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-<!-- Google Analytics -->
-<script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-89485836-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-ga('create', 'UA-65933410-1', 'auto');
-ga('send', 'pageview');
+  gtag('config', 'UA-89485836-2');
+</script>
 
 </script>
 <!-- End Google Analytics -->
@@ -30,18 +30,18 @@ ga('send', 'pageview');
   
   <title>3.2 Bean Scopes | 欲說還休</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Bean scopes: singleton and prototype 1. singleton Only one instance in Spring IoC container. Only return the same Bean.  One instance of the bean is created for the entire application.  Two ways to im">
+  <meta name="description" content="Bean scopes: singleton and prototype1. singletonOnly one instance in Spring IoC container. Only return the same Bean.  One instance of the bean is created for the entire application.  Two ways to impl">
 <meta name="keywords" content="Spring 3,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="3.2 Bean Scopes">
 <meta property="og:url" content="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/index.html">
 <meta property="og:site_name" content="欲說還休">
-<meta property="og:description" content="Bean scopes: singleton and prototype 1. singleton Only one instance in Spring IoC container. Only return the same Bean.  One instance of the bean is created for the entire application.  Two ways to im">
+<meta property="og:description" content="Bean scopes: singleton and prototype1. singletonOnly one instance in Spring IoC container. Only return the same Bean.  One instance of the bean is created for the entire application.  Two ways to impl">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2016-10-11T07:54:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="3.2 Bean Scopes">
-<meta name="twitter:description" content="Bean scopes: singleton and prototype 1. singleton Only one instance in Spring IoC container. Only return the same Bean.  One instance of the bean is created for the entire application.  Two ways to im">
+<meta name="twitter:description" content="Bean scopes: singleton and prototype1. singletonOnly one instance in Spring IoC container. Only return the same Bean.  One instance of the bean is created for the entire application.  Two ways to impl">
 <meta name="twitter:creator" content="@https:&#x2F;&#x2F;twitter.com&#x2F;___terryX">
   
   
@@ -113,9 +113,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="bean-scopes-singleton-and-prototype">Bean scopes: <em>singleton</em> and <em>prototype</em></h3>
-<h4 id="singleton">1. <em>singleton</em></h4>
-<p>Only one instance in Spring IoC container. Only return the same Bean.</p>
+        <h3 id="Bean-scopes-singleton-and-prototype"><a href="#Bean-scopes-singleton-and-prototype" class="headerlink" title="Bean scopes: singleton and prototype"></a>Bean scopes: <em>singleton</em> and <em>prototype</em></h3><h4 id="1-singleton"><a href="#1-singleton" class="headerlink" title="1. singleton"></a>1. <em>singleton</em></h4><p>Only one instance in Spring IoC container. Only return the same Bean.</p>
 <blockquote>
 <p>One instance of the bean is created for the entire application.</p>
 </blockquote>
@@ -136,10 +134,9 @@ ga('send', 'pageview');
 </ul>
 <p>In most time, <em>singleton</em> is default in Spring.</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span>  <span class="attr">class</span>=<span class="string">"cn.javass.spring.chapter3.bean.Printer"</span> <span class="attr">scope</span>=<span class="string">"singleton"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="prototype">2. <em>prototype</em></h4>
-<p>Return new Bean when container request a Bean. Contrast with <em>singleton</em>, <em>prototype</em> would not cache Bean.</p>
+<h4 id="2-prototype"><a href="#2-prototype" class="headerlink" title="2. prototype"></a>2. <em>prototype</em></h4><p>Return new Bean when container request a Bean. Contrast with <em>singleton</em>, <em>prototype</em> would not cache Bean.</p>
 <blockquote>
-<p>One instance of the bean is created every time the bean is injected into or retrieved from the Spring application context.</p>
+<p>One instance of the bean is created every time the bean is injected<br>into or retrieved from the Spring application context.</p>
 </blockquote>
 <ul>
 <li><strong>Here is the implement of <em>prototype</em> in Spring</strong>:</li>
@@ -156,20 +153,17 @@ ga('send', 'pageview');
 <li><strong>We could define <em>prototype</em> in xml:</strong></li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span>  <span class="attr">class</span>=<span class="string">"cn.javass.spring.chapter3.bean.Printer"</span> <span class="attr">scope</span>=<span class="string">"prototypes"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="bean-scopes-in-web-application">Bean Scopes in Web application</h3>
-<h4 id="request">1. <em>request</em></h4>
-<blockquote>
-<p>In a web application, one instance of the bean is created for each request.</p>
+<h3 id="Bean-Scopes-in-Web-application"><a href="#Bean-Scopes-in-Web-application" class="headerlink" title="Bean Scopes in Web application"></a>Bean Scopes in Web application</h3><h4 id="1-request"><a href="#1-request" class="headerlink" title="1. request"></a>1. <em>request</em></h4><blockquote>
+<p>In a web application, one instance of the bean is created for each<br>request.</p>
 </blockquote>
-<h4 id="session">2. <em>session</em></h4>
-<blockquote>
+<h4 id="2-session"><a href="#2-session" class="headerlink" title="2. session"></a>2. <em>session</em></h4><blockquote>
 <p>In a web application, one instance of the bean is created for each session.</p>
 </blockquote>
 
       
     </div>
     <footer class="article-footer">
-      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/" data-id="cjf1r5ttu0000vknpnauc2lpd" class="article-share-link">Share</a> -->
+      <!-- <a data-url="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/" data-id="cjgss8mwx0000jmv9f3nu98pz" class="article-share-link">Share</a> -->
       
       
         <a id="a-comments" href="http://www.terryx.com/2016/09/28/2016-01-21-32---bean-scopes/#disqus_thread" class="article-comment-link">Comments</a>
