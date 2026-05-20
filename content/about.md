@@ -9,7 +9,8 @@ title: "About Me"
 阅读，看电影，以及游戏
 
 Codeforces Profile:  
+    
 [ACMega](http://codeforces.com/profile/ACMega)
-  
-Leetcode Profile:  
-[**voidmian**](https://leetcode.com/voidmian/)
+
+    Leetcode Profile:  
+    [voidmian](https://leetcode.com/voidmian/)

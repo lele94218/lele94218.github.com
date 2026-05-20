@@ -23,36 +23,41 @@ Last time we find that in the `DefaultListableBeanFactory` it provides map to sa
 
 In the class, it has private variable to cache the bean instance:
 
-|  |  |
-| --- | --- |
-| ``` 1 2 ``` | ``` /** Cache of singleton objects: bean name --> bean instance */ private final Map<String, Object> singletonObjects = new ConcurrentHashMap<String, Object>(256); ``` |
+```java
+/** Cache of singleton objects: bean name --> bean instance */
+private final Map<String, Object> singletonObjects = new ConcurrentHashMap<String, Object>(256);
+```
 
 ## AbstractBeanFactory
 
 Again `AbstractBeanFactory` is very important `BeanFactory` implementation to get beans, and it is also a `SingletonBeanRegistry` interface implementation to save beans.
 
-|  |  |
-| --- | --- |
-| ``` 1 2 3 4 ``` | ``` protected <T> T doGetBean(String name,                           Class<T> requiredType,                           Object[] args,                           boolean typeCheckOnly) ``` |
+```java
+protected <T> T doGetBean(String name,
+                          Class<T> requiredType,
+                          Object[] args,
+                          boolean typeCheckOnly)
+```
 
 When `ApplicationContext` calls `doGetBean(...)`, it will call `getSingleton(...)` which is declared in `SingletonBeanRegistry` interface and implements in `DefaultSingletonBeanRegistry`.
 
-> Return the (raw) singleton object registered under the given name.  
+> Return the (raw) singleton object registered under the given name.
 > Only checks already instantiated singletons; does not return an Object for singleton bean definitions which have not been instantiated yet.
 
 > The main purpose of this method is to access manually registered singletons (see `registerSingleton(java.lang.String, java.lang.Object)`). Can also be used to access a singleton defined by a bean definition that already been created, in a raw fashion.
 
 > NOTE: This lookup method is not aware of FactoryBean prefixes or aliases. You need to resolve the canonical bean name first before obtaining the singleton instance.
 
-In this method, if the bean exists in concurrent map `singletonObjects<String, Object>` of `DefaultSingletonBeanRegistry`, it will call `getSingleton(...)` and return the bean object; Else the bean isn’t defined, the method will also call `getSingleton(...)`, if the singleton bean is null then it will generate the object of bean.
+In this method, if the bean exists in concurrent map `singletonObjects<String, Object>` of `DefaultSingletonBeanRegistry`, it will call `getSingleton(...)` and return the bean object; Else the bean isn’t defined, the method will also call  `getSingleton(...)`, if the singleton bean is null then it will generate the object of bean.
 
 ## Create Object of Bean
 
 How does spring create object from bean definition file? In `AbstractBeanFactory`, it provide an abstract bean creation method:
 
-|  |  |
-| --- | --- |
-| ``` 1 2 ``` | ``` protected abstract Object createBean(String beanName, RootBeanDefinition mbd, Object[] args) 			throws BeanCreationException; ``` |
+```java
+protected abstract Object createBean(String beanName, RootBeanDefinition mbd, Object[] args)
+			throws BeanCreationException;
+```
 
 Also see the document:
 
@@ -78,7 +83,7 @@ Now we just move to `createBean(...)` method and its main method is `doCreateBea
 
 So we can know from the document that the method just create the specified bean which means it should get class reference in the definition file.
 
-In this method, we find `BeanWrapper` class which is the central interface of Spring’s low-level JavaBeans infrastructure. The wrapper is initialized with `createBeanInstance(...)` method which can create a new instance for the specified bean, using an appropriate instantiation strategy: factory method, constructor autowiring, or simple instantiation. Then it call the core instantiation method `instantiateBean(...)` and it will step into `InstantiationStrategy` interface.
+In this method, we find `BeanWrapper` class which is the central interface of Spring’s low-level JavaBeans infrastructure. The wrapper  is initialized with `createBeanInstance(...)` method which can create a new instance for the specified bean, using an appropriate instantiation strategy: factory method, constructor autowiring, or simple instantiation. Then it call the core instantiation method `instantiateBean(...)` and it will step into `InstantiationStrategy` interface.
 
 ## InstantiationStrategy
 
@@ -94,5 +99,5 @@ Finally, the object will be saved in the `singletonObjects<String, Object>` for 
 
 After reading the source code of Spring’s IoC, I find some TODO list.
 
-* `ThreadLocal<?>`, `ConcurrentMap<K, V>` and *volatile* are often appeared in the source, so I need to deal with something about Java Threads;
-* [Spring Reference](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/) is very useful document to read thus I need to focus more with it.
+- `ThreadLocal<?>`, `ConcurrentMap<K, V>` and *volatile* are often appeared in the source, so I need to deal with something about Java Threads;
+- [Spring Reference](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/) is very useful document to read thus I need to focus more with it.
