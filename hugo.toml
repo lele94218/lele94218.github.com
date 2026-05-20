@@ -1,0 +1,63 @@
+baseURL = "https://lele94218.github.io/"
+title = "欲說還休"
+theme = "PaperMod"
+defaultContentLanguage = "zh-cn"
+paginate = 10
+enableRobotsTXT = true
+
+[params]
+  env = "production"
+  description = "TerryX's Blog"
+  author = "TerryX"
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+  TocOpen = false
+  [params.homeInfoParams]
+    Title = "欲說還休"
+    Content = "TerryX's Blog"
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/lele94218"
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 1
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 2
+  [[menu.main]]
+    identifier = "categories"
+    name = "Categories"
+    url = "/categories/"
+    weight = 3
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 4
+  [[menu.main]]
+    identifier = "archives"
+    name = "Archives"
+    url = "/archives/"
+    weight = 5
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    lineNos = false
+    style = "monokai"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
