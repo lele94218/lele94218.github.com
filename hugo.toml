@@ -1,54 +1,76 @@
 baseURL = "https://blog.terryx.com/"
 title = "欲說還休"
-theme = "PaperMod"
+theme = "stack"
 defaultContentLanguage = "zh-cn"
 paginate = 10
 enableRobotsTXT = true
 
+[languages.zh-cn]
+  label = "中文"
+  weight = 1
+
 [params]
-  env = "production"
   description = "TerryX's Blog"
-  author = "TerryX"
-  ShowReadingTime = true
-  ShowShareButtons = false
-  ShowPostNavLinks = true
-  ShowBreadCrumbs = true
-  ShowCodeCopyButtons = true
-  ShowToc = true
-  TocOpen = false
-  [params.homeInfoParams]
-    Title = "欲說還休"
-    Content = "TerryX's Blog"
-  [[params.socialIcons]]
-    name = "github"
-    url = "https://github.com/lele94218"
+  mainSections = ["posts"]
+  favicon = "/favicon.ico"
+
+  [params.dateFormat]
+    published = "2006-01-02"
+    lastUpdated = "2006-01-02"
+
+  [params.sidebar]
+    emoji = ""
+    subtitle = "TerryX's Blog"
+
+  [params.article]
+    math = true
+    toc = true
+    readingTime = true
+
+  [params.widgets]
+    enabled = ["search", "archives", "tag-cloud", "categories"]
+
+    [params.widgets.tagCloud]
+      limit = 20
+
+  [params.colorScheme]
+    toggle = true
+    default = "light"
+
+  [params.footer]
+    customText = "© 2016 - 2026 TerryX"
 
 [menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 1
+    [menu.main.params]
+      icon = "home"
+
   [[menu.main]]
     identifier = "posts"
     name = "Posts"
     url = "/posts/"
-    weight = 1
-  [[menu.main]]
-    identifier = "tags"
-    name = "Tags"
-    url = "/tags/"
     weight = 2
-  [[menu.main]]
-    identifier = "categories"
-    name = "Categories"
-    url = "/categories/"
-    weight = 3
+    [menu.main.params]
+      icon = "archives"
+
   [[menu.main]]
     identifier = "about"
     name = "About"
     url = "/about/"
-    weight = 4
-  [[menu.main]]
-    identifier = "archives"
-    name = "Archives"
-    url = "/archives/"
-    weight = 5
+    weight = 3
+    [menu.main.params]
+      icon = "user"
+
+  [[menu.social]]
+    identifier = "github"
+    name = "GitHub"
+    url = "https://github.com/lele94218"
+    [menu.social.params]
+      icon = "brand-github"
 
 [markup]
   [markup.highlight]
@@ -60,4 +82,17 @@ enableRobotsTXT = true
       unsafe = true
 
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  home = ["HTML", "RSS"]
+
+[related]
+  includeNewer = true
+  threshold = 60
+  toLower = false
+
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+
+  [[related.indices]]
+    name = "categories"
+    weight = 200
