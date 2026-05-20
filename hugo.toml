@@ -3,7 +3,7 @@ title = "欲說還休"
 theme = "stack"
 defaultContentLanguage = "zh-cn"
 paginate = 10
-enableRobotsTXT = true
+enableRobotsTXT = false
 
 [languages.zh-cn]
   label = "中文"
