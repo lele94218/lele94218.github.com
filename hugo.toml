@@ -76,7 +76,7 @@ enableRobotsTXT = true
   [markup.highlight]
     codeFences = true
     lineNos = false
-    style = "monokai"
+    noClasses = false
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
