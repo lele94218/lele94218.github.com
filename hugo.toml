@@ -1,98 +1,59 @@
 baseURL = "https://blog.terryx.com/"
 title = "欲說還休"
-theme = "stack"
+theme = "ink"
 defaultContentLanguage = "zh-cn"
 paginate = 10
-enableRobotsTXT = false
 
-[languages.zh-cn]
-  label = "中文"
-  weight = 1
+copyright = "© 2016 - 2026 TerryX"
+
+pygmentsstyle = "vs"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
 
 [params]
+  subtitle = "TerryX's Blog"
   description = "TerryX's Blog"
-  mainSections = ["posts"]
-  favicon = "/favicon.ico"
+  mode = "auto"
+  featherIconsCDN = true
 
-  [params.dateFormat]
-    published = "2006-01-02"
-    lastUpdated = "2006-01-02"
+[[menu.main]]
+  name = "Home"
+  url = "/"
+  weight = 1
 
-  [params.sidebar]
-    emoji = ""
-    subtitle = "TerryX's Blog"
+[[menu.main]]
+  name = "All posts"
+  url = "/posts"
+  weight = 2
 
-  [params.article]
-    math = true
-    toc = true
-    readingTime = true
+[[menu.main]]
+  name = "About"
+  url = "/about"
+  weight = 3
 
-  [params.widgets]
-    enabled = ["search", "archives", "tag-cloud", "categories"]
+[[menu.main]]
+  name = "Tags"
+  url = "/tags"
+  weight = 4
 
-    [params.widgets.tagCloud]
-      limit = 20
+[[params.social]]
+  name = "Github"
+  icon = "github"
+  url = "https://github.com/lele94218"
 
-  [params.colorScheme]
-    toggle = true
-    default = "light"
+[[params.social]]
+  name = "RSS"
+  icon = "rss"
+  url = "/index.xml"
 
-  [params.footer]
-    customText = "© 2016 - 2026 TerryX"
-
-[menu]
-  [[menu.main]]
-    identifier = "home"
-    name = "Home"
-    url = "/"
-    weight = 1
-    [menu.main.params]
-      icon = "home"
-
-  [[menu.main]]
-    identifier = "posts"
-    name = "Posts"
-    url = "/posts/"
-    weight = 2
-    [menu.main.params]
-      icon = "archives"
-
-  [[menu.main]]
-    identifier = "about"
-    name = "About"
-    url = "/about/"
-    weight = 3
-    [menu.main.params]
-      icon = "user"
-
-  [[menu.social]]
-    identifier = "github"
-    name = "GitHub"
-    url = "https://github.com/lele94218"
-    [menu.social.params]
-      icon = "brand-github"
+[taxonomies]
+  tag = "tags"
+  category = "categories"
 
 [markup]
-  [markup.highlight]
-    codeFences = true
-    lineNos = false
-    noClasses = false
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
 
 [outputs]
   home = ["HTML", "RSS"]
-
-[related]
-  includeNewer = true
-  threshold = 60
-  toLower = false
-
-  [[related.indices]]
-    name = "tags"
-    weight = 100
-
-  [[related.indices]]
-    name = "categories"
-    weight = 200
