@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language }}" data-theme="light">
+<head>
+  {{- partial "head.html" . }}
+  {{ if or .Params.math .Site.Params.math -}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '\\[', right: '\\]', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false}
+      ]
+    });">
+  </script>
+  {{- end }}
+</head>
+<body>
+  {{- partial "header.html" . }}
+  <main class="container">
+    {{- block "main" . }}{{ end }}
+  </main>
+  {{- partial "footer.html" . }}
+</body>
+</html>

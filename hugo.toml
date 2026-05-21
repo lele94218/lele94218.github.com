@@ -1,50 +1,38 @@
 baseURL = "https://blog.terryx.com/"
+defaultContentLanguage = "zh-cn"
 title = "欲說還休"
 theme = "ink"
-defaultContentLanguage = "zh-cn"
 paginate = 10
 
-copyright = "© 2016 - 2026 TerryX"
-
-pygmentsstyle = "vs"
-pygmentscodefences = true
-pygmentscodefencesguesssyntax = true
-
 [params]
-  subtitle = "TerryX's Blog"
   description = "TerryX's Blog"
-  mode = "auto"
-  featherIconsCDN = true
+  author = "TerryX"
+  homeTitle = "欲說還休"
+  homeSubtitle = "TerryX's Blog"
+  homeBio = "CS, Algorithms, Java, Linux, and more."
+  recentPostsCount = 5
 
-[[menu.main]]
-  name = "Home"
-  url = "/"
-  weight = 1
+  [[params.socialLinks]]
+    name = "GitHub"
+    url = "https://github.com/lele94218"
+    external = true
+  [[params.socialLinks]]
+    name = "Blog"
+    url = "/posts/"
 
-[[menu.main]]
-  name = "All posts"
-  url = "/posts"
-  weight = 2
-
-[[menu.main]]
-  name = "About"
-  url = "/about"
-  weight = 3
-
-[[menu.main]]
-  name = "Tags"
-  url = "/tags"
-  weight = 4
-
-[[params.social]]
-  name = "Github"
-  icon = "github"
-  url = "https://github.com/lele94218"
-
-[[params.social]]
-  name = "RSS"
-  icon = "rss"
-  url = "/index.xml"
+[menu]
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 1
+  [[menu.main]]
+    name = "Blog"
+    url = "/posts/"
+    weight = 2
+  [[menu.main]]
+    name = "Tags"
+    url = "/tags/"
+    weight = 3
 
 [taxonomies]
   tag = "tags"
@@ -54,6 +42,22 @@ pygmentscodefencesguesssyntax = true
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+  [markup.highlight]
+    codeFences = true
+    lineNos = false
+    noClasses = true
+    style = "github"
+
+[related]
+  includeNewer = true
+  threshold = 80
+  toLower = true
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+  [[related.indices]]
+    name = "date"
+    weight = 10
 
 [outputs]
   home = ["HTML", "RSS"]
