@@ -1,0 +1,47 @@
+{{ define "main" }}
+
+<section class="hero">
+  {{- with site.Params.homeImage }}
+  <img src="{{ strings.TrimLeft "/" . | relURL }}" alt="{{ site.Params.author | default site.Title }}" class="hero-image">
+  {{- end }}
+  <h1 class="hero-name">{{ site.Params.homeTitle | default site.Title }}</h1>
+  {{- with site.Params.homeSubtitle }}
+  <p class="hero-subtitle">{{ . }}</p>
+  {{- end }}
+  {{- with site.Params.homeBio }}
+  <p class="hero-bio">{{ . | markdownify }}</p>
+  {{- end }}
+  {{- with site.Params.socialLinks }}
+  <nav class="hero-links" aria-label="Social links">
+    {{- range . }}
+    <a href="{{ .url }}" {{ if .external }}target="_blank" rel="noopener noreferrer"{{ end }} title="{{ .name }}">{{ .name }}</a>
+    {{- end }}
+  </nav>
+  {{- end }}
+</section>
+
+{{- $recentCount := site.Params.recentPostsCount | default 3 }}
+{{- $posts := where site.RegularPages "Section" "posts" }}
+{{- with $posts | first $recentCount }}
+<section class="recent-posts">
+  <div class="recent-header">
+    <h2>{{ i18n "recent" | default "Recent" }}</h2>
+    <a href="{{ "posts/" | relURL }}" class="view-all">{{ i18n "view_all" | default "View all" }} &rarr;</a>
+  </div>
+  <ul class="post-list">
+    {{- range . }}
+    <li class="post-entry">
+      <a href="{{ .Permalink }}" class="post-entry-link">
+        <h3 class="post-entry-title">{{ .Title }}</h3>
+        {{ partial "post_meta.html" . }}
+        {{- with .Description | default .Summary }}
+        <p class="post-entry-summary">{{ . | plainify | truncate 160 }}</p>
+        {{- end }}
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{- end }}
+
+{{ end }}
