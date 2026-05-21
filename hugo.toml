@@ -8,17 +8,9 @@ paginate = 10
   description = "TerryX's Blog"
   author = "TerryX"
   homeTitle = "欲說還休"
-  homeSubtitle = "TerryX's Blog"
-  homeBio = "CS, Algorithms, Java, Linux, and more."
+  homeImage = "/images/banner.jpg"
   recentPostsCount = 5
 
-  [[params.socialLinks]]
-    name = "GitHub"
-    url = "https://github.com/lele94218"
-    external = true
-  [[params.socialLinks]]
-    name = "Blog"
-    url = "/posts/"
 
 [menu]
   [[menu.main]]

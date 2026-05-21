@@ -1,0 +1,126 @@
+<footer class="footer">
+    <div class="container">&copy; {{ now.Year }} <a href="https://github.com/lele94218" target="_blank" rel="noopener noreferrer">TerryX</a></div>
+</footer>
+
+<button class="scroll-top" aria-label="{{ i18n "scroll_to_top" | default "Scroll to top" }}" title="{{ i18n "scroll_to_top" | default "Scroll to top" }}">
+    <svg aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <polyline points="18 15 12 9 6 15" />
+    </svg>
+</button>
+
+{{/* i18n strings for JavaScript */}}
+<span id="i18n-strings" hidden
+    data-copy="{{ i18n "copy" | default "copy" }}"
+    data-copied="{{ i18n "copied" | default "Copied!" }}"
+    data-no-results="{{ i18n "search_no_results" | default "No results found." }}"
+    data-search-unavailable="{{ i18n "search_unavailable" | default "Search index unavailable." }}"
+></span>
+
+<script>
+    (function () {
+        var i18nEl = document.getElementById("i18n-strings");
+        var i18n = i18nEl ? i18nEl.dataset : {};
+
+        // Theme toggle
+        var toggle = document.querySelector(".theme-toggle");
+        if (toggle) {
+            toggle.addEventListener("click", function () {
+                var next =
+                    document.documentElement.dataset.theme === "dark"
+                        ? "light"
+                        : "dark";
+                document.documentElement.dataset.theme = next;
+                localStorage.setItem("theme", next);
+            });
+        }
+
+        // Alt+T keyboard shortcut for theme
+        document.addEventListener("keydown", function (e) {
+            if (e.altKey && e.key === "t") {
+                e.preventDefault();
+                toggle && toggle.click();
+            }
+        });
+
+        // Scroll-to-top button
+        var scrollBtn = document.querySelector(".scroll-top");
+        if (scrollBtn) {
+            window.addEventListener(
+                "scroll",
+                function () {
+                    scrollBtn.classList.toggle("visible", window.scrollY > 400);
+                },
+                { passive: true },
+            );
+            scrollBtn.addEventListener("click", function () {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        }
+
+        // Sticky header shadow
+        var header = document.getElementById("site-header");
+        if (header) {
+            window.addEventListener(
+                "scroll",
+                function () {
+                    header.classList.toggle("scrolled", window.scrollY > 10);
+                },
+                { passive: true },
+            );
+        }
+
+        // Reading progress bar fallback (for browsers without animation-timeline)
+        if (typeof CSS === "undefined" || !CSS.supports("animation-timeline", "scroll()")) {
+            document.documentElement.classList.add("no-scroll-timeline");
+            var bar = document.querySelector(".progress-bar");
+            if (bar) {
+                window.addEventListener(
+                    "scroll",
+                    function () {
+                        var h =
+                            document.documentElement.scrollHeight -
+                            window.innerHeight;
+                        bar.style.transform =
+                            "scaleX(" + (h > 0 ? window.scrollY / h : 0) + ")";
+                    },
+                    { passive: true },
+                );
+            }
+        }
+
+        // Code copy buttons
+        var copyLabel = i18n.copy || "copy";
+        var copiedLabel = i18n.copied || "Copied!";
+        document.querySelectorAll(".highlight").forEach(function (block) {
+            var code = block.querySelector("pre code");
+            if (!code) return;
+            var btn = document.createElement("button");
+            btn.className = "code-copy";
+            btn.textContent = copyLabel;
+            btn.setAttribute("aria-label", copyLabel);
+            btn.addEventListener("click", function () {
+                navigator.clipboard
+                    .writeText(code.textContent)
+                    .then(function () {
+                        btn.textContent = copiedLabel;
+                        setTimeout(function () {
+                            btn.textContent = copyLabel;
+                        }, 2000);
+                    })
+                    .catch(function () {});
+            });
+            block.style.position = "relative";
+            block.appendChild(btn);
+        });
+    })();
+</script>

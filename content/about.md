@@ -4,13 +4,6 @@ title: "About Me"
 
 ## 我
 
-一个计算机专业学生。喜欢编程，以及编程竞赛。最近在学习网站开发，我希望可以再这里展示更多的项目
+一个软件工程师。喜欢编程、阅读、看电影，以及游戏。
 
-阅读，看电影，以及游戏
-
-Codeforces Profile:  
-    
-[ACMega](http://codeforces.com/profile/ACMega)
-
-    Leetcode Profile:  
-    [voidmian](https://leetcode.com/voidmian/)
+GitHub: [lele94218](https://github.com/lele94218)

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ site.Language }}" data-theme="light">
+<html lang="{{ site.Language }}" data-theme="dark">
 <head>
   {{- partial "head.html" . }}
   {{- $chroma := resources.Get "css/chroma.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $chroma.RelPermalink }}" integrity="{{ $chroma.Data.Integrity }}">
+  {{- $custom := resources.Get "css/custom.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $custom.RelPermalink }}" integrity="{{ $custom.Data.Integrity }}">
   {{ if or .Params.math .Site.Params.math -}}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>

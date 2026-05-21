@@ -2,14 +2,12 @@
 
 <section class="hero">
   {{- with site.Params.homeImage }}
-  <img src="{{ strings.TrimLeft "/" . | relURL }}" alt="{{ site.Params.author | default site.Title }}" class="hero-image">
-  {{- end }}
-  <h1 class="hero-name">{{ site.Params.homeTitle | default site.Title }}</h1>
-  {{- with site.Params.homeSubtitle }}
-  <p class="hero-subtitle">{{ . }}</p>
-  {{- end }}
-  {{- with site.Params.homeBio }}
-  <p class="hero-bio">{{ . | markdownify }}</p>
+  <div class="hero-banner">
+    <img src="{{ strings.TrimLeft "/" . | relURL }}" alt="{{ site.Params.author | default site.Title }}" class="hero-banner-img">
+    <div class="hero-banner-overlay">
+      <h1 class="hero-name">{{ site.Params.homeTitle | default site.Title }}</h1>
+    </div>
+  </div>
   {{- end }}
   {{- with site.Params.socialLinks }}
   <nav class="hero-links" aria-label="Social links">
