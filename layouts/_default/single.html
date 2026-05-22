@@ -43,21 +43,26 @@
   {{- end }}
 
   <div class="giscus-comments">
-    <script src="https://giscus.app/client.js"
-      data-repo="lele94218/lele94218.github.com"
-      data-repo-id="MDEwOlJlcG9zaXRvcnk3MDUyMjAyMQ=="
-      data-category="General"
-      data-category-id="DIC_kwDOBDQUpc4C9l-M"
-      data-mapping="pathname"
-      data-strict="0"
-      data-reactions-enabled="1"
-      data-emit-metadata="0"
-      data-input-position="top"
-      data-theme="dark_tritanopia"
-      data-lang="zh-CN"
-      data-loading="eager"
-      crossorigin="anonymous"
-      async>
+    <script>
+      (function() {
+        var theme = localStorage.getItem("theme") || document.documentElement.dataset.theme || "dark";
+        var s = document.createElement("script");
+        s.src = "https://giscus.app/client.js";
+        s.setAttribute("data-repo", "lele94218/lele94218.github.com");
+        s.setAttribute("data-repo-id", "MDEwOlJlcG9zaXRvcnk3MDUyMjAyMQ==");
+        s.setAttribute("data-category", "General");
+        s.setAttribute("data-category-id", "DIC_kwDOBDQUpc4C9l-M");
+        s.setAttribute("data-mapping", "pathname");
+        s.setAttribute("data-strict", "0");
+        s.setAttribute("data-reactions-enabled", "1");
+        s.setAttribute("data-emit-metadata", "0");
+        s.setAttribute("data-input-position", "top");
+        s.setAttribute("data-theme", theme === "dark" ? "dark_tritanopia" : "light");
+        s.setAttribute("data-lang", "zh-CN");
+        s.crossOrigin = "anonymous";
+        s.async = true;
+        document.currentScript.parentElement.appendChild(s);
+      })();
     </script>
   </div>
 
