@@ -41,6 +41,13 @@
                         : "dark";
                 document.documentElement.dataset.theme = next;
                 localStorage.setItem("theme", next);
+                var giscusFrame = document.querySelector("iframe.giscus-frame");
+                if (giscusFrame) {
+                    giscusFrame.contentWindow.postMessage(
+                        { giscus: { setConfig: { theme: next === "dark" ? "dark_tritanopia" : "light" } } },
+                        "https://giscus.app"
+                    );
+                }
             });
         }
 

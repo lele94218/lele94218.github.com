@@ -42,7 +42,24 @@
   </nav>
   {{- end }}
 
-  {{ template "_internal/disqus.html" . }}
+  <div class="giscus-comments">
+    <script src="https://giscus.app/client.js"
+      data-repo="lele94218/lele94218.github.com"
+      data-repo-id="MDEwOlJlcG9zaXRvcnk3MDUyMjAyMQ=="
+      data-category="General"
+      data-category-id="DIC_kwDOBDQUpc4C9l-M"
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="dark_tritanopia"
+      data-lang="zh-CN"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async>
+    </script>
+  </div>
 
   {{- end }}
 </article>
