@@ -1,0 +1,27 @@
+backend:
+  name: github
+  repo: lele94218/lele94218.github.com
+  branch: main
+  base_url: https://blog-cms-oauth.lele94218.workers.dev
+  auth_endpoint: /auth
+
+locale: zh_Hans
+
+media_folder: "static/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "posts"
+    label: "文章"
+    folder: "content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    path: "{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "日期", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "标签", name: "tags", widget: "list", required: false }
+      - { label: "数学公式", name: "math", widget: "boolean", default: false, required: false }
+      - { label: "正文", name: "body", widget: "markdown" }
